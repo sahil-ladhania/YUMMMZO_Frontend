@@ -1,7 +1,7 @@
 import WhatsOnYourMindComponent from "@/components/userDashboard/WhatsOnYourMindComponent.jsx";
 import TopBrandsComponent from "@/components/userDashboard/TopBrandsComponent.jsx";
 
-function Home() {
+function UserHome() {
     return (
         <>
             <div className="max-w-7xl mx-auto px-4">
@@ -15,4 +15,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default UserHome;

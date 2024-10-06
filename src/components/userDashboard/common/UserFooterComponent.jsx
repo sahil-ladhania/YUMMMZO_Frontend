@@ -1,5 +1,5 @@
 
-function FooterComponent() {
+function UserFooterComponent() {
     return (
         <>
             {/* Footer */}
@@ -25,4 +25,4 @@ function FooterComponent() {
     );
 }
 
-export default FooterComponent;
+export default UserFooterComponent;

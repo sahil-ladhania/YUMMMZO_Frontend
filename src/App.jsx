@@ -1,29 +1,38 @@
 import './styles/global.css'
-import NavbarComponent from "@/components/userDashboard/common/NavbarComponent.jsx";
-import FooterComponent from "@/components/userDashboard/common/FooterComponent.jsx";
-import Home from "@/pages/user/Home.jsx";
+import UserNavbarComponent from "@/components/userDashboard/common/UserNavbarComponent.jsx";
+import OwnerNavbarComponent from "@/components/restaurantOwnerDashboard/common/OwnerNavbarComponent.jsx";
+import UserFooterComponent from "@/components/userDashboard/common/UserFooterComponent.jsx";
+import UserHome from "@/pages/user/UserHome.jsx";
 import Restaurants from "@/pages/user/Restaurants.jsx";
 import AboutUs from "@/pages/user/AboutUs.jsx";
 import ContactUs from "@/pages/user/ContactUs.jsx";
 import AddRestaurant from "@/pages/user/AddRestaurant.jsx";
 import RegisterRestaurant from "@/pages/user/RegisterRestaurant.jsx";
 import EmptyCart from "@/pages/user/EmptyCart.jsx";
-import Error from "@/pages/user/Error.jsx";
-import SignUp from "@/pages/user/SignUp.jsx";
-import Login from "@/pages/user/Login.jsx";
+import Error from "@/pages/common/Error.jsx";
+import SignUp from "@/pages/common/SignUp.jsx";
+import Login from "@/pages/common/Login.jsx";
 import Menu from "@/pages/user/Menu.jsx";
 import Checkout from "@/pages/user/Checkout.jsx";
 import Payment from "@/pages/user/Payment.jsx";
 import OrderTracking from "@/pages/user/OrderTracking.jsx";
+import OwnerFooterComponent from "@/components/restaurantOwnerDashboard/common/OwnerFooterComponent.jsx";
+import OwnerHome from "@/pages/restaurantOwner/OwnerHome.jsx";
+import ManageMenu from "@/pages/restaurantOwner/ManageMenu.jsx";
+import OrderManagement from "@/pages/restaurantOwner/OrderManagement.jsx";
+import Analytics from "@/pages/restaurantOwner/Analytics.jsx";
+import Notifications from "@/pages/restaurantOwner/Notifications.jsx";
+import RestaurantProfile from "@/pages/restaurantOwner/RestaurantProfile.jsx";
 
 function App() {
     return (
         <>
             {/* -----Navbar Component----- */}
-            <NavbarComponent/>
+            {/*<UserNavbarComponent/>*/}
+            <OwnerNavbarComponent/>
 
-            {/* -----Different Pages----- */}
-            {/*<Home/>*/}
+            {/* -----User Dashboard Different Pages----- */}
+            {/*<UserHome/>*/}
             {/*<Restaurants/>*/}
             {/*<Menu/>*/}
             {/*<AboutUs/>*/}
@@ -38,8 +47,17 @@ function App() {
             {/*<Payment/>*/}
             {/*<OrderTracking/>*/}
 
+            {/* -----Restaurant Owner Dashboard Different Pages----- */}
+            {/*<OwnerHome/>*/}
+            {/*<ManageMenu/>*/}
+            {/*<OrderManagement/>*/}
+            {/*<Analytics/>*/}
+            {/*<Notifications/>*/}
+            <RestaurantProfile/>
+
             {/* -----Footer Component----- */}
-            <FooterComponent/>
+            {/*<UserFooterComponent/>*/}
+            <OwnerFooterComponent/>
         </>
     )
 }

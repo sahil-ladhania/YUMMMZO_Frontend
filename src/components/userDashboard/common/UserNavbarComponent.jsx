@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button.jsx";
 
-function NavbarComponent() {
+function UserNavbarComponent() {
     return (
         <>
             {/* Navbar */}
@@ -32,4 +32,4 @@ function NavbarComponent() {
     );
 }
 
-export default NavbarComponent;
+export default UserNavbarComponent;
