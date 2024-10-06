@@ -23,15 +23,23 @@ import OrderManagement from "@/pages/restaurantOwner/OrderManagement.jsx";
 import Analytics from "@/pages/restaurantOwner/Analytics.jsx";
 import Notifications from "@/pages/restaurantOwner/Notifications.jsx";
 import RestaurantProfile from "@/pages/restaurantOwner/RestaurantProfile.jsx";
+import PartnerNavbarComponent from "@/components/deliveryPartnerDashboard/common/PartnerNavbarComponent.jsx";
+import PartnerFooterComponent from "@/components/deliveryPartnerDashboard/common/PartnerFooterComponent.jsx";
+import PartnerHome from "@/pages/deliveryPartner/PartnerHome.jsx";
+import ActiveOrders from "@/pages/deliveryPartner/ActiveOrders.jsx";
+import CurrentDelivery from "@/pages/deliveryPartner/CurrentDelivery.jsx";
+import Earnings from "@/pages/deliveryPartner/Earnings.jsx";
+import Profile from "@/pages/deliveryPartner/Profile.jsx";
 
 function App() {
     return (
         <>
             {/* -----Navbar Component----- */}
             {/*<UserNavbarComponent/>*/}
-            <OwnerNavbarComponent/>
+            {/*<OwnerNavbarComponent/>*/}
+            {/*<PartnerNavbarComponent/>*/}
 
-            {/* -----User Dashboard Different Pages----- */}
+            {/* -----User Dashboard Different Pages (14 Pages)----- */}
             {/*<UserHome/>*/}
             {/*<Restaurants/>*/}
             {/*<Menu/>*/}
@@ -47,17 +55,25 @@ function App() {
             {/*<Payment/>*/}
             {/*<OrderTracking/>*/}
 
-            {/* -----Restaurant Owner Dashboard Different Pages----- */}
+            {/* -----Restaurant Owner Dashboard Different Pages (6 Pages)----- */}
             {/*<OwnerHome/>*/}
             {/*<ManageMenu/>*/}
             {/*<OrderManagement/>*/}
             {/*<Analytics/>*/}
             {/*<Notifications/>*/}
-            <RestaurantProfile/>
+            {/*<RestaurantProfile/>*/}
+
+            {/* -----Delivery Partner Dashboard Different Pages (5 Pages)----- */}
+            {/*<PartnerHome/>*/}
+            {/*<ActiveOrders/>*/}
+            {/*<CurrentDelivery/>*/}
+            {/*<Earnings/>*/}
+            {/*<Profile/>*/}
 
             {/* -----Footer Component----- */}
             {/*<UserFooterComponent/>*/}
-            <OwnerFooterComponent/>
+            {/*<OwnerFooterComponent/>*/}
+            {/*<PartnerFooterComponent/>*/}
         </>
     )
 }
