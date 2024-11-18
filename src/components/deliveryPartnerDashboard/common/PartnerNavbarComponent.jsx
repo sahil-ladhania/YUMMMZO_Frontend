@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@radix-ui/react-dropdown-menu";
 
 function PartnerNavbarComponent() {
@@ -6,11 +7,15 @@ function PartnerNavbarComponent() {
         <>
             <nav className="bg-white shadow">
                 <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-                    <div className="text-lg font-bold">Delivery Partner Dashboard</div>
-                    <div className="hidden md:flex space-x-4">
-                        <Button variant="link">Active Orders</Button>
-                        <Button variant="link">Current Delivery</Button>
-                        <Button variant="link">Earnings</Button>
+                    {/* Logo Section */}
+                    <div>
+                        <Link className="text-xl font-bold" to="/partner/">Delivery Partner Dashboard</Link>
+                    </div>
+                    {/* Nav Items Section */}
+                    <div className="flex space-x-8 items-center">
+                        <Link className="cursor-pointer" to="/partner/active-orders">Active Orders</Link>
+                        <Link className="cursor-pointer" to="/partner/current-delivery">Current Delivery</Link>
+                        <Link className="cursor-pointer" to="/partner/earnings">Earnings</Link>
                     </div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>

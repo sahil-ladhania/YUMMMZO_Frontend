@@ -1,4 +1,5 @@
 import {Button} from "@/components/ui/button.jsx";
+import {Link} from "react-router-dom";
 
 function Error() {
     return (
@@ -8,7 +9,9 @@ function Error() {
                     <h1 className="text-2xl font-bold text-red-600 mb-4">Oops! Something went wrong.</h1>
                     <p className="text-gray-600 mb-4">We're sorry, but an error occurred while processing your
                         request.</p>
-                    <Button className="mt-2">Reload Page</Button>
+                    <Link className="text-blue-600 hover:underline" to="/user/">
+                        <Button className="mt-2">Reload Page</Button>
+                    </Link>
                 </div>
             </div>
         </>

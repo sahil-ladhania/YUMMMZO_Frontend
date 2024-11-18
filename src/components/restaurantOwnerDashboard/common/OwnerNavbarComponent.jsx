@@ -1,4 +1,5 @@
 import {Button} from "@/components/ui/button.jsx";
+import { Link } from "react-router-dom";
 import {BellIcon} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@radix-ui/react-dropdown-menu";
 
@@ -8,16 +9,18 @@ function OwnerNavbarComponent() {
             <nav className="flex justify-between items-center py-4 px-8 bg-white shadow-md">
                 {/* Logo Section */}
                 <div>
-                    <h1 className="text-xl font-bold">YUMMMZO</h1> {/* Replace with your logo */}
+                    <Link className="text-xl font-bold" to="/owner/">YUMMMZO</Link>
                 </div>
                 {/* Nav Items Section */}
-                <div className="flex space-x-6">
-                    <Button variant="link" className="text-lg">Menu</Button>
-                    <Button variant="link" className="text-lg">Orders</Button>
-                    <Button variant="link" className="text-lg">Analytics</Button>
-                    <Button variant="ghost">
-                        <BellIcon className="w-6 h-6"/>
-                    </Button>
+                <div className="flex space-x-8 items-center">
+                    <Link className="cursor-pointer" to="/owner/manage-menu">Menu</Link>
+                    <Link className="cursor-pointer" to="/owner/manage-orders">Orders</Link>
+                    <Link className="cursor-pointer" to="/owner/analytics">Analytics</Link>
+                    <Link className="cursor-pointer" to="/owner/notifications">
+                        <Button variant="ghost">
+                            <BellIcon className="w-6 h-6"/>
+                        </Button>
+                    </Link>
                 </div>
                 {/* Profile Dropdown Section */}
                 <div>

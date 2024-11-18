@@ -1,7 +1,5 @@
 import './styles/global.css'
-import UserNavbarComponent from "@/components/userDashboard/common/UserNavbarComponent.jsx";
-import OwnerNavbarComponent from "@/components/restaurantOwnerDashboard/common/OwnerNavbarComponent.jsx";
-import UserFooterComponent from "@/components/userDashboard/common/UserFooterComponent.jsx";
+import {BrowserRouter, Routes , Route} from "react-router-dom";
 import UserHome from "@/pages/user/UserHome.jsx";
 import Restaurants from "@/pages/user/Restaurants.jsx";
 import AboutUs from "@/pages/user/AboutUs.jsx";
@@ -16,65 +14,63 @@ import Menu from "@/pages/user/Menu.jsx";
 import Checkout from "@/pages/user/Checkout.jsx";
 import Payment from "@/pages/user/Payment.jsx";
 import OrderTracking from "@/pages/user/OrderTracking.jsx";
-import OwnerFooterComponent from "@/components/restaurantOwnerDashboard/common/OwnerFooterComponent.jsx";
 import OwnerHome from "@/pages/restaurantOwner/OwnerHome.jsx";
 import ManageMenu from "@/pages/restaurantOwner/ManageMenu.jsx";
 import OrderManagement from "@/pages/restaurantOwner/OrderManagement.jsx";
 import Analytics from "@/pages/restaurantOwner/Analytics.jsx";
 import Notifications from "@/pages/restaurantOwner/Notifications.jsx";
 import RestaurantProfile from "@/pages/restaurantOwner/RestaurantProfile.jsx";
-import PartnerNavbarComponent from "@/components/deliveryPartnerDashboard/common/PartnerNavbarComponent.jsx";
-import PartnerFooterComponent from "@/components/deliveryPartnerDashboard/common/PartnerFooterComponent.jsx";
 import PartnerHome from "@/pages/deliveryPartner/PartnerHome.jsx";
 import ActiveOrders from "@/pages/deliveryPartner/ActiveOrders.jsx";
 import CurrentDelivery from "@/pages/deliveryPartner/CurrentDelivery.jsx";
 import Earnings from "@/pages/deliveryPartner/Earnings.jsx";
 import Profile from "@/pages/deliveryPartner/Profile.jsx";
+import User from "@/dashboards/User.jsx";
+import Owner from "@/dashboards/Owner.jsx";
+import Partner from "@/dashboards/Partner.jsx";
 
 function App() {
     return (
-        <>
-            {/* -----Navbar Component----- */}
-            {/*<UserNavbarComponent/>*/}
-            {/*<OwnerNavbarComponent/>*/}
-            {/*<PartnerNavbarComponent/>*/}
-
-            {/* -----User Dashboard Different Pages (14 Pages)----- */}
-            {/*<UserHome/>*/}
-            {/*<Restaurants/>*/}
-            {/*<Menu/>*/}
-            {/*<AboutUs/>*/}
-            {/*<ContactUs/>*/}
-            {/*<AddRestaurant/>*/}
-            {/*<RegisterRestaurant/>*/}
-            {/*<EmptyCart/>*/}
-            {/*<Error/>*/}
-            {/*<SignUp/>*/}
-            {/*<Login/>*/}
-            {/*<Checkout/>*/}
-            {/*<Payment/>*/}
-            {/*<OrderTracking/>*/}
-
-            {/* -----Restaurant Owner Dashboard Different Pages (6 Pages)----- */}
-            {/*<OwnerHome/>*/}
-            {/*<ManageMenu/>*/}
-            {/*<OrderManagement/>*/}
-            {/*<Analytics/>*/}
-            {/*<Notifications/>*/}
-            {/*<RestaurantProfile/>*/}
-
-            {/* -----Delivery Partner Dashboard Different Pages (5 Pages)----- */}
-            {/*<PartnerHome/>*/}
-            {/*<ActiveOrders/>*/}
-            {/*<CurrentDelivery/>*/}
-            {/*<Earnings/>*/}
-            {/*<Profile/>*/}
-
-            {/* -----Footer Component----- */}
-            {/*<UserFooterComponent/>*/}
-            {/*<OwnerFooterComponent/>*/}
-            {/*<PartnerFooterComponent/>*/}
-        </>
+            <BrowserRouter>
+                <Routes>
+                    {/* User Dashboard Routes*/}
+                    <Route path="user" element={<User/>}>
+                        <Route index path="" element={<UserHome/>}/>
+                        <Route path="restaurants" element={<Restaurants/>}/>
+                        <Route path="add-restaurant" element={<AddRestaurant/>}/>
+                        <Route path="register-restaurant" element={<RegisterRestaurant/>}/>
+                        <Route path="about-us" element={<AboutUs/>}/>
+                        <Route path="contact-us" element={<ContactUs/>}/>
+                        <Route path="signup" element={<SignUp/>}/>
+                        <Route path="login" element={<Login/>}/>
+                        <Route path="menu" element={<Menu/>}/>
+                        <Route path="empty-cart" element={<EmptyCart/>}/>
+                        <Route path="checkout" element={<Checkout/>}/>
+                        <Route path="payment" element={<Payment/>}/>
+                        <Route path="order-tracking" element={<OrderTracking/>}/>
+                        <Route path="error" element={<Error/>}/>
+                    </Route>
+                    {/* Vendor Dashboard Routes*/}
+                    <Route path="owner" element={<Owner/>}>
+                        <Route index path="" element={<OwnerHome/>}/>
+                        <Route path="manage-menu" element={<ManageMenu/>}/>
+                        <Route path="manage-orders" element={<OrderManagement/>}/>
+                        <Route path="analytics" element={<Analytics/>}/>
+                        <Route path="notifications" element={<Notifications/>}/>
+                        <Route path="profile" element={<RestaurantProfile/>}/>
+                    </Route>
+                    {/* Courier Dashboard Routes*/}
+                    <Route path="partner" element={<Partner/>}>
+                        <Route index path="" element={<PartnerHome/>}/>
+                        <Route path="active-orders" element={<ActiveOrders/>}/>
+                        <Route path="current-delivery" element={<CurrentDelivery/>}/>
+                        <Route path="earnings" element={<Earnings/>}/>
+                        <Route path="profile" element={<Profile/>}/>
+                    </Route>
+                    {/* Error Route */}
+                    <Route path="*" element={<Error/>}/>
+                </Routes>
+            </BrowserRouter>
     )
 }
 

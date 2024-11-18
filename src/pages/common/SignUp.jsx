@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input.jsx";
 import { Button } from "@/components/ui/button.jsx";
+import {Link} from "react-router-dom";
 
 function SignUp() {
     return (
@@ -37,8 +38,8 @@ function SignUp() {
                         <Button type="submit" className="w-full">Sign Up</Button>
                     </form>
                     <p className="mt-4 text-center text-sm text-gray-600">
-                        Already have an account? <a href="/src/pages/common/Login" className="text-blue-600 hover:underline">Login
-                        here</a>
+                        Already have an account?
+                        <Link className="text-blue-600 hover:underline" to="/user/login">Sign up here</Link>
                     </p>
                 </div>
             </div>

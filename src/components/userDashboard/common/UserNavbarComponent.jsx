@@ -1,4 +1,5 @@
 import {Button} from "@/components/ui/button.jsx";
+import { Link } from "react-router-dom";
 
 function UserNavbarComponent() {
     return (
@@ -7,25 +8,23 @@ function UserNavbarComponent() {
             <nav className="h-24 flex items-center justify-between px-5">
                 {/* Logo Section */}
                 <div className="flex items-center">
-                    <img
-                        className="h-20 w-auto"
-                        src="https://1000logos.net/wp-content/uploads/2021/06/Zomato-logo.png"
-                        alt="App Logo"
-                    />
+                    <Link className="text-xl font-bold" to="/user/">YUMMMZO</Link>
                 </div>
                 {/* Nav Items Section */}
                 <div>
                     <ul className="flex space-x-8 items-center">
-                        <li className="cursor-pointer">Restaurants</li>
-                        <li className="cursor-pointer">About Us</li>
-                        <li className="cursor-pointer">Contact Us</li>
-                        <li className="cursor-pointer">Add Restaurant</li>
-                        <li className="cursor-pointer">Cart</li>
+                        <Link className="cursor-pointer" to="/user/restaurants">Restaurants</Link>
+                        <Link className="cursor-pointer" to="/user/about-us">About Us</Link>
+                        <Link className="cursor-pointer" to="/user/contact-us">Contact Us</Link>
+                        <Link className="cursor-pointer" to="/user/add-restaurant">Add Restaurant</Link>
+                        <Link className="cursor-pointer" to="/user/checkout">Cart</Link>
                     </ul>
                 </div>
                 {/* Sign in / Profile Section */}
                 <div>
-                    <Button>Sign in</Button>
+                    <Link to="/user/login">
+                        <Button>Sign in</Button>
+                    </Link>
                 </div>
             </nav>
         </>
