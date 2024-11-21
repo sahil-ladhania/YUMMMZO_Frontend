@@ -3,7 +3,7 @@ function UserFooterComponent() {
     return (
         <>
             {/* Footer */}
-            <div className="flex items-center justify-between px-5 py-5 bg-gray-100">
+            <div className="flex items-center justify-between px-5 py-5">
                 {/* Logo Section */}
                 <div className="mb-3">
                     <h1 className="text-xl font-bold">YUMMMZO</h1> {/* Replace with your logo */}
