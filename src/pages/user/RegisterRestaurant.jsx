@@ -13,7 +13,7 @@ function RegisterRestaurant() {
                 {/* Details Section */}
                 <div className="w-full md:w-2/3">
                     <RestaurantInfoFormComponent/>
-                    {/*<MenuInfoFormComponent/>*/}
+                    <MenuInfoFormComponent/>
                 </div>
             </div>
         </>

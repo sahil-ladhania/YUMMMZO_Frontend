@@ -43,13 +43,15 @@ YUMMMZO is a food delivery application that allows users to order food online wh
 /src
   /assets               # Static files (icons, images, etc.)
   /components           # Components for different dashboards
+  /dashboards           # Components for All three Dashboard
+  /hooks                # Custom hooks
   /layouts              # Layout components
+  /lib                  # Understand Why is this for ????????????????????
   /pages                # Main page components
   /redux                # State management
-  /hooks                # Custom hooks
-  /utils                # Utility functions
-  /styles               # Global and component-level styles
   /services             # API calls and integrations
+  /styles               # Global and component-level styles
+  /utils                # Utility functions  
 ```
 ## Installation
 To get started with the project, follow these steps:
