@@ -28,9 +28,12 @@ import Profile from "@/pages/deliveryPartner/Profile.jsx";
 import User from "@/dashboards/User.jsx";
 import Owner from "@/dashboards/Owner.jsx";
 import Partner from "@/dashboards/Partner.jsx";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 function App() {
     return (
+        <Provider store={store}>
             <BrowserRouter>
                 <Routes>
                     {/* User Dashboard Routes*/}
@@ -71,6 +74,7 @@ function App() {
                     <Route path="*" element={<Error/>}/>
                 </Routes>
             </BrowserRouter>
+        </Provider>
     )
 }
 
