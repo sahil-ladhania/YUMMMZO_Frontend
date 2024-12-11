@@ -15,6 +15,9 @@ function Login() {
         password: ""
     });
     const dispatch = useDispatch();
+    console.log(dispatch);
+    console.log(useDispatch);
+    console.log(useDispatch());
 
     // Handler Functions
     const handleSubmit = async(e) => {
@@ -27,6 +30,7 @@ function Login() {
             if(!token){
                 throw new Error("Authentication token not found");
             };
+            // 	These dispatch calls send actions (login, setUser) to the Redux store.
             dispatch(login({token}));
             dispatch(setUser({
                 firstName: user.firstName,
