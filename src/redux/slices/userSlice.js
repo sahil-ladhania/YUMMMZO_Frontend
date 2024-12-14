@@ -20,32 +20,21 @@ const userSlice = createSlice({
     initialState,
     reducers : {
         setUser : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+            state.userData = action.payload;
         },
-        signupStart : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+        signupStart : (state) => {
+            state.signupLoading = true;
+            state.signupSuccess = false;
+            state.signupError = "";
         },
         signupSuccess : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+            state.signupLoading = false;
+            state.signupSuccess = true;
+            state.userData = action.payload;
         },
         signupFailure : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+            state.signupLoading = false;
+            state.signupError = action.payload;
         },
         changePasswordStart : (state , action) => {
             // Add logic
