@@ -36,26 +36,18 @@ const userSlice = createSlice({
             state.signupLoading = false;
             state.signupError = action.payload;
         },
-        changePasswordStart : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+        changePasswordStart : (state) => {
+            state.changePasswordLoading = true;
+            state.changePasswordSuccess = false;
+            state.changePasswordError = "";
         },
-        changePasswordSuccess : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+        changePasswordSuccess : (state) => {
+            state.changePasswordLoading = false;
+            state.changePasswordSuccess = true;
         },
         changePasswordFailure : (state , action) => {
-            // Add logic
-            console.log(state);
-            console.log(action);
-            console.log(action.type);
-            console.log(action.payload);
+            state.changePasswordLoading = false;
+            state.changePasswordError = action.payload;
         },
     }
 })

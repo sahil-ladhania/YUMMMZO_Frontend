@@ -23,3 +23,16 @@ export const login = async(userData) => {
         throw new Error("Something went wrong : " + error);
     }
 }
+
+export const changePassword = async(userData) => {
+    try{
+        const response = await axios.put(`${API_URL}/change-password` , userData , {
+            withCredentials : true
+        });
+        console.log(response);
+        return response.data;
+    }
+    catch(error){
+        throw new Error("Something went wrong : " + error);
+    }
+}
