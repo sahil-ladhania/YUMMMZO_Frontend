@@ -88,6 +88,7 @@ function Login() {
                             <label className="block text-sm font-medium mb-1">Email</label>
                             <Input 
                                 onChange={handleInputChange} 
+                                type="email"
                                 name="email" 
                                 value={formData.email} 
                                 placeholder="Enter your email" 
