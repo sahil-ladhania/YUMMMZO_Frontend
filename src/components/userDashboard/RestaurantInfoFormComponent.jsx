@@ -43,7 +43,7 @@ function RestaurantInfoFormComponent() {
         return null;
     }
 
-    const validateForm = () => {
+    const validateForm1 = () => {
         return (form1.restaurantName && form1.ownerName && form1.ownerEmail && form1.ownerPhoneNumber && form1.shopNumber && form1.floor && form1.area && form1.city && form1.nearbyLandmark);
     }
 
@@ -193,7 +193,7 @@ function RestaurantInfoFormComponent() {
                     {/* Combined Button Section */}
                     <Button 
                         className="mt-4" 
-                        disabled={!validateForm()}
+                        disabled={!validateForm1()}
                     >
                         Next
                     </Button>

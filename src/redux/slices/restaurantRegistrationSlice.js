@@ -64,7 +64,7 @@ export const restaurantRegistrationSlice = createSlice({
         setAddress : (state , action) => {
             state.address = { ...state.address , ...action.payload };
         },
-        setRestaurantImage : (state , action) => {
+        setRestaurantImage : (state , action) => { //--------------------------------> start from here
             state.restaurantImage = action.payload;
         },
         setCuisines : (state , action) => {
@@ -102,6 +102,15 @@ export const restaurantRegistrationSlice = createSlice({
                 nearbyLandmark : action.payload.nearbyLandmark,
                 city : action.payload.city,
             };
+        },
+        setForm2Data : (state , action) => {
+            state.restaurantImage = action.payload;
+            state.cuisines = action.payload;
+            state.priceForTwo = action.payload;
+            state.isPureVeg = action.payload;
+            state.openingTime = action.payload;
+            state.closingTime = action.payload;
+            state.openingDays = action.payload;
         }
     }
 })
@@ -123,6 +132,7 @@ export const {
     setIsPureVeg, 
     setPriceForTwo, 
     setSubmitted,
-    setForm1Data
+    setForm1Data,
+    setForm2Data
  } = restaurantRegistrationSlice.actions;
 export default restaurantRegistrationSlice.reducer;
