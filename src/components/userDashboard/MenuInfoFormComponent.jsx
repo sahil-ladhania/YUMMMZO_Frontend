@@ -29,7 +29,7 @@ function MenuInfoFormComponent() {
     // Handler Functions
     const handleChange = async(e) => {
         e.preventDefault();
-        const {name , value , type , files , checked} = e.target; 
+        const {name , value , type , files} = e.target; 
         if(type === 'file'){
             const imageFile = files[0];
             if(imageFile){
@@ -44,13 +44,6 @@ function MenuInfoFormComponent() {
                     throw new Error("Error uploading image : " , error);
                 }
             }
-        }
-        else if(type === 'checkbox'){
-            const updatedList = checked ? [...form2[name] , value] : form2[name].filter((item) => item !== value);
-            setForm2({
-                ...form2,
-                [name]: updatedList,
-            });
         }
         else{
             setForm2({
@@ -132,12 +125,10 @@ function MenuInfoFormComponent() {
                     {/* Toggle Section for Pure Veg Restaurant */}
                     <div className="mb-4 flex items-center">
                         <Switch 
-                            onChange={handleChange}
                             id="pureVeg" 
                             name="isPureVeg"
-                            checked={form2.isPureVeg}
                         />
-                        <Label htmlFor="pureVeg" className="ml-2 text-sm font-medium">
+                        <Label htmlFor="isPureVeg" className="ml-2 text-sm font-medium">
                             Is this a pure vegetarian restaurant?
                         </Label>
                     </div>
@@ -207,8 +198,8 @@ function MenuInfoFormComponent() {
                                 required
                             />
                         </div>
+                        {/* Restaurant Opening Days Section */}
                         <h4 className="text-md font-semibold mt-4 mb-2">Mark Open Days</h4>
-                        {/* Get the open days from Backend so that use can select from the below options */}
                         <div className="grid grid-cols-2 gap-4">
                             {
                                 openDays.map((openDay) => (
@@ -217,10 +208,10 @@ function MenuInfoFormComponent() {
                                             onChange={handleChange}
                                             name="openingDays"
                                             type="checkbox" 
-                                            value={openDay} 
+                                            value={openDay.openingDayId} 
                                             className="mr-2"
                                         />
-                                        <label htmlFor={openDay} className="text-sm">{openDay.day}</label>
+                                        <label htmlFor={openDay.openingDayId} className="text-sm">{openDay.day}</label>
                                     </div>
                                 ))
                             }

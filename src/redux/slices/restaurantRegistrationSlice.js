@@ -64,7 +64,7 @@ export const restaurantRegistrationSlice = createSlice({
         setAddress : (state , action) => {
             state.address = { ...state.address , ...action.payload };
         },
-        setRestaurantImage : (state , action) => { //--------------------------------> start from here
+        setRestaurantImage : (state , action) => { 
             state.restaurantImage = action.payload;
         },
         setCuisines : (state , action) => {
