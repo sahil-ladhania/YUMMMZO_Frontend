@@ -1,12 +1,15 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function OrderHeaderComponent() {
     return (
         <>
-            <Card className="p-6 my-5 mb-4">
+            <Card className="p-6 my-5 mb-4 bg-neutral-900 border-none">
                 <CardHeader>
-                    <CardTitle>Order Management</CardTitle>
+                    <CardTitle className="text-orange-400 text-2xl font-medium">Order Management</CardTitle>
                 </CardHeader>
+                <CardContent>
+                        <p className="text-neutral-300 text-sm">Manage your orders with one click.</p>
+                </CardContent>
             </Card>
         </>
     );

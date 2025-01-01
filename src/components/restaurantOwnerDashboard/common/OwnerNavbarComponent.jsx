@@ -6,18 +6,18 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 function OwnerNavbarComponent() {
     return (
         <>
-            <nav className="flex justify-between items-center py-4 px-8 bg-white shadow-md">
+            <nav className="h-32 flex justify-between items-center py-4 px-8 shadow-md text-white roboto-regular">
                 {/* Logo Section */}
                 <div>
-                    <Link className="text-xl font-bold" to="/owner/">YUMMMZO</Link>
+                    <Link className="text-xl font-bold text-orange-400" to="/owner/">YUMMMZO</Link>
                 </div>
                 {/* Nav Items Section */}
-                <div className="flex space-x-8 items-center">
-                    <Link className="cursor-pointer" to="/owner/manage-menu">Menu</Link>
-                    <Link className="cursor-pointer" to="/owner/manage-orders">Orders</Link>
-                    <Link className="cursor-pointer" to="/owner/analytics">Analytics</Link>
+                <div className="flex space-x-8 items-center bg-neutral-900 rounded-lg px-10 py-4">
+                    <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/manage-menu">Menu</Link>
+                    <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/manage-orders">Orders</Link>
+                    <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/analytics">Analytics</Link>
                     <Link className="cursor-pointer" to="/owner/notifications">
-                        <Button variant="ghost">
+                        <Button className="bg-neutral-800 hover:bg-neutral-800"> 
                             <BellIcon className="w-6 h-6"/>
                         </Button>
                     </Link>
@@ -26,12 +26,12 @@ function OwnerNavbarComponent() {
                 <div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="text-lg">Profile</Button>
+                            <Button className="text-md bg-black border border-orange-400 hover:bg-black">Profile</Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuItem>My Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                        <DropdownMenuContent className="mr-4 px-8 py-4 mt-2 h-auto bg-neutral-900 rounded-lg">
+                            <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">My Profile</DropdownMenuItem>
+                            <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">Settings</DropdownMenuItem>
+                            <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

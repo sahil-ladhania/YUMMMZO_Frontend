@@ -5,9 +5,9 @@ import MenuItemComponent from "@/components/restaurantOwnerDashboard/MenuItemCom
 function MenuManagementComponent() {
     return (
         <>
-            <Card className="p-6 mb-4">
+            <Card className="p-6 mb-10 bg-neutral-900 border-none">
                 <CardHeader>
-                    <CardTitle>Manage Your Menu</CardTitle>
+                    <CardTitle className="text-orange-400 text-2xl font-medium">Manage Your Menu</CardTitle>
                 </CardHeader>
                 <CardContent>
                     {/* Placeholder for MenuItem components */}
@@ -16,7 +16,7 @@ function MenuManagementComponent() {
                         <MenuItemComponent />
                         <MenuItemComponent />
                     </div>
-                    <Button className="mt-4 w-full">Add Items</Button>
+                    <Button className="mt-4 w-full bg-white text-black hover:bg-white">Add Items</Button>
                 </CardContent>
             </Card>
         </>

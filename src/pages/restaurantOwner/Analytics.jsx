@@ -7,7 +7,7 @@ import PerformanceMetricsComponent from "@/components/restaurantOwnerDashboard/P
 function Analytics() {
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-4 roboto-regular">
                 <AnalyticsHeaderComponent/>
                 <SalesOverviewComponent/>
                 <OrderTrendsComponent/>

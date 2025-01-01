@@ -10,7 +10,7 @@ import RestaurantPromotionsComponent from "@/components/restaurantOwnerDashboard
 function OwnerHome() {
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-6">
+            <div className="max-w-7xl mx-auto px-4 py-6 roboto-regular">
                 {/* Owner Welcome Section */}
                 <section className="mb-6">
                     <OwnerWelcomeSectionComponent/>

@@ -7,7 +7,7 @@ import UpdateOrderStatusComponent from "@/components/restaurantOwnerDashboard/Up
 function OrderManagement() {
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-4 roboto-regular">
                 <OrderHeaderComponent/>
                 <FilterSortComponent/>
                 <OrderListComponent/>

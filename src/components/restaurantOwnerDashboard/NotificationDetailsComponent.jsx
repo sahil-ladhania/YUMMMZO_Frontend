@@ -3,13 +3,15 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 function NotificationDetailsComponent() {
     return (
         <>
-            <Card className="p-6 mb-4">
+            <Card className="p-6 mb-4 bg-neutral-900 border-none">
                 <CardHeader>
-                    <CardTitle>Notification Details</CardTitle>
+                    <CardTitle className="text-orange-400 text-2xl font-medium">Notification Details</CardTitle>
                 </CardHeader>
                 <CardContent>
                     {/* Placeholder for notification details */}
-                    <div className="h-48 bg-gray-200">Details of the selected notification will appear here.</div>
+                    <div className="h-48 bg-neutral-800 rounded-lg">
+                        
+                    </div>
                 </CardContent>
             </Card>
         </>

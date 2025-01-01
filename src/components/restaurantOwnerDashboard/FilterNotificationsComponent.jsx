@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 function FilterNotificationsComponent() {
     return (
         <>
-            <div className="flex justify-between mb-4">
-                <Select className="w-1/4" placeholder="Filter by type">
-                    <option value="all">All</option>
-                    <option value="alerts">Alerts</option>
-                    <option value="updates">Updates</option>
-                    <option value="promotions">Promotions</option>
-                </Select>
-                <Button className="ml-2">Apply Filter</Button>
+            <div className="flex justify-between mb-4 bg-neutral-900 py-4 rounded-lg">
+                <div className="px-4 flex justify-between w-2/4">
+                    <Button className="bg-black hover:bg-black">All</Button>
+                    <Button className="bg-black hover:bg-black">Alerts</Button>
+                    <Button className="bg-black hover:bg-black">Updates</Button>
+                    <Button className="bg-black hover:bg-black">Promotions</Button>
+                </div>
+                <Button className="mx-4 bg-white text-black hover:bg-white">Apply Filter</Button>
             </div>
         </>
     );

@@ -7,7 +7,7 @@ import UploadLogoComponent from "@/components/restaurantOwnerDashboard/UploadLog
 function RestaurantProfile() {
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-4 roboto-regular">
                 <RestaurantProfileHeaderComponent/>
                 <ProfileOverviewComponent/>
                 <EditProfileComponent/>

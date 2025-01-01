@@ -6,7 +6,7 @@ import NotificationDetailsComponent from "@/components/restaurantOwnerDashboard/
 function Notifications() {
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-4 roboto-regular">
                 <NotificationsHeaderComponent/>
                 <FilterNotificationsComponent/>
                 <NotificationsListComponent/>
