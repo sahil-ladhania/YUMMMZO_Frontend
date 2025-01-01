@@ -66,12 +66,12 @@ function RestaurantInfoFormComponent() {
 
     return (
         <>
-            <div className="p-4">
-                <h2 className="text-xl font-bold mb-4">Restaurant Information</h2>
+            <div className="p-4 bg-neutral-900 rounded-lg">
+                <h2 className="text-2xl font-bold mb-4 roboto-regular text-orange-400">Restaurant Information</h2>
                 <form onSubmit={handleNext}>
                     {/* Restaurant Name Section */}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Restaurant Name</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Restaurant Name</label>
                         <Input
                             onChange={handleChange}
                             type="text" 
@@ -82,9 +82,9 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     {/* Owner Details Section */}
-                    <h3 className="text-lg font-semibold mb-2">Owner Details</h3>
+                    <h3 className="text-lg font-semibold mb-2 roboto-regular text-white">Owner Details</h3>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Name</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Name</label>
                         <Input 
                             onChange={handleChange}
                             type="text" 
@@ -95,7 +95,7 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Email</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Email</label>
                         <Input 
                             onChange={handleChange}
                             type="email" 
@@ -106,7 +106,7 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Contact Number</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Contact Number</label>
                         <Input 
                             onChange={handleChange}
                             type="tel" 
@@ -117,9 +117,9 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     {/* Map Section */}
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Add Your Restaurants Location</label>
-                        <div className="h-80 w-full bg-gray-200 mb-2">
+                    <div className="mb-4 py-4">
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Add Your Restaurants Location</label>
+                        <div className="h-80 w-full rounded-lg mb-2 p-4 bg-neutral-800">
                             <MapContainer center={location} zoom={13} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false}>
                                 <TileLayer
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -131,12 +131,12 @@ function RestaurantInfoFormComponent() {
                                 <CenterMapOnLocation/>
                             </MapContainer>
                         </div>
-                        <Button onClick={handleCurrentLocation} variant="outline">Use Current Location</Button>
+                        <Button className="roboto-regular" onClick={handleCurrentLocation} variant="outline">Use Current Location</Button>
                     </div>
                     {/* Restaurant Address Details Section */}
-                    <h3 className="text-lg font-semibold mb-2">Restaurant Address Details</h3>
+                    <h3 className="text-lg font-semibold mb-2 roboto-regular text-white">Restaurant Address Details</h3>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Shop No/Building No</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Shop No/Building No</label>
                         <Input 
                             onChange={handleChange}
                             type="text" 
@@ -147,7 +147,7 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Floor</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Floor</label>
                         <Input 
                             onChange={handleChange}
                             type="text" 
@@ -158,7 +158,7 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Area</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Area</label>
                         <Input 
                             onChange={handleChange}
                             type="text" 
@@ -169,7 +169,7 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">City</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">City</label>
                         <Input 
                             onChange={handleChange}
                             type="text" 
@@ -180,7 +180,7 @@ function RestaurantInfoFormComponent() {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Nearby Landmark</label>
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Nearby Landmark</label>
                         <Input 
                             onChange={handleChange}
                             type="text" 
@@ -192,7 +192,7 @@ function RestaurantInfoFormComponent() {
                     </div>
                     {/* Combined Button Section */}
                     <Button 
-                        className="mt-4" 
+                        className="mt-4 roboto-regular bg-white text-black" 
                         disabled={!validateForm1()}
                     >
                         Next

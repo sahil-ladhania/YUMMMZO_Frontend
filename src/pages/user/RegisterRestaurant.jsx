@@ -10,7 +10,7 @@ function RegisterRestaurant() {
 
     return (
         <>
-            <div className="flex flex-col md:flex-row max-w-7xl mx-auto px-4 py-8">
+            <div className="flex flex-col md:flex-row max-w-7xl mx-auto px-4 py-8 roboto-regular">
                 {/* Timeline Section */}
                 <div className="w-full md:w-1/3 mb-8 md:mr-8">
                     <TimelineComponent/>

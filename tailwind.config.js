@@ -53,7 +53,12 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		backgroundImage: {
+			'restaurant-card-gradient': 'linear-gradient(220.55deg, #FFD439 0%, #FF7A00 100%)',
+			'how-it-works-card-gradient': 'linear-gradient(220.55deg, #EAEAEA 0%, #8B8B8B 100%)',
+			'order-details-gradient': 'linear-gradient(220.55deg, #FFD439 0%, #FF7A00 100%)',
+		},
   	}
   },
   plugins: [require("tailwindcss-animate")],

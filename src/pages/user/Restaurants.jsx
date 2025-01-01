@@ -6,8 +6,8 @@ function Restaurants() {
         <>
             <div className="max-w-7xl mx-auto px-4">
                 {/* Heading Section */}
-                <h1 className="text-2xl font-bold my-4">
-                    Restaurants with online food delivery
+                <h1 className="text-4xl py-4 text-orange-400 roboto-regular font-bold my-6">
+                    Popular Restaurants Near You
                 </h1>
                 {/* Filters Section */}
                 <FiltersContainerComponent/>

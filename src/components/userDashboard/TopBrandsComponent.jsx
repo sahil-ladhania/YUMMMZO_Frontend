@@ -5,10 +5,10 @@ function TopBrandsComponent() {
         <>
             <div className="my-8">
                 {/* Top Brands Sections */}
-                <h1 className="text-xl font-bold">Top brands for you</h1>
+                <h1 className="text-4xl mb-6 text-white tracking-wider roboto-regular">Top brands for you</h1>
                 {/* Brands Section */}
                 <div className="flex flex-wrap">
-                    {Array(9).fill(<BrandComponent/>)}
+                    {Array(18).fill(<BrandComponent/>)}
                 </div>
             </div>
         </>

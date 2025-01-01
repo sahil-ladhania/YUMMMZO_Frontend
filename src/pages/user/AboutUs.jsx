@@ -3,19 +3,20 @@ import TeamMemberComponent from "@/components/userDashboard/TeamMemberComponent.
 function AboutUs() {
     return (
         <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
-                <h1 className="text-2xl font-bold mb-4">About Us</h1>
-                <p className="mb-4">
+            <div className="max-w-7xl mx-auto px-4 py-8 text-white my-10 bg-neutral-900 rounded-lg">
+                <h1 className="text-4xl font-semibold mb-4 py-2 roboto-regular text-orange-400">About Us</h1>
+                <p className="roboto-regular text-sm text-neutral-300">
                     Welcome to YUMMMZO! We are committed to providing the best online food delivery experience for our
-                    customers. Our goal is to bring delicious meals from your favorite restaurants straight to your
-                    doorstep.
+                    customers. 
                 </p>
-                <h2 className="text-xl font-semibold mb-2">Our Team</h2>
+                <p className="mb-6 roboto-regular text-sm text-neutral-300">
+                    Our goal is to bring delicious meals from your favorite restaurants straight to your
+                doorstep.
+                </p>
+                <h2 className="text-xl font-medium mb-4 mt-10 roboto-regular text-neutral-300">Our Team</h2>
                 <div className="flex flex-wrap gap-4">
-                    <TeamMemberComponent name="John Doe" role="CEO"/>
-                    <TeamMemberComponent name="Jane Smith" role="CTO"/>
-                    <TeamMemberComponent name="Alice Johnson" role="CMO"/>
-                    <TeamMemberComponent name="Bob Brown" role="COO"/>
+                    <TeamMemberComponent name="Sahil Ladhania" role="Founder"/>
+                    <TeamMemberComponent name="Janvi Sunderka" role="Co-Founder"/>
                 </div>
             </div>
         </>

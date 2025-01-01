@@ -6,17 +6,19 @@ function User() {
     return (
         <>
             {/* Navbar */}
-            <header className="w-full bg-red-500 text-white">
+            <header className="w-full bg-black text-white">
                 <UserNavbarComponent />
             </header>
             {/* Body Content */}
-            <div className="mx-auto max-w-7xl px-4 min-h-[calc(100vh-8rem)]">
-                <main>
-                    <Outlet />
-                </main>
+            <div className="">
+                <div className="mx-auto max-w-7xl px-4 min-h-[calc(100vh-8rem)]">
+                    <main>
+                        <Outlet />
+                    </main>
+                </div>
             </div>
             {/* Footer */}
-            <footer className="w-full bg-red-500 text-white">
+            <footer className="w-full h-20 bg-black text-white">
                 <UserFooterComponent />
             </footer>
         </>

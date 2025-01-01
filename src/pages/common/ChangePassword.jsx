@@ -60,14 +60,14 @@ function ChangePassword() {
         <>
             <div className="flex items-center justify-center h-screen">
                 <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold mb-6 text-center">Change Password</h2>
-                    {changePasswordLoading && <p className="text-blue-600">Loading...</p>}
-                    {changePasswordSuccess && <p className="text-green-600">Signup successful! Welcome aboard!</p>}
+                    <h2 className="text-2xl font-bold mb-6 text-center roboto-regular">Change Password</h2>
+                    {changePasswordLoading && <p className="text-blue-600 roboto-regular">Loading...</p>}
+                    {changePasswordSuccess && <p className="text-green-600 roboto-regular">Signup successful! Welcome aboard!</p>}
                     {changePasswordError && <p className="text-red-500">{changePasswordError}</p>}
                     <form onSubmit={handleChangePassword}>
                         {/* Email Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Email</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Email</label>
                             <Input 
                                 onChange={handleInputChange}
                                 type="email" 
@@ -79,7 +79,7 @@ function ChangePassword() {
                         </div>
                         {/* Current Password Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Current Password</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Current Password</label>
                             <Input 
                                 onChange={handleInputChange}
                                 type="password" 
@@ -91,7 +91,7 @@ function ChangePassword() {
                         </div>
                         {/* New Password Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">New Password</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">New Password</label>
                             <Input 
                                 onChange={handleInputChange}
                                 type="password" 
@@ -103,7 +103,7 @@ function ChangePassword() {
                         </div>
                         {/* Confirm Password Section */}
                         <div className="mb-6">
-                            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Confirm Password</label>
                             <Input 
                                 onChange={handleInputChange}
                                 type="password" 
@@ -114,7 +114,7 @@ function ChangePassword() {
                             />
                         </div>
                         {/* Submit Button */}
-                        <Button type="submit" className="w-full">Change Password</Button>
+                        <Button type="submit" className="w-full roboto-regular bg-black text-white hover:bg-black">Change Password</Button>
                     </form>
                 </div>
             </div>

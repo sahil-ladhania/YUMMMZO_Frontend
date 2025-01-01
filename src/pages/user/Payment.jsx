@@ -5,7 +5,7 @@ import PaymentOptionsComponent from "@/components/userDashboard/PaymentOptionsCo
 function Payment() {
     return (
         <>
-            <div className="py-8 max-w-7xl mx-auto px-4">
+            <div className="py-8 max-w-7xl mx-auto px-4 bg-neutral-800 my-10 rounded-lg">
                 {/* Payment Header */}
                 <PaymentHeaderComponent/>
                 {/* Address Details */}

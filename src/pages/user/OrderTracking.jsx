@@ -5,7 +5,7 @@ import OrderDetailsComponent from "@/components/userDashboard/OrderDetailsCompon
 function OrderTracking() {
     return (
         <>
-            <div className="py-8 max-w-7xl mx-auto px-4">
+            <div className="py-8 max-w-7xl mx-auto px-4 bg-neutral-900 my-10 rounded-lg">
                 {/* Top Part */}
                 <div className="flex">
                     {/* Left Part - Map */}

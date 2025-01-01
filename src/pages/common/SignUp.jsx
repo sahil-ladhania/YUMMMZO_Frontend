@@ -60,14 +60,14 @@ function SignUp() {
         <>
             <div className="flex items-center justify-center h-screen">
                 <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold mb-6 text-center">Create an Account</h2>
-                    {signupLoading && <p className="text-blue-600">Loading...</p>}
-                    {signupSuccess && <p className="text-green-600">Signup successful! Welcome aboard!</p>}
+                    <h2 className="text-2xl font-bold mb-6 text-center roboto-regular">Create an Account</h2>
+                    {signupLoading && <p className="text-blue-600 roboto-regular">Loading...</p>}
+                    {signupSuccess && <p className="text-green-600 roboto-regular">Signup successful! Welcome aboard!</p>}
                     {signupError && <p className="text-red-500">{signupError}</p>}
                     <form onSubmit={handleSignup}>
                         {/* First Name Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">First Name</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">First Name</label>
                             <Input 
                                 onChange={handleInputChange}  
                                 type="text" 
@@ -79,7 +79,7 @@ function SignUp() {
                         </div>
                         {/* Last Name Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Last Name</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Last Name</label>
                             <Input 
                                 onChange={handleInputChange} 
                                 type="text" 
@@ -91,7 +91,7 @@ function SignUp() {
                         </div>
                         {/* Email Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Email</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Email</label>
                             <Input 
                                 onChange={handleInputChange} 
                                 type="email" 
@@ -103,7 +103,7 @@ function SignUp() {
                         </div>
                         {/* Phone Number Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Phone Number</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Phone Number</label>
                             <Input 
                                 onChange={handleInputChange} 
                                 type="tel" 
@@ -115,7 +115,7 @@ function SignUp() {
                         </div>
                         {/* Password Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Password</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Password</label>
                             <Input 
                                 onChange={handleInputChange} 
                                 type="password" 
@@ -127,7 +127,7 @@ function SignUp() {
                         </div>
                         {/* Role Selection Dropdown */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Select Role</label>
+                            <label className="block text-sm font-medium mb-1 roboto-regular">Select Role</label>
                             <Select 
                                 onValueChange={(value) => 
                                     setFormData({
@@ -142,14 +142,14 @@ function SignUp() {
                                     <SelectValue placeholder="Select your role" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="CUSTOMER">Customer</SelectItem>
-                                    <SelectItem value="VENDOR">Vendor</SelectItem>
-                                    <SelectItem value="COURIER">Courier</SelectItem>
+                                    <SelectItem className="roboto-regular" value="CUSTOMER">Customer</SelectItem>
+                                    <SelectItem className="roboto-regular" value="VENDOR">Vendor</SelectItem>
+                                    <SelectItem className="roboto-regular" value="COURIER">Courier</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
                         {/* Signup Button */}
-                        <Button type="submit" className="w-full">Sign Up</Button>
+                        <Button type="submit" className="w-full roboto-regular bg-black text-white hover:bg-black">Sign Up</Button>
                     </form>
                     <p className="mt-4 text-center text-sm text-gray-600">
                         Already have an account?

@@ -77,16 +77,17 @@ function Login() {
     return (
         <>
             <div className="flex items-center justify-center h-screen">
-                <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold mb-6 text-center">Welcome Back!</h2>
-                    {loginloading && <p className="text-blue-600">Loading...</p>}
-                    {loginSuccess && <p className="text-green-600">Login successful! Welcome aboard!</p>}
-                    {loginError && <p className="text-red-500">{loginError || `Login failed. Please try again.`}</p>}
+                <div className="max-w-md w-full p-8 rounded-lg shadow-md bg-white roboto-regular">
+                    <h2 className="text-2xl font-bold mb-6 text-center text-black roboto-regular">Welcome Back!</h2>
+                    {loginloading && <p className="text-black roboto-regular">Loading...</p>}
+                    {loginSuccess && <p className="text-black roboto-regular">Login successful! Welcome aboard!</p>}
+                    {loginError && <p className="roboto-regular text-black">{loginError || `Login failed. Please try again.`}</p>}
                     <form onSubmit={handleLogin}>
                         {/* Email Section */}
                         <div className="mb-4">
-                            <label className="block text-sm font-medium mb-1">Email</label>
+                            <label className="block text-sm font-medium mb-1 text-black">Email</label>
                             <Input 
+                                className="roboto-regular"
                                 onChange={handleInputChange} 
                                 type="email"
                                 name="email" 
@@ -97,8 +98,9 @@ function Login() {
                         </div>
                         {/* Password Section */}
                         <div className="mb-6">
-                            <label className="block text-sm font-medium mb-1">Password</label>
+                            <label className="block text-sm font-medium mb-1 text-black">Password</label>
                             <Input 
+                                className="roboto-regular"
                                 onChange={handleInputChange} 
                                 type="password" 
                                 name="password" 
@@ -108,15 +110,15 @@ function Login() {
                             />
                         </div>
                         {/* Login Button */}
-                        <Button type="submit" className="w-full">Login</Button>
+                        <Button type="submit" className="w-full roboto-regular bg-black text-white hover:bg-black">Login</Button>
                     </form>
-                    <p className="mt-4 text-center text-sm text-gray-600">
+                    <p className="mt-4 text-center text-sm text-gray-600 roboto-regular">
                         Dont have an account?
-                        <Link className="text-blue-600 hover:underline" to="/user/signup">Sign up here</Link>
+                        <Link className="text-blue-600 hover:underline roboto-regular" to="/user/signup">Sign up here</Link>
                     </p>
-                    <p className="mt-2 text-center text-sm text-gray-600">
+                    <p className="mt-2 text-center text-sm text-gray-600 roboto-regular">
                         Forgot your password?
-                        <Link className="text-blue-600 hover:underline" to="/user/change-password">Reset it here</Link>
+                        <Link className="text-blue-600 hover:underline roboto-regular" to="/user/change-password">Reset it here</Link>
                     </p>
                 </div>
             </div>
