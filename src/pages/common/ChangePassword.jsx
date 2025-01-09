@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changePasswordFailure, changePasswordStart } from "@/redux/slices/userSlice";
+import { changePasswordFailure, changePasswordSuccessfull , changePasswordStart } from "@/redux/slices/userSlice";
 import { changePassword } from "@/services/auth/authService";
 import { useNavigate } from "react-router-dom";
 
@@ -34,8 +34,10 @@ function ChangePassword() {
             const response = await changePassword(formData);
             console.log("After Calling Api...");
             console.log(response);
-            dispatch(changePasswordSuccess(response));
-            navigate("/user/login");
+            dispatch(changePasswordSuccessfull(response));
+            setTimeout(() => {
+                navigate("/user/login");
+            }, 2000)
         }
         catch(error){
             dispatch(changePasswordFailure(error.message));
@@ -62,7 +64,7 @@ function ChangePassword() {
                 <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold mb-6 text-center roboto-regular">Change Password</h2>
                     {changePasswordLoading && <p className="text-blue-600 roboto-regular">Loading...</p>}
-                    {changePasswordSuccess && <p className="text-green-600 roboto-regular">Signup successful! Welcome aboard!</p>}
+                    {changePasswordSuccess && <p className="text-green-600 roboto-regular">Password Successfull Updated...</p>}
                     {changePasswordError && <p className="text-red-500">{changePasswordError}</p>}
                     <form onSubmit={handleChangePassword}>
                         {/* Email Section */}

@@ -1,21 +1,19 @@
 import { Input } from "@/components/ui/input.jsx";
 import { Button } from "@/components/ui/button.jsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { signupFailure, signupStart } from "@/redux/slices/userSlice";
+import { signupFailure, signupStart , signupSuccessfull } from "@/redux/slices/userSlice";
 import { signup } from "@/services/auth/authService";
-import { useNavigate } from "react-router-dom";
 
 function SignUp() {
-    // useNavigate 
+    // useNavigate
     const navigate = useNavigate();
-
     // Selector and Dispatch
     const dispatch = useDispatch();
-    const { signupLoading, signupSuccess, signupError } = useSelector((state) => state.user);
+    const { signupLoading, signupSuccess , signupError } = useSelector((state) => state.user);
 
     // State Variables
     const [formData , setFormData] = useState({
@@ -28,17 +26,33 @@ function SignUp() {
     });
 
     // Handler Functions
-    const handleSignup = async(e) => {
+    const handleInputChange = (e) => {
+        // prevent kro input feild ka default behavior
         e.preventDefault();
+        // retrieve kro name aur value inputfeild se
+        const {name , value} = e.target;
+        // set kro form data 
+        setFormData({
+            ...formData,
+            [name] : value
+        })
+    }
+
+    const handleSignup = async(e) => {
+        // prevent kro form ka default behavior
+        e.preventDefault();
+        // signupStart() function for dispatch kro 
         dispatch(signupStart());
         try{
-            const response = await signup(formData);
-            dispatch(signupSuccess(response));
-            navigate("/user/login");
+            // call kro signup api ko jo backend mai jaa k controller ko call kr dega -> data save ho jayega 
+            const response = await signup(formData); // response mai data mil ra user ka 
+            dispatch(signupSuccessfull(response)); // yaha data ko signupSuccessfull() k ander pass kr rhe hai 
+            // -----can show an alert for successfull signup-----
         }
         catch(error){
-            dispatch(signupFailure(error.message));
+            dispatch(signupFailure(error.message)); // yaha agr koi error aya to signupFailure() k ander error message pass kr rhe hai 
         }
+        // Jb signup successfull ho jaye to input ko empty kr do
         setFormData({
             firstName : "",
             lastName : "",
@@ -47,15 +61,13 @@ function SignUp() {
             password : "",
             role : ""
         })
+        // ab user ko Login Page pe redirect kr do
+        setTimeout(() => {
+            // -----can show an alert that redirecting to login page-----
+            navigate('/user/login');
+        }, 2000);
     }
-    const handleInputChange = (e) => {
-        e.preventDefault();
-        const {name , value} = e.target;
-        setFormData({
-            ...formData,
-            [name] : value
-        })
-    }
+
     return (
         <>
             <div className="flex items-center justify-center h-screen">
