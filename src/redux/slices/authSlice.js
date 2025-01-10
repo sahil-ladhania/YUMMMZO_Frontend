@@ -46,7 +46,7 @@ const authSlice = createSlice({
             state.logoutSuccess = true;
             state.isAuthenticated = false;
             state.user = null;
-            
+            localStorage.clear();
         },
         // Reducer when Logout will Fail
         logoutFailure : (state , action) => {

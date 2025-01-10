@@ -2,16 +2,17 @@ import {Button} from "@/components/ui/button.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiSearch } from 'react-icons/ci';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logoutFailure, logoutStart, logoutSuccessfull } from "@/redux/slices/authSlice";
 import { logout } from "@/services/auth/authService";
 
 function UserNavbarComponent() {
     // useNavigate
     const navigate = useNavigate();
-    // useSelector and useDispatch
-    const { isAuthenticated } = useSelector(state => state.auth);
+    // useDispatch
     const dispatch = useDispatch();
+    // localStorage
+    const userData = localStorage.getItem("user");
 
     // Handler Functions
     const handleLogout = async() => {
@@ -58,7 +59,7 @@ function UserNavbarComponent() {
                 {/* Sign in / Profile Section / Logout */}
                 <div>
                     {
-                        isAuthenticated ?
+                        userData ?
                         <Button onClick={handleLogout} className="bg-black text-white border border-orange-400 hover:bg-black roboto-regular">Logout</Button>
                         :
                         <Link to="/user/login">

@@ -65,6 +65,22 @@ function Login() {
                 email : user.email,
                 role : user.role
             }))
+            // local storage mai store kr lo
+            const {userId , firstName , lastName , email , role} = user;
+            console.log(userId);
+            console.log(firstName);
+            console.log(lastName);
+            console.log(email);
+            console.log(role);
+            const userObj = {
+                userId : userId,
+                firstName : firstName,
+                lastName : lastName,
+                email : email,
+                role : role
+            }
+            console.log(userObj);
+            localStorage.setItem("user" , JSON.stringify(userObj));
             console.log("Login Successfull!!!");
         }
         catch(error){
