@@ -8,8 +8,10 @@ import { loginStart , loginFailure, loginSuccessfull } from "@/redux/slices/auth
 import { setUser } from "@/redux/slices/userSlice";
 
 function Login() {
+    
     // useNavigate
     const navigate = useNavigate();
+
     // Dispatch and Selector
     const dispatch = useDispatch();
     const { loginloading , loginSuccess , loginError , isAuthenticated , user} = useSelector((state) => state.auth);
@@ -20,16 +22,10 @@ function Login() {
         password : ""
     });
 
-    console.log("isAuthenticated : " , isAuthenticated);
-    console.log("user : " , user);
-
     // Handler Functions
     const handleInputChange = (e) => {
-        // prevent kro input feild ka default behavior
         e.preventDefault();
-        // retrieve kro name aur value inputfeild se
         const {name , value} = e.target;
-        // set kro form data 
         setFormData({
             ...formData,
             [name] : value
@@ -37,61 +33,31 @@ function Login() {
     }
 
     const handleLogin = async(e) => {
-        // prevent kro form ka default behavior
         e.preventDefault();
-        // loginStart() function for dispatch kro 
         dispatch(loginStart());
         try{
-            // call kro login api ko jo backend mai jaa k controller ko call kr dega -> verification hoga fir uske according login hoga ya ni hoga
-            const response = await login(formData); // response mai data mil ra user ka agr agr user email password shi hoga wrna error fekega
-            console.log(response);
-            const user = response.existingUser; // response object mai do chiz mil ra message and existingUser object -> to existingUser object user variable mai save kr lo
-            console.log(user); // user object mil ra hai
-            // const token = Cookies.get('jwt'); // Issue -> Not getting the Cookie & The Cookie is not Persistent which means on refresh the Cookie is getting vanished
-            console.log("isAuthenticated : " , isAuthenticated); // false mil ra -> Bcoz abi user authenticate ni hua hai kyu ki token ni mila 
-            console.log("user : " , user); // user object mil ra jo login kia hai
-            // agr user ni mile to error feko
+            const response = await login(formData); 
+            const user = response.existingUser; 
             if(!user){
                 throw new Error("Invalid Credentials !!!");
             };
-            // agr user mil jaye -> to loginSuccess() Function dispatch kro aur pass kro ek object with -> token and existingUser Object
             dispatch(loginSuccessfull({
                 existingUser : response.existingUser
             }));
-            // And fir user set kr do -> setUser() Function ko dispatch kro 
             dispatch(setUser({
                 firstName : user.firstName,
                 lastName : user.lastName,
                 email : user.email,
                 role : user.role
             }))
-            // local storage mai store kr lo
-            const {userId , firstName , lastName , email , role} = user;
-            console.log(userId);
-            console.log(firstName);
-            console.log(lastName);
-            console.log(email);
-            console.log(role);
-            const userObj = {
-                userId : userId,
-                firstName : firstName,
-                lastName : lastName,
-                email : email,
-                role : role
-            }
-            console.log(userObj);
-            localStorage.setItem("user" , JSON.stringify(userObj));
-            console.log("Login Successfull!!!");
         }
         catch(error){
-            dispatch(loginFailure(error.message));  // yaha agr koi error aya to loginFailure() k ander error message pass kr rhe hai 
+            dispatch(loginFailure(error.message));  
         }
-        // Jb login successfull ho jaye to input ko empty kr do
         setFormData({
             email : "",
             password : ""
         })
-        // ab user ko Home Page pe redirect kr do
         setTimeout(() => {
             navigate('/user/');
         }, 2000);

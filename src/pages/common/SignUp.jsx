@@ -9,8 +9,10 @@ import { signupFailure, signupStart , signupSuccessfull } from "@/redux/slices/u
 import { signup } from "@/services/auth/authService";
 
 function SignUp() {
+
     // useNavigate
     const navigate = useNavigate();
+
     // Selector and Dispatch
     const dispatch = useDispatch();
     const { signupLoading, signupSuccess , signupError } = useSelector((state) => state.user);
@@ -39,20 +41,15 @@ function SignUp() {
     }
 
     const handleSignup = async(e) => {
-        // prevent kro form ka default behavior
         e.preventDefault();
-        // signupStart() function for dispatch kro 
         dispatch(signupStart());
         try{
-            // call kro signup api ko jo backend mai jaa k controller ko call kr dega -> data save ho jayega 
-            const response = await signup(formData); // response mai data mil ra user ka 
-            dispatch(signupSuccessfull(response)); // yaha data ko signupSuccessfull() k ander pass kr rhe hai 
-            // -----can show an alert for successfull signup-----
+            const response = await signup(formData);
+            dispatch(signupSuccessfull(response)); 
         }
         catch(error){
-            dispatch(signupFailure(error.message)); // yaha agr koi error aya to signupFailure() k ander error message pass kr rhe hai 
+            dispatch(signupFailure(error.message));
         }
-        // Jb signup successfull ho jaye to input ko empty kr do
         setFormData({
             firstName : "",
             lastName : "",
@@ -61,9 +58,7 @@ function SignUp() {
             password : "",
             role : ""
         })
-        // ab user ko Login Page pe redirect kr do
         setTimeout(() => {
-            // -----can show an alert that redirecting to login page-----
             navigate('/user/login');
         }, 2000);
     }

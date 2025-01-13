@@ -5,7 +5,6 @@ const API_URL = "http://localhost:3000";
 export const signup = async(userData) => {
     try{
         const response = await axios.post(`${API_URL}/signup` , userData);
-        console.log("signup api call kr dia , ab return kr ra response");
         return response.data;
     }
     catch(error){
@@ -16,9 +15,8 @@ export const signup = async(userData) => {
 export const login = async(userData) => {
     try{
         const response = await axios.post(`${API_URL}/login` , userData , {
-            withCredentials: true // ye option ni hoga to cookies frontend pe store hi ni hoga -> aur backend pe b credentials : ture hona chayia cors config mai -> Kyuki by default cookies are not sent with cross-origin requests.
+            withCredentials: true 
         });
-        console.log("login api call kr dia , ab return kr ra response");
         return response.data;
     }
     catch(error){
@@ -31,7 +29,6 @@ export const changePassword = async(userData) => {
         const response = await axios.put(`${API_URL}/change-password` , userData , {
             withCredentials : true
         });
-        console.log(response);
         return response.data;
     }
     catch(error){
@@ -44,7 +41,6 @@ export const logout = async() => {
         const response = await axios.post(`${API_URL}/logout` , {} , {
             withCredentials: true 
         });
-        console.log(response);
         return response.data;
     }
     catch(error){

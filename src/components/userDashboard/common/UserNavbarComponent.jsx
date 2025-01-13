@@ -2,35 +2,32 @@ import {Button} from "@/components/ui/button.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiSearch } from 'react-icons/ci';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutFailure, logoutStart, logoutSuccessfull } from "@/redux/slices/authSlice";
 import { logout } from "@/services/auth/authService";
 
 function UserNavbarComponent() {
+
     // useNavigate
     const navigate = useNavigate();
-    // useDispatch
+
+    // useDispatch and useSelector
     const dispatch = useDispatch();
-    // localStorage
-    const userData = localStorage.getItem("user");
+    const { isAuthenticated } = useSelector((state) => state.auth);
+
 
     // Handler Functions
     const handleLogout = async() => {
-        // logoutStart() function for dispatch kro     
         dispatch(logoutStart());
         try{
-            // call kro logout api ko jo backend mai jaa k controller ko call kr dega -> cookie clear hoga fir login screen pe redirect hoga user 
             const response = await logout();
-            console.log(response);
-            // ab logoutSuccessfull() Function ko dispatch kro
             dispatch(logoutSuccessfull());
-            // ab user ko Login Page pe redirect kr do
             setTimeout(() => {
                 navigate('/user/login');
             }, 2000);
         }
         catch(error){
-            dispatch(logoutFailure(error.message)); // yaha agr koi error aya to logoutFailure() k ander error message pass kr rhe hai 
+            dispatch(logoutFailure(error.message)); 
         }
     }
     return (
@@ -59,7 +56,7 @@ function UserNavbarComponent() {
                 {/* Sign in / Profile Section / Logout */}
                 <div>
                     {
-                        userData ?
+                        isAuthenticated ?
                         <Button onClick={handleLogout} className="bg-black text-white border border-orange-400 hover:bg-black roboto-regular">Logout</Button>
                         :
                         <Link to="/user/login">
