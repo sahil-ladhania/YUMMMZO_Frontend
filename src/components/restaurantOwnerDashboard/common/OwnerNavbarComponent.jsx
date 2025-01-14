@@ -1,9 +1,36 @@
 import {Button} from "@/components/ui/button.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {BellIcon} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@radix-ui/react-dropdown-menu";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutFailure, logoutStart, logoutSuccessfull } from "@/redux/slices/authSlice";
+import { logout } from "@/services/auth/authService";
 
 function OwnerNavbarComponent() {
+
+    // useNavigate
+    const navigate = useNavigate();
+
+    // useSelector
+    const {isAuthenticated , user} = useSelector((store) => store.auth);
+    const userRole = user ? user.role : null;
+    const dispatch = useDispatch();
+
+    // Handler Functions
+    const handleLogout = async() => {
+        dispatch(logoutStart());
+        try{
+            const response = await logout();
+            dispatch(logoutSuccessfull());
+            setTimeout(() => {
+                navigate('/user/login');
+            }, 2000);
+        }
+        catch(error){
+            dispatch(logoutFailure(error.message)); 
+        }
+    }
+
     return (
         <>
             <nav className="h-32 flex justify-between items-center py-4 px-8 shadow-md text-white roboto-regular">
@@ -23,18 +50,23 @@ function OwnerNavbarComponent() {
                     </Link>
                 </div>
                 {/* Profile Dropdown Section */}
-                <div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button className="text-md bg-black border border-orange-400 hover:bg-black">Profile</Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="mr-4 px-8 py-4 mt-2 h-auto bg-neutral-900 rounded-lg">
-                            <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">My Profile</DropdownMenuItem>
-                            <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">Settings</DropdownMenuItem>
-                            <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">Logout</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                {
+                    isAuthenticated && userRole === "VENDOR" ?
+                    <div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button className="text-md bg-black border border-orange-400 hover:bg-black">Profile</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="mr-4 px-8 py-4 mt-2 h-auto bg-neutral-900 rounded-lg">
+                                <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">My Profile</DropdownMenuItem>
+                                <DropdownMenuItem className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">Settings</DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleLogout} className="p-2 text-sm font-medium my-2 cursor-pointer hover:bg-neutral-700 hover:outline-none hover:rounded-lg">Logout</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                    :
+                    <Button className="text-md bg-black border border-orange-400 hover:bg-black">Login</Button>
+                }
             </nav>
         </>
     );

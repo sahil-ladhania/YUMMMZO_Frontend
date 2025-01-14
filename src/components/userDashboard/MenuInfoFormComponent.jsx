@@ -6,11 +6,23 @@ import { useEffect, useState } from "react";
 import { getAllCuisines } from "@/services/cuisines/cuisineService.js";
 import { getOpenDays } from "@/services/openDays/openDaysService.js";
 import { uploadImageToCloudnary } from "@/services/cloudnary/imagesServices.js";
-import { useDispatch } from "react-redux";
-import { restaurantRegistrationStart, setForm2Data } from "@/redux/slices/restaurantRegistrationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { restaurantRegistrationFailure, restaurantRegistrationStart, setForm2Data } from "@/redux/slices/restaurantRegistrationSlice";
+import { registerRestaurant } from "@/services/restaurants/restaurantRegistration";
+import { convertTo12HourFormat } from "@/utils/helpers/timeFormatConversion";
+import { useNavigate } from "react-router-dom";
 
 function MenuInfoFormComponent() {
-    // Dispatch and Selctors
+
+    // useNavigate
+    const navigate = useNavigate();
+
+    // useDispatch and useSelector
+    const {user} = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
+    const {restaurantName , ownerDetails , address , restaurantImage , cuisines , openingTime , closingTime , openingDays , isPureVeg , priceForTwo} = useSelector((store) => store.restaurant);
+    const {ownerName , ownerEmail , ownerPhoneNumber} = ownerDetails;
+    const {buildingNumber , floorNumber , area , nearbyLandmark , city , state , postalCode , country} = address;
     const dispatch = useDispatch();
 
     // State Variables
@@ -23,47 +35,8 @@ function MenuInfoFormComponent() {
         closingTime : "",
         openingDays : []
     });
-    const [cuisines , setCuisines] = useState([]);
+    const [cuisinesArray , setCuisinesArray] = useState([]);
     const [openDays , setOpenDays] = useState([]); 
-
-    // Handler Functions
-    const handleChange = async(e) => {
-        e.preventDefault();
-        const {name , value , type , files} = e.target; 
-        if(type === 'file'){
-            const imageFile = files[0];
-            if(imageFile){
-                try{
-                    const imageLink = await uploadImageToCloudnary({imageFile});
-                    setForm2({
-                        ...form2,
-                        restaurantImageLink : imageLink
-                    })
-                }   
-                catch(error){
-                    throw new Error("Error uploading image : " , error);
-                }
-            }
-        }
-        else{
-            setForm2({
-                ...form2,
-                [name] : value
-            });
-        }
-    }
-
-    const validateForm2 = () => {
-        return (form2.restaurantImageLink && form2.priceForTwo && form2.cuisines.length > 0 && form2.openingTime && form2.closingTime && form2.openingDays.length > 0);
-    }
-
-    const handleRestaurantRegistration = (e) => {
-        e.preventDefault();
-        console.log(form2);
-        dispatch(restaurantRegistrationStart());
-        dispatch(setForm2Data(form2));
-        console.log(form2);
-    }
 
     // UseEffect for Cuisines
     useEffect(() => {
@@ -72,7 +45,7 @@ function MenuInfoFormComponent() {
             const response = await getAllCuisines();
             const cuisines = response.cuisines;
             if(isMounted){
-                setCuisines(cuisines);
+                setCuisinesArray(cuisines);
             }
         }
         getCuisines();
@@ -96,6 +69,108 @@ function MenuInfoFormComponent() {
             isMounted = false;
         }
     }, [])
+
+    // Handler Functions
+    const handleChange = async(e) => {
+        e.preventDefault();
+        const {name , value , type , files} = e.target; 
+        if(type === 'file'){
+            const imageFile = files[0];
+            if(imageFile){
+                try{
+                    const imageLink = await uploadImageToCloudnary({imageFile});
+                    console.log(imageLink);
+                    setForm2({
+                        ...form2,
+                        restaurantImageLink : imageLink
+                    })
+                }   
+                catch(error){
+                    throw new Error("Error uploading image : " , error);
+                }
+            }
+        }
+        else{
+            setForm2({
+                ...form2,
+                [name] : value
+            });
+        }
+    }
+
+    const handleCheckboxChange = (e , type) => {
+        const {value , checked} = e.target;
+        setForm2((prevForm2) => {
+            const updatedArray = checked ?
+                                        [...prevForm2[type] , value]
+                                        :
+                                        prevForm2[type].filter((item) => item !== value);
+            console.log(updatedArray);
+            return {
+                ...prevForm2,
+                [type] : updatedArray
+            }
+        })
+    }
+
+    console.log(form2);
+
+    const validateForm2 = () => {
+        return (form2.restaurantImageLink && form2.priceForTwo && form2.cuisines.length > 0 && form2.openingTime && form2.closingTime && form2.openingDays.length > 0);
+    }
+
+    const handleRestaurantRegistration = async(e) => {
+        e.preventDefault();
+        const openTime = convertTo12HourFormat(openingTime);
+        const closeTime = convertTo12HourFormat(closingTime);
+        console.log(form2);
+        dispatch(setForm2Data(form2));
+        dispatch(restaurantRegistrationStart());
+        // merge both form data and save it
+        const formData = {
+            userId,
+            restaurantName,
+            ownerName,
+            ownerEmail,
+            ownerPhoneNumber,
+            buildingNumber,
+            floorNumber,
+            area,
+            city,
+            nearbyLandmark,
+            state,
+            postalCode,
+            country,
+            restaurantImage,
+            cuisines,
+            openTime,
+            closeTime,
+            openingDays,
+            isPureVeg,
+            priceForTwo
+        }
+        console.log(formData);
+        dispatch(setForm2Data(form2));
+        try{
+            const response = await registerRestaurant(formData);
+            console.log(response);
+        }
+        catch(error){
+            dispatch(restaurantRegistrationFailure(error.message));
+        }
+        setForm2({
+            restaurantImageLink : "",
+            isPureVeg : false,
+            priceForTwo : "",
+            cuisines : [],
+            openingTime : "",
+            closingTime : "",
+            openingDays : []
+        })
+        setTimeout(() => {
+            navigate("/owner/");
+        }, 1000);
+    }
 
     return (
         <>
@@ -127,6 +202,14 @@ function MenuInfoFormComponent() {
                         <Switch 
                             id="pureVeg" 
                             name="isPureVeg"
+                            checked={form2.isPureVeg}
+                            onCheckedChange={(checked) => 
+                                setForm2((prevForm2) => ({
+                                    ...prevForm2,
+                                    isPureVeg : checked
+                                }))
+                            }
+                            // add an onChange for this 
                         />
                         <Label htmlFor="isPureVeg" className="ml-2 text-lg font-medium roboto-regular text-neutral-300">
                             Is this a pure vegetarian restaurant?
@@ -157,10 +240,10 @@ function MenuInfoFormComponent() {
                         <p className="text-sm mb-2 roboto-regular text-neutral-300">Your restaurant will appear in searches for these cuisines.</p>
                         <div className="grid grid-cols-2 gap-2 roboto-regular bg-neutral-800 p-4 rounded-lg text-white">
                             {
-                                cuisines.map((cuisine) => (
+                                cuisinesArray.map((cuisine) => (
                                     <div key={cuisine.cuisineId} className="flex items-center">
                                         <input 
-                                            onChange={handleChange}
+                                            onChange={(e) => handleCheckboxChange(e , "cuisines")}
                                             name="cuisines"
                                             type="checkbox" 
                                             value={cuisine.cuisineId}
@@ -208,7 +291,7 @@ function MenuInfoFormComponent() {
                                     openDays.map((openDay) => (
                                         <div key={openDay.openingDayId} className="flex items-center">
                                             <input 
-                                                onChange={handleChange}
+                                                onChange={(e) => handleCheckboxChange(e , "openingDays")}
                                                 name="openingDays"
                                                 type="checkbox" 
                                                 value={openDay.openingDayId} 

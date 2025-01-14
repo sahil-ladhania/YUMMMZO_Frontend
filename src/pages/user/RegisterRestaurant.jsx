@@ -4,7 +4,8 @@ import MenuInfoFormComponent from "@/components/userDashboard/MenuInfoFormCompon
 import { useSelector } from "react-redux";
 
 function RegisterRestaurant() {
-    // Selector
+
+    // useSelector
     const step = useSelector(state => state.restaurant.step);
     console.log(step);
 

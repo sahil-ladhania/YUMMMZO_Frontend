@@ -15,6 +15,7 @@ function Login() {
     // Dispatch and Selector
     const dispatch = useDispatch();
     const { loginloading , loginSuccess , loginError , isAuthenticated , user} = useSelector((state) => state.auth);
+    const userRole = user ? user.role : null;
 
     // State Variables
     const [formData , setFormData] = useState({

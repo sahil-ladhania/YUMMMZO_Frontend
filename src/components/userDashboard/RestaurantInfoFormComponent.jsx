@@ -264,7 +264,7 @@ function RestaurantInfoFormComponent() {
                     </div>
                     {/* Combined Button Section */}
                     <Button 
-                        className="mt-4 roboto-regular bg-white text-black" 
+                        className="mt-4 roboto-regular bg-white text-black hover:bg-white" 
                         disabled={!validateForm1()}
                     >
                         Next

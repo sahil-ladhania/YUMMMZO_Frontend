@@ -36,9 +36,16 @@ function PartnerWithUsComponent() {
                 </h2>
                 <div className="flex justify-center space-x-4 my-4">
                     <Button onClick={handleRestautantRegistration} className="text-white border border-orange-400 hover:bg-black bg-black roboto-regular">Register Your Restaurant</Button>
-                    <Link to="/user/login">
-                        <Button className="text-black bg-orange-400 hover:bg-orange-400 border-none roboto-regular" variant="outline">Login to View Your Existing Restaurants</Button>
-                    </Link>
+                    {
+                        isAuthenticated && role === "VENDOR" ?
+                        <Link to="/owner/">
+                            <Button className="text-black bg-orange-400 hover:bg-orange-400 border-none roboto-regular" variant="outline">Go To Dashboard</Button>
+                        </Link>
+                        :
+                        <Link to="/user/login">
+                            <Button className="text-black bg-orange-400 hover:bg-orange-400 border-none roboto-regular" variant="outline">Login to View Your Existing Restaurants</Button>
+                        </Link>
+                    }
                 </div>
             </div>
         </>
