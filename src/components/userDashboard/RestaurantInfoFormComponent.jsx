@@ -1,3 +1,10 @@
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input.jsx";
 import {Button} from "@/components/ui/button.jsx";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
@@ -21,7 +28,9 @@ function RestaurantInfoFormComponent() {
         floor : "",
         area : "",
         city : "",
-        nearbyLandmark : ""
+        nearbyLandmark : "",
+        state : "",
+        postalCode : ""
     });
 
     // Handler Function 
@@ -187,6 +196,69 @@ function RestaurantInfoFormComponent() {
                             name="nearbyLandmark"
                             value={form1.nearbyLandmark}
                             placeholder="Enter Nearby Landmark" 
+                            required
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">State</label>
+                        <Select onValueChange={(value) => 
+                            setForm1((prevForm) => ({
+                                ...prevForm,
+                                state : value
+                            }))
+                        }>
+                            <SelectTrigger>
+                                <SelectValue placeholder="State" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-200 absolute top-auto bottom-auto z-50">
+                                <SelectItem value="andhra-pradesh">Andhra Pradesh</SelectItem>
+                                <SelectItem value="arunachal-pradesh">Arunachal Pradesh</SelectItem>
+                                <SelectItem value="assam">Assam</SelectItem>
+                                <SelectItem value="bihar">Bihar</SelectItem>
+                                <SelectItem value="chhattisgarh">Chhattisgarh</SelectItem>
+                                <SelectItem value="goa">Goa</SelectItem>
+                                <SelectItem value="gujarat">Gujarat</SelectItem>
+                                <SelectItem value="haryana">Haryana</SelectItem>
+                                <SelectItem value="himachal-pradesh">Himachal Pradesh</SelectItem>
+                                <SelectItem value="jharkhand">Jharkhand</SelectItem>
+                                <SelectItem value="karnataka">Karnataka</SelectItem>
+                                <SelectItem value="kerala">Kerala</SelectItem>
+                                <SelectItem value="madhya-pradesh">Madhya Pradesh</SelectItem>
+                                <SelectItem value="maharashtra">Maharashtra</SelectItem>
+                                <SelectItem value="manipur">Manipur</SelectItem>
+                                <SelectItem value="meghalaya">Meghalaya</SelectItem>
+                                <SelectItem value="mizoram">Mizoram</SelectItem>
+                                <SelectItem value="nagaland">Nagaland</SelectItem>
+                                <SelectItem value="odisha">Odisha</SelectItem>
+                                <SelectItem value="punjab">Punjab</SelectItem>
+                                <SelectItem value="rajasthan">Rajasthan</SelectItem>
+                                <SelectItem value="sikkim">Sikkim</SelectItem>
+                                <SelectItem value="tamil-nadu">Tamil Nadu</SelectItem>
+                                <SelectItem value="telangana">Telangana</SelectItem>
+                                <SelectItem value="tripura">Tripura</SelectItem>
+                                <SelectItem value="uttar-pradesh">Uttar Pradesh</SelectItem>
+                                <SelectItem value="uttarakhand">Uttarakhand</SelectItem>
+                                <SelectItem value="west-bengal">West Bengal</SelectItem>
+                                <SelectItem value="andaman-nicobar">Andaman and Nicobar Islands</SelectItem>
+                                <SelectItem value="chandigarh">Chandigarh</SelectItem>
+                                <SelectItem value="dadra-nagar-haveli">Dadra and Nagar Haveli</SelectItem>
+                                <SelectItem value="daman-diu">Daman and Diu</SelectItem>
+                                <SelectItem value="delhi">Delhi</SelectItem>
+                                <SelectItem value="lakshadweep">Lakshadweep</SelectItem>
+                                <SelectItem value="puducherry">Puducherry</SelectItem>
+                                <SelectItem value="ladakh">Ladakh</SelectItem>
+                                <SelectItem value="jammu-kashmir">Jammu and Kashmir</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1 roboto-regular text-white">Postal Code</label>
+                        <Input 
+                            onChange={handleChange}
+                            type="number" 
+                            name="postalCode"
+                            value={form1.postalCode}
+                            placeholder="Enter Postal Code" 
                             required
                         />
                     </div>

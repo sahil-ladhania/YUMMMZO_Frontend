@@ -17,7 +17,7 @@ export const initialState = {
         city : '',
         state : '',
         postalCode : '',
-        country : ''
+        country : 'India'
     },
     restaurantImage : '',           
     cuisines : [],                  
