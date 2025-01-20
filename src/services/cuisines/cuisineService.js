@@ -9,6 +9,6 @@ export const getAllCuisines = async() => {
         return cuisines;
     }
     catch(error){
-        throw new Error("Something went wrong : " + error);
+        throw new Error("Something went wrong : " + error.message);
     }
 }

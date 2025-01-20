@@ -18,7 +18,6 @@ function WhatsOnYourMindComponent() {
         const getCuisines = async() => {
             try{
                 const cuisinesList = await getAllCuisines();
-                console.log(cuisinesList);
                 if(isMounted){
                     dispatch(setCuisines(cuisinesList));
                 }

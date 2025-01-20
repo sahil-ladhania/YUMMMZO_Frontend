@@ -15,7 +15,9 @@ function UserHeroComponent() {
         <Link to="/user/about-us">
           <Button className='bg-orange-400 text-black mr-2 hover:bg-black hover:text-orange-400 roboto-regular'>About Us</Button>
         </Link>
-        <Button className='bg-black text-white border border-orange-400 hover:bg-black roboto-regular'>Order Now</Button>
+        <Link to="/user/restaurants">
+          <Button className='bg-black text-white border border-orange-400 hover:bg-black roboto-regular'>Order Now</Button>
+        </Link>
       </div>
     </div>
   )

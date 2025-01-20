@@ -1,14 +1,14 @@
 
-function BrandComponent() {
+function BrandComponent({image , name}) {
     return (
         <>
-            <div className="flex h-40 w-28 flex-col items-center justify-evenly mx-2 mb-2">
+            <div className="flex flex-col items-center h-48 w-48 cursor-pointer">
                 <img
-                    className="rounded-full h-24"
-                    src="https://b.zmtcdn.com/data/brand_creatives/logos/9b304a4689d0abb972b3463aa130e2401723799713.png"
-                    alt="brand-image"/>
-                <p className="text-gray-400 roboto-regular">Bikaner Elite</p>
-                <p className="text-gray-400 roboto-regular">21 min</p>
+                    className="rounded-full h-32 w-32 object-cover"
+                    src={image}
+                    alt="brand-image"
+                />
+                <p className="text-gray-400 text-lg roboto-regular mt-3 text-center">{name}</p>
             </div>
         </>
     );

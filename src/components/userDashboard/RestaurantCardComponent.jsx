@@ -1,19 +1,24 @@
 import {Card} from "@/components/ui/card.jsx";
 import { FaStar } from "react-icons/fa";
 
-function RestaurantCardComponent() {
+function RestaurantCardComponent({ restaurantImage , restaurantName , area , city }) {
+
+    // Merging Location
+    const location = `${area} , ${city}`;
+    console.log(location);
+
     return (
         <>
             <Card className="p-4 flex flex-col my-4 bg-restaurant-card-gradient border-none cursor-pointer">
                 {/* Image Section */}
                 <img
-                    src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/9/9/e6c52804-eab5-48c8-a29e-c717ddfc39b2_948065.jpg"
+                    src={restaurantImage}
                     alt="Restaurant"
                     className="w-full h-40 object-cover rounded-md"
                 />
                 {/* Restaurant Details Section */}
                 <div className="mt-2">
-                    <h2 className="text-lg font-semibold roboto-regular py-1 text-neutral-800">Goila Butter Chicken</h2>
+                    <h2 className="text-lg font-semibold roboto-regular py-1 text-neutral-800">{restaurantName}</h2>
                     <div className="flex items-center py-2">
                         <FaStar className="fill-green-800 mr-1"/>
                         <span className="roboto-regular text-sm font-medium">4.5</span>
@@ -31,7 +36,7 @@ function RestaurantCardComponent() {
                         <div className="flex text-sm roboto-regular">
                             <p className="font-semibold mr-2">Location : </p>
                             <ul className="flex">
-                                <li className="px-1 roboto-regular text-sm font-medium">Sector 18, Noida</li>
+                                <li className="px-1 roboto-regular text-sm font-medium">{location}</li>
                             </ul>
                         </div>
                     </div>
