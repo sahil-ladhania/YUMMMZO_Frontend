@@ -91,17 +91,6 @@ export const {
     restaurantRegistrationFailure,
     setUserId, 
     setStep, 
-    setRestaurantName, 
-    setOwnerDetails, 
-    setAddress, 
-    setRestaurantImage, 
-    setCuisines, 
-    setOpeningTime, 
-    setClosingTime, 
-    setOpeningDays, 
-    setIsPureVeg, 
-    setPriceForTwo, 
-    setSubmitted,
     setForm1Data,
     setForm2Data
  } = restaurantRegistrationSlice.actions;

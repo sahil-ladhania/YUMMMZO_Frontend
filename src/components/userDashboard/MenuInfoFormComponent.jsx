@@ -41,10 +41,15 @@ function MenuInfoFormComponent() {
     useEffect(() => {
         let isMounted = true;
         const getCuisines = async() => {
-            const response = await getAllCuisines();
-            const cuisines = response.cuisines;
-            if(isMounted){
-                setCuisinesArray(cuisines);
+            try{
+                const response = await getAllCuisines();
+                const cuisines = response.cuisines;
+                if(isMounted){
+                    setCuisinesArray(cuisines);
+                }
+            }
+            catch(error){
+                throw new Error("Something Went Wrong : " , error.message);
             }
         }
         getCuisines();
@@ -57,10 +62,15 @@ function MenuInfoFormComponent() {
     useEffect(() => {
         let isMounted = true;
         const getOpeningDays = async() => {
-            const response = await getOpenDays();
-            const openDays = response.openDays;
-            if(isMounted){
-                setOpenDays(openDays);
+            try{
+                const response = await getOpenDays();
+                const openDays = response.openDays;
+                if(isMounted){
+                    setOpenDays(openDays);
+                }
+            }
+            catch(error){
+                throw new Error("Something Went Wrong : " , error.message);
             }
         }
         getOpeningDays();
