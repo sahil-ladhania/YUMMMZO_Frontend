@@ -10,12 +10,15 @@ import {Button} from "@/components/ui/button.jsx";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { restaurantRegistrationStart, setForm1Data, setStep } from "@/redux/slices/restaurantRegistrationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { restaurantRegistrationStart, setForm1Data, setStep, setUserId } from "@/redux/slices/restaurantRegistrationSlice";
 
 function RestaurantInfoFormComponent() {
+    
     // Selectors and Dispatch
     const dispatch = useDispatch();
+    const {user} = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
 
     // State Variables
     const [location , setLocation] = useState([12.9716, 77.5946]);
@@ -69,6 +72,7 @@ function RestaurantInfoFormComponent() {
         e.preventDefault();
         console.log(form1);
         dispatch(restaurantRegistrationStart());
+        dispatch(setUserId(userId));
         dispatch(setForm1Data(form1));
         dispatch(setStep(2));
     }

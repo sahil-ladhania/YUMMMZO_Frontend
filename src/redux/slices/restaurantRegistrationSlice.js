@@ -49,47 +49,14 @@ export const restaurantRegistrationSlice = createSlice({
             state.restaurantRegistrationLoading = false;
             state.restaurantRegistrationError = action.payload;
         },
-        setUserId : (state , action) => {
-            state.userId = action.payload;
-        },
         setStep : (state , action) => {
             state.step = action.payload;
         },
-        setRestaurantName : (state , action) => {
-            state.restaurantName = action.payload;
-        },
-        setOwnerDetails : (state , action) => {
-            state.ownerDetails = { ...state.ownerDetails , ...action.payload };
-        },
-        setAddress : (state , action) => {
-            state.address = { ...state.address , ...action.payload };
-        },
-        setRestaurantImage : (state , action) => { 
-            state.restaurantImage = action.payload;
-        },
-        setCuisines : (state , action) => {
-            state.cuisines = action.payload;
-        },
-        setOpeningTime : (state , action) => {
-            state.openingTime = action.payload;
-        },
-        setClosingTime : (state , action) => {
-            state.closingTime = action.payload;
-        },
-        setOpeningDays : (state , action) => {
-            state.openingDays = action.payload;
-        },
-        setIsPureVeg : (state , action) => {
-            state.isPureVeg = action.payload;
-        },
-        setPriceForTwo : (state , action) => {
-            state.priceForTwo = action.payload;
-        },
-        setSubmitted : (state , action) => {
-            state.submitted = action.payload;
+        setUserId : (state , action) => {
+            state.userId = action.payload;
         },
         setForm1Data : (state , action) => {
-            state.restaurantName = action.payload;
+            state.restaurantName = action.payload.restaurantName;
             state.ownerDetails = {
                 ownerName : action.payload.ownerName,
                 ownerEmail : action.payload.ownerEmail,
@@ -101,16 +68,19 @@ export const restaurantRegistrationSlice = createSlice({
                 area : action.payload.area,
                 nearbyLandmark : action.payload.nearbyLandmark,
                 city : action.payload.city,
+                state : action.payload.state,
+                postalCode : action.payload.postalCode,
+                country : 'India'
             };
         },
         setForm2Data : (state , action) => {
-            state.restaurantImage = action.payload;
-            state.cuisines = action.payload;
-            state.priceForTwo = action.payload;
-            state.isPureVeg = action.payload;
-            state.openingTime = action.payload;
-            state.closingTime = action.payload;
-            state.openingDays = action.payload;
+            state.restaurantImage = action.payload.restaurantImageLink;
+            state.cuisines = action.payload.cuisines;
+            state.priceForTwo = action.payload.priceForTwo;
+            state.isPureVeg = action.payload.isPureVeg;
+            state.openingTime = action.payload.openingTime;
+            state.closingTime = action.payload.closingTime;
+            state.openingDays = action.payload.openingDays;
         }
     }
 })

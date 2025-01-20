@@ -9,7 +9,6 @@ import { uploadImageToCloudnary } from "@/services/cloudnary/imagesServices.js";
 import { useDispatch, useSelector } from "react-redux";
 import { restaurantRegistrationFailure, restaurantRegistrationStart, setForm2Data } from "@/redux/slices/restaurantRegistrationSlice";
 import { registerRestaurant } from "@/services/restaurants/restaurantRegistration";
-import { convertTo12HourFormat } from "@/utils/helpers/timeFormatConversion";
 import { useNavigate } from "react-router-dom";
 
 function MenuInfoFormComponent() {
@@ -20,7 +19,7 @@ function MenuInfoFormComponent() {
     // useDispatch and useSelector
     const {user} = useSelector((store) => store.auth);
     const userId = user ? user.userId : null;
-    const {restaurantName , ownerDetails , address , restaurantImage , cuisines , openingTime , closingTime , openingDays , isPureVeg , priceForTwo} = useSelector((store) => store.restaurant);
+    const {restaurantName , ownerDetails , address} = useSelector((store) => store.restaurant);
     const {ownerName , ownerEmail , ownerPhoneNumber} = ownerDetails;
     const {buildingNumber , floorNumber , area , nearbyLandmark , city , state , postalCode , country} = address;
     const dispatch = useDispatch();
@@ -121,39 +120,34 @@ function MenuInfoFormComponent() {
 
     const handleRestaurantRegistration = async(e) => {
         e.preventDefault();
-        const openTime = convertTo12HourFormat(openingTime);
-        const closeTime = convertTo12HourFormat(closingTime);
+        console.log("form2 Data :-");
         console.log(form2);
         dispatch(setForm2Data(form2));
         dispatch(restaurantRegistrationStart());
-        // merge both form data and save it
         const formData = {
-            userId,
-            restaurantName,
-            ownerName,
-            ownerEmail,
-            ownerPhoneNumber,
-            buildingNumber,
-            floorNumber,
-            area,
-            city,
-            nearbyLandmark,
-            state,
-            postalCode,
-            country,
-            restaurantImage,
-            cuisines,
-            openTime,
-            closeTime,
-            openingDays,
-            isPureVeg,
-            priceForTwo
+            "userId" : parseInt(userId),
+            "restaurantName": restaurantName,
+            "ownerName": ownerName,
+            "ownerEmail": ownerEmail,
+            "ownerPhoneNumber": ownerPhoneNumber,
+            "buildingNumber": buildingNumber,
+            "floorNumber": floorNumber,
+            "area": area,
+            "city": city,
+            "nearbyLandmark": nearbyLandmark,
+            "state": state,
+            "postalCode": postalCode,
+            "country": country,
+            "restaurantImage": form2.restaurantImageLink,
+            "cuisines": form2.cuisines.map(cuisine => parseInt(cuisine)),  
+            "openingTime": form2.openingTime,
+            "closingTime": form2.closingTime, 
+            "openingDays" : form2.openingDays.map(day => parseInt(day)),
+            "isPureVeg": form2.isPureVeg,
+            "priceForTwo": parseInt(form2.priceForTwo)
         }
-        console.log(formData);
-        dispatch(setForm2Data(form2));
         try{
             const response = await registerRestaurant(formData);
-            console.log(response);
         }
         catch(error){
             dispatch(restaurantRegistrationFailure(error.message));
@@ -209,7 +203,6 @@ function MenuInfoFormComponent() {
                                     isPureVeg : checked
                                 }))
                             }
-                            // add an onChange for this 
                         />
                         <Label htmlFor="isPureVeg" className="ml-2 text-lg font-medium roboto-regular text-neutral-300">
                             Is this a pure vegetarian restaurant?

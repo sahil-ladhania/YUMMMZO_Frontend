@@ -9,6 +9,9 @@ export const registerRestaurant = async(formData) => {
         return response.data;
     }
     catch(error){
-        throw new Error("Something went wrong : " + error);
+        if(error.response){
+            console.log("Error Response : " , error.response.data);
+        }
+        throw new Error("Something went wrong : " + error.message);
     }
 }
