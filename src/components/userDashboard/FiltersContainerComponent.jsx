@@ -17,71 +17,118 @@ function FiltersContainerComponent() {
     const [searchQuery , setSearchQuery] = useState('');
 
     // Handler Functions
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
         const query = e.target.value;
         setSearchQuery(query);
         dispatch(setSearchText(query));
-    }
-
-    const handleFiltering = async(e) => {
-        const {name , value} = e.target;
-        console.log(`${name} : ${value}`);
-        if(name === 'filter'){
-            if(value === "pure-veg"){
-                dispatch(setFilter({ ...filter , veg : true }));
-            }
-            if(value === "300-600"){
-                dispatch(setFilter({ ...filter , priceRange : [300 , 600] }));
-            }
-            if(value === "0-300"){
-                dispatch(setFilter({ ...filter , priceRange : [0 , 300] }));
-            }
-            dispatch(setFilter({ filterType : value }));
+        try {
+            dispatch(setLoading(true));
+            const response = await filterRestaurants({
+                searchText: query,
+                filter,
+                sortOption,
+            });
+            dispatch(setFilteredRestaurants(response));
+        } 
+        catch (error) {
+            dispatch(setError(error.message));
+        } 
+        finally {
+            dispatch(setLoading(false));
         }
-        if(name === 'sort'){
+    };
+
+    const handleFiltering = async (e) => {
+        const { name, value } = e.target;
+        let updatedFilter = { ...filter };
+        if (name === 'filter') {
+            if (value === 'pure-veg'){
+                updatedFilter.veg = true;
+            };
+            if (value === '300-600'){
+                updatedFilter.priceRange = '300-600';
+            };
+            if (value === '0-300'){
+                updatedFilter.priceRange = '0-300';
+            };
+        }
+        if (name === 'sort') {
             dispatch(setSortOption(value));
         }
-        try{
-            // call the api
+        try {
+            dispatch(setLoading(true));
             const filteredAndSortedRestaurants = await filterRestaurants({
                 searchText,
-                filter : { ...filter , [name] : value },
-                sortOption : name === 'sort' ? value : sortOption
+                filter: updatedFilter,
+                sortOption: name === 'sort' ? value : sortOption,
             });
-            console.log(filteredAndSortedRestaurants);
-            dispatch(setFilteredRestaurants(filteredAndSortedRestaurants)); 
-        }
-        catch(error){
+            dispatch(setFilteredRestaurants(filteredAndSortedRestaurants));
+        } 
+        catch (error) {
             dispatch(setError(error.message));
-            throw new Error("Something Went Wrong : " , error.message);
+        } 
+        finally {
+            dispatch(setLoading(false));
+        }
+    };
+
+    const clearFilters = async() => {
+        setSearchQuery('');
+        dispatch(setSearchText(''));
+        dispatch(setSortOption('Relevance(Default)'));
+        dispatch(setFilter({
+            veg: null,
+            priceRange: ''
+        }))
+        try {
+            dispatch(setLoading(true));
+            const response = await filterRestaurants({
+                searchText: '',
+                filter: { 
+                    veg: null, 
+                    priceRange: '' 
+                },
+                sortOption: 'Relevance(Default)',
+            });
+            dispatch(setFilteredRestaurants(response));
+        } 
+        catch (error) {
+            dispatch(setError(error.message));
+        } 
+        finally {
+            dispatch(setLoading(false));
         }
     }
 
-    // useEffect
     useEffect(() => {
         let isMounted = true;
-        if(searchQuery !== ''){
-            dispatch(setLoading(true));
-        }        
-        const filterRestaurantsFeed = async() => {
-            try{
-                const filteredRestaurants = await filterRestaurants({ searchText });
-                console.log(filteredRestaurants);
-                if(isMounted){
-                    dispatch(setFilteredRestaurants(filteredRestaurants));
+        const fetchRestaurants = async () => {
+            try {
+                dispatch(setLoading(true));
+                const response = await filterRestaurants({
+                    searchText: '',
+                    filter: { veg: null, priceRange: '' },
+                    sortOption: 'Relevance(Default)'
+                });
+                if (isMounted) {
+                    dispatch(setFilteredRestaurants(response));
+                }
+            } 
+            catch (error) {
+                dispatch(setError(error.message));
+            }
+            finally {
+                if (isMounted) {
+                    dispatch(setLoading(false));
                 }
             }
-            catch(error){
-                dispatch(setError(error.message));
-                throw new Error("Something Went Wrong : " , error.message);
-            }            
-        }
-        filterRestaurantsFeed();
+        };
+        fetchRestaurants();
         return () => {
             isMounted = false;
-        }
-    }, [searchText , filter , sortOption]);
+        };
+    }, []);
 
     return (
         <>
@@ -119,7 +166,7 @@ function FiltersContainerComponent() {
                 <Button onClick={handleFiltering} name="filter" value="pure-veg" className="bg-black text-white border border-orange-400 hover:bg-black roboto-regular">Pure Veg</Button>
                 <Button onClick={handleFiltering} name="filter" value="300-600" className="bg-black text-white border border-orange-400 hover:bg-black roboto-regular">Rs.300 - Rs.600</Button>
                 <Button onClick={handleFiltering} name="filter" value="0-300" className="bg-black text-white border border-orange-400 hover:bg-black roboto-regular">Less than Rs.300</Button>
-                <Button className="bg-orange-400 text-black hover:bg-orange-400 roboto-regular">Clear Filters</Button>
+                <Button onClick={clearFilters} className="bg-orange-400 text-black hover:bg-orange-400 roboto-regular">Clear Filters</Button>
             </div>
         </>
     );

@@ -12,7 +12,6 @@ export const filterRestaurants = async({ searchText , filter , sortOption}) => {
                 sort: sortOption
             }
         });
-        console.log(response);
         return response.data;
     }
     catch(error){

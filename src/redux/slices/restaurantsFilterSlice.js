@@ -5,7 +5,7 @@ export const initialState = {
     searchText : '',
     filter : {
         veg : null,
-        priceRange : [null , null]
+        priceRange : ''
     },
     sortOption : 'Relevance(Default)',
     isLoading : false,
