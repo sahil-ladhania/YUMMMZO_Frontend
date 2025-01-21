@@ -8,7 +8,7 @@ function RestaurantsContainerComponent() {
 
     // useSelector and useDispatch
     const dispatch = useDispatch();
-    const { restaurantsFeedList } = useSelector((store) => store.restaurantsFeed);
+    const { filteredRestaurantsList } = useSelector((store) => store.filteredRestaurants);
 
     // useEffect
     useEffect(() => {
@@ -16,8 +16,7 @@ function RestaurantsContainerComponent() {
         // logic
         const getRestaurants = async() => {
             try{
-                const restaurantsList = await getAllRestaurants();
-                console.log(restaurantsList);
+                const restaurantsList = await getAllRestaurants();                
                 if(isMounted){
                     dispatch(setRestaurantsFeed(restaurantsList));
                 }
@@ -37,13 +36,14 @@ function RestaurantsContainerComponent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-20">
                 {/* Restaurants Section */}
                 {
-                    restaurantsFeedList.map((restaurant) => (
+                    filteredRestaurantsList.map((restaurant) => (
                         <RestaurantCardComponent 
                             key={restaurant.restaurantId}
                             restaurantImage = {restaurant.restaurantImage}
                             restaurantName = {restaurant.restaurantName}
                             area = {restaurant.area}
                             city = {restaurant.city}
+                            priceForTwo={restaurant.priceForTwo}
                         />
                     ))
                 }

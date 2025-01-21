@@ -1,11 +1,10 @@
 import {Card} from "@/components/ui/card.jsx";
 import { FaStar } from "react-icons/fa";
 
-function RestaurantCardComponent({ restaurantImage , restaurantName , area , city }) {
+function RestaurantCardComponent({ restaurantImage , restaurantName , area , city , priceForTwo }) {
 
     // Merging Location
     const location = `${area} , ${city}`;
-    console.log(location);
 
     return (
         <>
@@ -24,6 +23,8 @@ function RestaurantCardComponent({ restaurantImage , restaurantName , area , cit
                         <span className="roboto-regular text-sm font-medium">4.5</span>
                         <span className="mx-2 roboto-regular text-sm font-medium">•</span>
                         <span className="roboto-regular text-sm font-medium">30 min</span>
+                        <span className="mx-2 roboto-regular text-sm font-medium">•</span>
+                        <span className="roboto-regular text-sm font-medium">Price : {priceForTwo}.Rs</span>
                     </div>
                     <div>
                         <div className="flex text-sm roboto-regular">
