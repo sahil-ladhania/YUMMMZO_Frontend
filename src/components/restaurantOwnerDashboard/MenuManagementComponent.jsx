@@ -1,22 +1,26 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {Button} from "@/components/ui/button.jsx";
-import MenuItemComponent from "@/components/restaurantOwnerDashboard/MenuItemComponent.jsx";
+import MenuCardComponent from "./MenuCardComponent";
+import { IoIosAdd } from "react-icons/io";
 
 function MenuManagementComponent() {
     return (
         <>
             <Card className="p-6 mb-10 bg-neutral-900 border-none">
                 <CardHeader>
-                    <CardTitle className="text-orange-400 text-2xl font-medium">Manage Your Menu</CardTitle>
+                    <div className="flex justify-between items-center cursor-pointer">
+                        <CardTitle className="text-orange-400 text-2xl font-medium">Manage Your Menus</CardTitle>
+                        <Button className="mt-6 w-fit bg-white text-black hover:bg-white">
+                            <IoIosAdd className="fill-black size-8"/>
+                            Add New Menu
+                        </Button>
+                    </div>
                 </CardHeader>
                 <CardContent>
-                    {/* Placeholder for MenuItem components */}
-                    <div className="space-y-4">
-                        <MenuItemComponent />
-                        <MenuItemComponent />
-                        <MenuItemComponent />
+                    <div className="space-y-6">
+                        <MenuCardComponent />
                     </div>
-                    <Button className="mt-4 w-full bg-white text-black hover:bg-white">Add Items</Button>
+                    <Button className="mt-6 w-full bg-white text-black hover:bg-white">Save Menu</Button>
                 </CardContent>
             </Card>
         </>

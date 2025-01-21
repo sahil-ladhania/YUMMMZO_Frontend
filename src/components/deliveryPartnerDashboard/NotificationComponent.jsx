@@ -2,7 +2,7 @@
 function NotificationComponent({ message }) {
     return (
         <>
-            <div className="p-2 border border-gray-200 rounded-md bg-gray-50">
+            <div className="p-4 rounded-md bg-neutral-800 text-white text-sm">
                 {message}
             </div>
         </>

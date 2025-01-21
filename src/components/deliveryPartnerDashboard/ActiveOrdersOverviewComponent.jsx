@@ -4,14 +4,16 @@ import OrderItemComponent from "@/components/deliveryPartnerDashboard/OrderItemC
 function ActiveOrdersOverviewComponent() {
     return (
         <>
-            <Card className="mb-6 p-4">
-                <h1 className="text-xl font-semibold">Active Orders Overview</h1>
-                <div className="border border-gray-200 rounded-lg p-4">
-                    <OrderItemComponent orderId={1} orderStatus="Pending" />
-                    <OrderItemComponent orderId={2} orderStatus="Accepted" />
-                    <OrderItemComponent orderId={3} orderStatus="In Delivery" />
-                </div>
-            </Card>
+            <section className="p-6">
+                <Card className="mb-6 p-6 bg-neutral-900 border-none">
+                    <h1 className="text-orange-400 text-2xl font-medium mb-6">Active Orders Overview</h1>
+                    <div className="rounded-lg p-4">
+                        <OrderItemComponent orderId={1} orderStatus="Pending" />
+                        <OrderItemComponent orderId={2} orderStatus="Accepted" />
+                        <OrderItemComponent orderId={3} orderStatus="In Delivery" />
+                    </div>
+                </Card>
+            </section>
         </>
     );
 }

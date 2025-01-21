@@ -8,12 +8,16 @@ function CurrentDeliveryDetailsComponent() {
     };
     return (
         <>
-            <Card className="mb-6 p-4">
-                <h1 className="text-xl font-semibold">Current Delivery Details</h1>
-                <p className="mt-2"><strong>Item Name:</strong> {deliveryDetails.itemName}</p>
-                <p><strong>Delivery Address:</strong> {deliveryDetails.deliveryAddress}</p>
-                <p><strong>Customer Contact:</strong> {deliveryDetails.customerContact}</p>
-            </Card>
+            <section className="p-6">
+                <Card className="mb-6 p-6 border-none bg-neutral-900">
+                    <h1 className="text-orange-400 text-2xl font-medium">Current Delivery Details</h1>
+                    <div className="text-white mt-4 text-sm">
+                        <p className="text-md"><strong>Item Name : </strong> {deliveryDetails.itemName}</p>
+                        <p className="text-md"><strong>Delivery Address : </strong> {deliveryDetails.deliveryAddress}</p>
+                        <p className="text-md"><strong>Customer Contact : </strong> {deliveryDetails.customerContact}</p>
+                    </div>
+                </Card>
+            </section>
         </>
     );
 }

@@ -2,10 +2,14 @@
 function PartnerFooterComponent() {
     return (
         <>
-            <footer className="bg-gray-800 text-white">
-                <div className="max-w-7xl mx-auto px-4 py-4 text-center">
-                    <p>© 2024 Delivery Partner Dashboard. All rights reserved.</p>
+            <footer className="bg-neutral-900 roboto-regular text-white h-40 flex flex-col items-center justify-center">
+                <div className="flex justify-center space-x-8 text-sm">
+                    <a href="/privacy" className="">Privacy Policy</a>
+                    <a href="/terms" className="">Terms & Conditions</a>
+                    <a href="/support" className="">Support</a>
+                    <a href="/contact" className="">Contact Us</a>
                 </div>
+                <p className="mt-4 text-xs text-neutral-500">© 2024 YUMMMZO</p>
             </footer>
         </>
     );

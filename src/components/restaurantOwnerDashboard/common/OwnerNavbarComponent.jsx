@@ -40,14 +40,30 @@ function OwnerNavbarComponent() {
                 </div>
                 {/* Nav Items Section */}
                 <div className="flex space-x-8 items-center bg-neutral-900 rounded-lg px-10 py-4">
-                    <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/manage-menu">Menu</Link>
-                    <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/manage-orders">Orders</Link>
-                    <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/analytics">Analytics</Link>
-                    <Link className="cursor-pointer" to="/owner/notifications">
-                        <Button className="bg-neutral-800 hover:bg-neutral-800"> 
-                            <BellIcon className="w-6 h-6"/>
-                        </Button>
-                    </Link>
+                    {
+                        isAuthenticated && userRole === "VENDOR" ?
+                        <>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/manage-menu">Menu</Link>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/manage-orders">Orders</Link>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/owner/analytics">Analytics</Link>
+                            <Link className="cursor-pointer" to="/owner/notifications">
+                                <Button className="bg-neutral-800 hover:bg-neutral-800"> 
+                                    <BellIcon className="w-6 h-6"/>
+                                </Button>
+                            </Link>
+                        </>
+                        :
+                        <>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Menu</Link>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Orders</Link>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Analytics</Link>
+                            <Link className="cursor-pointer">
+                                <Button className="bg-neutral-800 hover:bg-neutral-800"> 
+                                    <BellIcon className="w-6 h-6"/>
+                                </Button>
+                            </Link>
+                        </>
+                    }
                 </div>
                 {/* Profile Dropdown Section */}
                 {
@@ -65,7 +81,9 @@ function OwnerNavbarComponent() {
                         </DropdownMenu>
                     </div>
                     :
-                    <Button className="text-md bg-black border border-orange-400 hover:bg-black">Login</Button>
+                    <Link to="/user/login">
+                        <Button className="text-md bg-black border border-orange-400 hover:bg-black">Login</Button>
+                    </Link>
                 }
             </nav>
         </>
