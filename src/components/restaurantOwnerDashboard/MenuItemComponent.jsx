@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button.jsx";
 import { Textarea } from "@/components/ui/textarea"; // Importing Textarea from ShadCN
+import { Label } from "recharts";
 
 function MenuItemComponent() {
     return (
@@ -44,6 +45,17 @@ function MenuItemComponent() {
                             <label htmlFor="isBestSeller" className="text-sm text-white">
                                 Is Best Seller
                             </label>
+                        </div>
+                        {/* Menu Item Image Section */}
+                        <div className="roboto-regular text-white">
+                            <Input
+                                className="mt-2 text-red-800 font-medium"
+                                id="picture" 
+                                name="menuItemImageLink" 
+                                type="file" 
+                                accept="image/*" 
+                                required
+                            />
                         </div>
                     </div>
                 </div>

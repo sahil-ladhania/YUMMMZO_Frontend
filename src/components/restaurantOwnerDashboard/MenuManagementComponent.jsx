@@ -17,10 +17,12 @@ function MenuManagementComponent() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-6">
+                    <div className="space-y-6 mb-10">
                         <MenuCardComponent />
                     </div>
-                    <Button className="mt-6 w-full bg-white text-black hover:bg-white">Save Menu</Button>
+                    <div className="space-y-6 mb-10">
+                        <MenuCardComponent />
+                    </div>
                 </CardContent>
             </Card>
         </>

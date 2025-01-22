@@ -22,9 +22,9 @@ function Menu() {
                 <MenuItemsComponents />
             </div>
             {/* Reviews Section */}
-            {/*<div className="w-full max-w-5xl mx-auto"> /!* Aligning width with Menu Tabs *!/*/}
-            {/*    <ReviewsComponent/>*/}
-            {/*</div>*/}
+            {/* <div className="w-full max-w-5xl mx-auto">
+               <ReviewsComponent/>
+            </div> */}
         </div>
     );
 }
