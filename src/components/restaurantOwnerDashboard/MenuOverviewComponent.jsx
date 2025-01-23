@@ -1,7 +1,58 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { setError, setLoading, setMenus, setRestaurantId } from "@/redux/slices/menuCreationSlice";
+import { getAllMenus, getRestaurantId } from "@/services/menus/menuFeed";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function MenuOverviewComponent() {
+
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
+    const { user } = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
+    const { restaurantId , menus } = useSelector((store) => store.menu);
+
+    // useEffect
+    useEffect(() => {
+        let isMounted = true;
+        dispatch(setLoading(true));
+        const gettingRestaurantID = async() => {
+            try{
+                const restaurantId = await getRestaurantId({ userId });
+                if(isMounted){
+                    dispatch(setRestaurantId(restaurantId));
+                }
+            }
+            catch(error){
+                dispatch(setError(error.message));
+            }
+        }
+        gettingRestaurantID();
+        return () => {
+            isMounted = false;
+        }
+    }, []);
+
+    useEffect(() => {
+        let isMounted = true;
+        const getMenus = async() => {
+            try{
+                const response = await getAllMenus({ restaurantId });
+                if(isMounted){
+                    dispatch(setMenus(response));
+                }
+            }
+            catch(error){
+                dispatch(setError(error.message));
+            }
+        }
+        getMenus();
+        return () => {
+            isMounted = false;
+        }
+    }, [restaurantId])
+
     return (
         <>
             <Card className="p-6 mb-10 bg-neutral-900 border-none">
@@ -14,107 +65,38 @@ function MenuOverviewComponent() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="text-orange-400">Menu Name</TableHead>
-                                    <TableHead className="text-orange-400">Item Name</TableHead>
-                                    <TableHead className="text-orange-400">Price</TableHead>
-                                    <TableHead className="text-orange-400">Quantity</TableHead>
-                                    <TableHead className="text-orange-400">Type</TableHead>
-                                    <TableHead className="text-orange-400">Best Seller</TableHead>
-                                    <TableHead className="text-orange-400">Actions</TableHead>
+                                    <TableHead className="text-orange-400">description</TableHead>
+                                    <TableHead className="text-orange-400">isActive</TableHead>
+                                    <TableHead className="text-orange-400">Created On</TableHead>
+                                    <TableHead className="text-orange-400">Updated On</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {/* Example row data; replace with dynamic data later */}
-                                <TableRow>
-                                    <TableCell>Snacks</TableCell>
-                                    <TableCell>Samosa</TableCell>
-                                    <TableCell>$2.00</TableCell>
-                                    <TableCell>10</TableCell>
-                                    <TableCell>Veg</TableCell>
-                                    <TableCell>Yes</TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Desserts</TableCell>
-                                    <TableCell>Chocolate Cake</TableCell>
-                                    <TableCell>$5.00</TableCell>
-                                    <TableCell>5</TableCell>
-                                    <TableCell>Veg</TableCell>
-                                    <TableCell>No</TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Desserts</TableCell>
-                                    <TableCell>Chocolate Cake</TableCell>
-                                    <TableCell>$5.00</TableCell>
-                                    <TableCell>5</TableCell>
-                                    <TableCell>Veg</TableCell>
-                                    <TableCell>No</TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Desserts</TableCell>
-                                    <TableCell>Chocolate Cake</TableCell>
-                                    <TableCell>$5.00</TableCell>
-                                    <TableCell>5</TableCell>
-                                    <TableCell>Veg</TableCell>
-                                    <TableCell>No</TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Desserts</TableCell>
-                                    <TableCell>Chocolate Cake</TableCell>
-                                    <TableCell>$5.00</TableCell>
-                                    <TableCell>5</TableCell>
-                                    <TableCell>Veg</TableCell>
-                                    <TableCell>No</TableCell>
-                                    <TableCell>
-                                        <div className="flex space-x-2">
-                                            <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
-                                                Edit
-                                            </button>
-                                            <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                                {/* Add more rows as needed */}
+                                {
+                                    menus.map((menu) => (
+                                        <TableRow key={menu.menuId}>
+                                                <TableCell>{menu.menuName}</TableCell>
+                                                <TableCell>{menu.description}</TableCell>
+                                                {/* <TableCell>{menu.isActive}</TableCell> */}
+                                                <TableCell>{menu.isActive === true ? "Active" : "Inactive"}</TableCell>
+                                                <TableCell>{menu.createdAt}</TableCell>
+                                                <TableCell>{menu.updatedAt}</TableCell>
+                                                <TableCell>
+                                                    <div className="flex space-x-2">
+                                                        <button className="bg-white text-black px-2 py-1 rounded hover:bg-white">
+                                                            View Items
+                                                        </button>
+                                                        <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
+                                                            Edit
+                                                        </button>
+                                                        <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </TableCell>
+                                        </TableRow>
+                                    ))
+                                }
                             </TableBody>
                         </Table>
                     </div>

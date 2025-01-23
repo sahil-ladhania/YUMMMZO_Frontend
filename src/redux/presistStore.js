@@ -6,6 +6,7 @@ import cuisineFeedReducer from "./slices/cuisinesFeedSlice";
 import restaurantsFeedReducer from "./slices/restaurantsFeedSlice";
 import topBrandsReducer from "./slices/topBrandsSlice";
 import restaurantsFilterReducer from "./slices/restaurantsFilterSlice";
+import menuCreationReducer from "./slices/menuCreationSlice";
 import storage from 'redux-persist/lib/storage'; 
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     cuisine : cuisineFeedReducer,
     restaurantsFeed : restaurantsFeedReducer,
     topBrands : topBrandsReducer,
-    filteredRestaurants : restaurantsFilterReducer
+    filteredRestaurants : restaurantsFilterReducer,
+    menu : menuCreationReducer
 })
 
 const persistConfig = {
