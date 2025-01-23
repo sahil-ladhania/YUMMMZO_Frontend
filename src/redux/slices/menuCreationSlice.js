@@ -44,6 +44,14 @@ export const menuCreationSlice = createSlice({
         setMenus : (state , action) => {
             state.menus = action.payload;
         },
+        setCurrentMenu : (state , action) => {
+            state.currentMenu.menuName = action.payload.menuName;
+            state.currentMenu.description = action.payload.menuDescription;
+            state.currentMenu.isActive = action.payload.isActive;
+        },
+        deleteMenu : (state , action) => {
+            // Logic
+        },
         fetchMenusSuccess : (state , action) => {
             // Logic
         },
@@ -51,12 +59,6 @@ export const menuCreationSlice = createSlice({
             // Logic
         },
         updateMenu : (state , action) => {
-            // Logic
-        },
-        deleteMenu : (state , action) => {
-            // Logic
-        },
-        setCurrentMenu : (state , action) => {
             // Logic
         },
         addMenuItem : (state , action) => {

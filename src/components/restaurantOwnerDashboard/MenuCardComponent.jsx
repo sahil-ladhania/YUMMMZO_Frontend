@@ -4,20 +4,50 @@ import MenuItemComponent from "@/components/restaurantOwnerDashboard/MenuItemCom
 import { Input } from "../ui/input";
 import { IoIosAdd } from "react-icons/io";
 import { Textarea } from "../ui/textarea";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrentMenu } from "@/redux/slices/menuCreationSlice";
 
 function MenuCardComponent() {
+
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
+
+    // State Variables
+    const [menuDetails , setMenuDetails] = useState({
+        "menuName" : '',
+        "menuDescription" : '',
+        "isActive" : false
+    });
+    const [menuItems , setMenuItems] = useState([]);
+
+    // Handler Functions
+    const handleMenuFeilds = (e) => {
+        e.preventDefault();
+        const { name, value, type, checked } = e.target;
+        const updatedMenuDetails = {
+            ...menuDetails,
+            [name] : type === "checkbox" ? checked : value,
+        };
+        setMenuDetails(updatedMenuDetails);
+        dispatch(setCurrentMenu(updatedMenuDetails));
+    };
+
     return (
         <>
             <Card className="p-6 bg-neutral-800 border-none rounded-md">
                 <CardHeader>
                     <div className="flex items-start justify-between">
                         <div className="flex flex-col w-8/12 h-44 justify-between">
-                            <Input className="w-auto" placeholder="Enter the menu name"/>
-                            <Textarea className="" placeholder="Enter the menu description"/>
+                            <Input onChange={handleMenuFeilds} className="w-auto" type="text" name="menuName" value={menuDetails.menuName} placeholder="Enter the menu name"/>
+                            <Textarea onChange={handleMenuFeilds} className="" type="text" name="menuDescription" value={menuDetails.menuDescription} placeholder="Enter the menu description"/>
                             <div className="flex items-center space-x-2">
                                 <input
+                                    onChange={handleMenuFeilds}
                                     type="checkbox"
-                                    id="isBestSeller"
+                                    id="isActive"
+                                    name="isActive" 
+                                    checked={menuDetails.isActive}
                                     className="form-checkbox text-orange-500"
                                 />
                                 <label htmlFor="isActive" className="text-sm text-white">

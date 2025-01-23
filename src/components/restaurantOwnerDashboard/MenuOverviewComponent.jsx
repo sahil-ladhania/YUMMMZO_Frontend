@@ -1,9 +1,21 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"  
 import { setError, setLoading, setMenus, setRestaurantId } from "@/redux/slices/menuCreationSlice";
 import { getAllMenus, getRestaurantId } from "@/services/menus/menuFeed";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "../ui/button";
 
 function MenuOverviewComponent() {
 
@@ -12,6 +24,11 @@ function MenuOverviewComponent() {
     const { user } = useSelector((store) => store.auth);
     const userId = user ? user.userId : null;
     const { restaurantId , menus } = useSelector((store) => store.menu);
+
+    // Handler Functions
+    const handleDeleteMenu = () => {
+        console.log("Deleted");
+    }
 
     // useEffect
     useEffect(() => {
@@ -56,7 +73,7 @@ function MenuOverviewComponent() {
     return (
         <>
             <Card className="p-6 mb-10 bg-neutral-900 border-none">
-                <CardHeader>
+                <CardHeader className="flex">
                     <CardTitle className="text-orange-400 text-2xl font-medium">Menu Overview</CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm text-neutral-300 bg-neutral-700 rounded-lg">
@@ -89,9 +106,22 @@ function MenuOverviewComponent() {
                                                         <button className="bg-black text-white px-2 py-1 rounded hover:bg-black">
                                                             Edit
                                                         </button>
-                                                        <button className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">
-                                                            Delete
-                                                        </button>
+                                                        <AlertDialog>
+                                                            <AlertDialogTrigger className="bg-red-900 text-white px-2 py-1 rounded hover:bg-red-900">Delete</AlertDialogTrigger>
+                                                            <AlertDialogContent>
+                                                                <AlertDialogHeader>
+                                                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                                    <AlertDialogDescription>
+                                                                        This action cannot be undone. This will permanently delete your menu
+                                                                        and remove all your menu items from our servers.
+                                                                    </AlertDialogDescription>
+                                                                </AlertDialogHeader>
+                                                                <AlertDialogFooter>
+                                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                    <AlertDialogAction onClick={handleDeleteMenu}>Continue</AlertDialogAction>
+                                                                </AlertDialogFooter>
+                                                            </AlertDialogContent>
+                                                        </AlertDialog>
                                                     </div>
                                                 </TableCell>
                                         </TableRow>
