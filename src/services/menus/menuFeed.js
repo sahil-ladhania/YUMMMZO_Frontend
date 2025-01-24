@@ -26,7 +26,7 @@ export const getAllMenus = async({ restaurantId }) => {
 
 export const getAllMenuItems = async({ menuId }) => {
     try{
-        const response = await axios.get(`${API_URL}/restaurants/menu/${menuId}/menuItems`);
+        const response = await axios.get(`${API_URL}/restaurants/menu/${menuId}/menuItems`); // error ????
         const menuItems = response.data.menuItems;
         return menuItems;
     }

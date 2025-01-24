@@ -5,10 +5,10 @@ import MenuItemsComponents from "@/components/userDashboard/MenuItemsComponents.
 import MenuTabsComponent from "@/components/userDashboard/MenuTabsComponent.jsx";
 import ReviewsComponent from "@/components/userDashboard/ReviewsComponent.jsx";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllMenus } from "@/services/menus/menuFeed";
-import { setMenus } from "@/redux/slices/menuFeedSlice";
+import { setMenus, setSelectedMenu } from "@/redux/slices/menuFeedSlice";
 import { getARestaurant } from "@/services/restaurants/restaurantFeed";
 
 function Menu() {
@@ -25,12 +25,12 @@ function Menu() {
     // useEffect
     useEffect(() => {
         let isMounted = true;
-        // api call
         const getMenusForRestaurant = async() => {
             try{
                 const menus = await getAllMenus({ restaurantId });
                 if(isMounted){
                     dispatch(setMenus(menus));
+                    dispatch(setSelectedMenu(menus[0]));
                 }
             }
             catch(error){
@@ -46,7 +46,6 @@ function Menu() {
 
     useEffect(() => {
         let isMounted = true;
-        // call api
         const getRestaurant = async() => {
             try{
                 const details = await getARestaurant({restaurantId});

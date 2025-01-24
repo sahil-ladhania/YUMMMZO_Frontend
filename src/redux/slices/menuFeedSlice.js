@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     menus : [],
-    selectedMenuItems : []
+    selectedMenu : 0,
+    isMenuSelected : false,
+    selectedMenuItems : [],
   };
 
 export const menuFeedSlice = createSlice({
@@ -12,6 +14,12 @@ export const menuFeedSlice = createSlice({
         setMenus : (state, action) => {
             state.menus = action.payload;
         },
+        setSelectedMenu : (state , action) => {
+            state.selectedMenu = action.payload;
+        },
+        setIsMenuSelected : (state , action) => {
+            state.isMenuSelected = action.payload;
+        },
         setMenuItems : (state , action) => {
             state.selectedMenuItems = action.payload;
         }
@@ -20,6 +28,8 @@ export const menuFeedSlice = createSlice({
 
 export const { 
     setMenus,
+    setSelectedMenu,
+    setIsMenuSelected,
     setMenuItems
 } = menuFeedSlice.actions;
 export default menuFeedSlice.reducer;
