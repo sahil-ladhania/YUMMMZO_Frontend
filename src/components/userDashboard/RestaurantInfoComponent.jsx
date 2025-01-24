@@ -1,15 +1,20 @@
 import { FaStar } from "react-icons/fa6";
 
-function RestaurantInfoComponent() {
+function RestaurantInfoComponent({restaurantDetails}) {
+
+    // Retrieving Restaurant Details
+    const { restaurantName , buildingNumber , area , city } = restaurantDetails ?? {};
+    const restaurantAddress = `${buildingNumber}, ${area} , ${city}`;
+
     return (
         <>
             <div className="mb-6">
-                <h1 className="text-5xl mb-4 font-bold text-orange-400">Harilal's</h1>
+                <h1 className="text-5xl mb-4 font-bold text-orange-400">{restaurantName}</h1>
                 <p className="text-md text-neutral-300">
                     Mithai , South Indian , Street Food , North Indian , Chinese , Fast Food , Bakery
                 </p>
                 <p className="text-sm text-neutral-400">
-                    Golambar, Patna
+                    {restaurantAddress}
                 </p>
                 <div className="flex items-center space-x-4 mt-4">
                     <div className="flex items-center">

@@ -1,14 +1,16 @@
 import {Card} from "@/components/ui/card.jsx";
 import { FaStar } from "react-icons/fa";
 
-function RestaurantCardComponent({ restaurantImage , restaurantName , area , city , priceForTwo }) {
+function RestaurantCardComponent({ onClick , restaurantImage , restaurantName , area , city , priceForTwo }) {
 
     // Merging Location
     const location = `${area} , ${city}`;
 
     return (
         <>
-            <Card className="p-4 flex flex-col my-4 bg-restaurant-card-gradient border-none cursor-pointer">
+            <Card 
+                onClick={onClick} 
+                className="p-4 flex flex-col my-4 bg-restaurant-card-gradient border-none cursor-pointer">
                 {/* Image Section */}
                 <img
                     src={restaurantImage}

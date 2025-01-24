@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 
-function MenuItemComponent({ image, name, price }) {
+function MenuItemComponent({ image, name, price , description }) {
     return (
         <>
             <div className="flex items-center justify-between p-4 rounded-lg bg-neutral-800 text-neutral-400">
@@ -14,8 +14,8 @@ function MenuItemComponent({ image, name, price }) {
                     <div>
                         <h3 className="text-lg text-white font-semibold">{name}</h3>
                         <p className="text-neutral-300 text-md">{price}</p>
-                        <p className="text-sm text-neutral-300 w-10/12 text-justify">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit praesentium pariatur nemo autem, vitae ab quisquam exercitationem vel eaque? Pariatur?
+                        <p className="text-sm text-neutral-300 w-auto text-justify">
+                            {description}
                         </p>
                     </div>
                 </div>

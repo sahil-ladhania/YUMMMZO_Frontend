@@ -12,3 +12,13 @@ export const getAllRestaurants = async() => {
         throw new Error("Something went wrong : " + error.message);
     }
 }
+
+export const getARestaurant = async({restaurantId}) => {
+    try{
+        const response = await axios.get(`${API_URL}/restaurantss/${restaurantId}`);
+        return response.data.restaurant;
+    }
+    catch(error){   
+        throw new Error("Something went wrong : " + error.message);
+    }
+}

@@ -3,13 +3,15 @@ import { Button } from "@/components/ui/button"; // Import ShadCN Button compone
 import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { IoIosArrowDown } from "react-icons/io";
 
-function ImageHeaderComponent() {
+function ImageHeaderComponent({restaurantDetails}) {
+  const {restaurantImage} = restaurantDetails ?? {};
+
   return (
     <>
       <div
         className="relative w-full h-64 rounded-md mb-6"
         style={{
-          backgroundImage: `url('https://b.zmtcdn.com/data/pictures/0/20522030/cc8f83eb4e1cb9421c88bfb16fb7a82e_o2_featured_v2.jpg?output-format=webp')`,
+          backgroundImage: `url('${restaurantImage}')`,
         }}>
         <div className="absolute inset-0 bg-black/50 backdrop-blur-md rounded-md"></div>
         {/* Input Section */}

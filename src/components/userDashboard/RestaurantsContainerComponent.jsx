@@ -3,12 +3,21 @@ import { setRestaurantsFeed } from "@/redux/slices/restaurantsFeedSlice";
 import { getAllRestaurants } from "@/services/restaurants/restaurantFeed";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function RestaurantsContainerComponent() {
+
+    // useNavigate
+    const navigate = useNavigate();
 
     // useSelector and useDispatch
     const dispatch = useDispatch();
     const { filteredRestaurantsList } = useSelector((store) => store.filteredRestaurants);
+
+    // Handler Functions
+    const openRestaurant = (restaurantId) => {
+        navigate(`/user/restaurant/${restaurantId}/menu`);
+    }
 
     // useEffect
     useEffect(() => {
@@ -37,7 +46,8 @@ function RestaurantsContainerComponent() {
                 {/* Restaurants Section */}
                 {
                     filteredRestaurantsList.map((restaurant) => (
-                        <RestaurantCardComponent 
+                        <RestaurantCardComponent
+                            onClick={() => openRestaurant(restaurant.restaurantId)} 
                             key={restaurant.restaurantId}
                             restaurantImage = {restaurant.restaurantImage}
                             restaurantName = {restaurant.restaurantName}

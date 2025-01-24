@@ -23,3 +23,14 @@ export const getAllMenus = async({ restaurantId }) => {
         throw new Error("Something went wrong : " + error.message);
     }
 }
+
+export const getAllMenuItems = async({ menuId }) => {
+    try{
+        const response = await axios.get(`${API_URL}/restaurants/menu/${menuId}/menuItems`);
+        const menuItems = response.data.menuItems;
+        return menuItems;
+    }
+    catch(error){   
+        throw new Error("Something went wrong : " + error.message);
+    }
+}

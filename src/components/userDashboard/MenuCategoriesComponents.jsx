@@ -1,17 +1,37 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { setMenuItems } from "@/redux/slices/menuFeedSlice";
+import { getAllMenuItems } from "@/services/menus/menuFeed";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function MenuCategoriesComponents() {
+
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
+    const { menus } = useSelector((store) => store.menuFeed);
+
+    // Handler Function
+    const openMenu = async (menuId) => {
+        try {
+            const menuItems = await getAllMenuItems({menuId});
+            dispatch(setMenuItems(menuItems));
+        } 
+        catch (error) {
+            console.error(error);
+        }
+    };    
+
     return (
         <>
             <ScrollArea className="h-[400px] rounded-md p-4 text-neutral-400 bg-neutral-900">
                 <ul className="space-y-4">
-                    <li className="font-semibold cursor-pointer text-orange-500">Durga Puja Specials (5)</li>
-                    <li className="font-semibold cursor-pointer">Sweets (64)</li>
-                    <li className="font-semibold cursor-pointer">Bakery (35)</li>
-                    <li className="font-semibold cursor-pointer">Breakfast Menu (3)</li>
-                    <li className="font-semibold cursor-pointer">Chaat & Snacks (13)</li>
-                    <li className="font-semibold cursor-pointer">Icecream & Beverages (1)</li>
-                    <li className="font-semibold cursor-pointer">Namkeens & Mixtures (33)</li>
+                    {
+                        menus.map((menu) => {
+                            return(
+                                <li onClick={() => openMenu(menu.menuId)} key={menu.menuId} className="font-semibold cursor-pointer">{menu.menuName}</li>
+                            )
+                        })
+                    }
                 </ul>
             </ScrollArea>
         </>
