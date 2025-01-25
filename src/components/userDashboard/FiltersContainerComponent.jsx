@@ -45,12 +45,24 @@ function FiltersContainerComponent() {
         if (name === 'filter') {
             if (value === 'pure-veg'){
                 updatedFilter.veg = true;
+                dispatch(setFilter({
+                    veg : updatedFilter.veg,
+                    priceRange : updatedFilter.priceRange
+                }));
             };
             if (value === '300-600'){
                 updatedFilter.priceRange = '300-600';
+                dispatch(setFilter({
+                    veg : updatedFilter.veg,
+                    priceRange : updatedFilter.priceRange
+                }));
             };
             if (value === '0-300'){
                 updatedFilter.priceRange = '0-300';
+                dispatch(setFilter({
+                    veg : updatedFilter.veg,
+                    priceRange : updatedFilter.priceRange
+                }));
             };
         }
         if (name === 'sort') {

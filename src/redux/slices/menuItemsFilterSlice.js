@@ -24,13 +24,13 @@ const menuItemsFilterSlice = createSlice({
             state.searchText = action.payload;
         },
         setFilter : (state , action) => {
-            // logic
+            state.filter = action.payload;
         },
         setSortByPriceOption : (state , action) => {
-            // logic
+            state.sortByPriceOption = action.payload;
         },
         setSortByCategoryOption : (state , action) => {
-            // logic
+            state.sortByCategoryOption = action.payload;
         },
         setLoading : (state , action) => {
             state.isLoading = action.payload;

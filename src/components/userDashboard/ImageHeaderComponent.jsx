@@ -4,8 +4,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setError, setFilteredMenuItems, setLoading, setSearchText } from "@/redux/slices/menuItemsFilterSlice";
+import { setError, setFilter, setFilteredMenuItems, setLoading, setSearchText, setSortByCategoryOption, setSortByPriceOption } from "@/redux/slices/menuItemsFilterSlice";
 import { filterMenuItems } from "@/services/menus/filterMenuItems";
+import { getAllRestaurantMenuItems } from "@/services/menus/menuFeed";
 
 function ImageHeaderComponent({restaurantDetails}) {
 
@@ -44,23 +45,84 @@ function ImageHeaderComponent({restaurantDetails}) {
     }
   }
 
-  const handleFiltering = (e) => {
+  const handleFiltering = async(e) => {
     const { name , value } = e.target;
     console.log(name , value);
+    let updatedFilter = { ...filter };
+    console.log(updatedFilter);
+    if(name === 'filter'){
+      if(value === 'pure-veg'){
+        updatedFilter.veg = true;
+        dispatch(setFilter({
+          veg : updatedFilter.veg,
+          availability : updatedFilter.availability
+        }))
+      }
+      if(value === 'availability'){
+        updatedFilter.availability = true;
+        dispatch(setFilter({
+          veg : updatedFilter.veg,
+          availability : updatedFilter.availability
+        }))
+      }
+    }
+    if(name === 'sort_by_price'){
+      if(value === 'Cost:Low-High'){
+        dispatch(setSortByPriceOption(value));
+      }
+      if(value === 'Cost:High-Low'){
+        dispatch(setSortByPriceOption(value));
+      }
+    }
+    if(name === 'sort_by_categories'){
+      if(value === 'main-course'){
+        dispatch(setSortByCategoryOption(value));
+      }
+      if(value === 'appetizer'){
+        dispatch(setSortByCategoryOption(value));
+      }
+      if(value === 'desert'){
+        dispatch(setSortByCategoryOption(value));
+      }
+      if(value === 'beverage'){
+        dispatch(setSortByCategoryOption(value));
+      }
+      if(value === 'side'){
+        dispatch(setSortByCategoryOption(value));
+      }
+    }
+    try {
+      dispatch(setLoading(true));
+      const response = await filterMenuItems({
+        restaurantId,
+        searchText,
+        filter : updatedFilter,
+        sortByPriceOption: name === 'sort_by_price' ? value : sortByPriceOption,
+        sortByCategoryOption: name === 'sort_by_categories' ? value : sortByCategoryOption
+      }); 
+      dispatch(setFilteredMenuItems(response.filteredMenuItems));
+    }
+    catch(error){
+      dispatch(setError(error.message));
+    }
+    finally {
+      dispatch(setLoading(false));
+  }
   }
 
-  const clearFilters = async(e) => {
+  const clearFilters = async() => {
     setSearchQuery('');
     dispatch(setSearchText(''));
-    // dispatch sorting options
+    dispatch(setFilter({
+      veg : null,
+      availability : null
+    }));
+    dispatch(setSortByPriceOption(''));
+    dispatch(setSortByCategoryOption(''));
     try {
         dispatch(setLoading(true));
-        const response = await filterMenuItems({
-          restaurantId,
-          searchText: '',
-          // rest of sorting options
-        });
-        dispatch(setFilteredMenuItems(response.filteredMenuItems));
+        const response = await getAllRestaurantMenuItems({ restaurantId });
+        dispatch(setFilteredMenuItems(response));
     }
     catch(error){
         dispatch(setError(error.message));
@@ -129,7 +191,7 @@ function ImageHeaderComponent({restaurantDetails}) {
                     <Button 
                       onClick={handleFiltering} 
                       name="sort_by_categories"
-                      value="main-course"
+                      value="MAIN_COURSE"
                       className="rounded-md m-2 bg-neutral-800 hover:bg-neutral-800 text-white roboto-regular px-8"
                     >
                       Main Course
@@ -137,7 +199,7 @@ function ImageHeaderComponent({restaurantDetails}) {
                     <Button 
                       onClick={handleFiltering}
                       name="sort_by_categories"
-                      value="appetizer" 
+                      value="APPETIZER" 
                       className="rounded-md m-2 bg-neutral-800 hover:bg-neutral-800 text-white  roboto-regular px-8"
                     >
                       Appetizer
@@ -145,7 +207,7 @@ function ImageHeaderComponent({restaurantDetails}) {
                     <Button 
                       onClick={handleFiltering} 
                       name="sort_by_categories"
-                      value="desert"
+                      value="DESSERT"
                       className="rounded-md m-2 bg-neutral-800 hover:bg-neutral-800 text-white  roboto-regular px-8"
                     >
                       Desert
@@ -153,7 +215,7 @@ function ImageHeaderComponent({restaurantDetails}) {
                     <Button 
                       onClick={handleFiltering} 
                       name="sort_by_categories"
-                      value="beverage"
+                      value="BEVERAGE"
                       className="rounded-md m-2 bg-neutral-800 hover:bg-neutral-800 text-white  roboto-regular px-8"
                     >
                       Beverage
@@ -161,7 +223,7 @@ function ImageHeaderComponent({restaurantDetails}) {
                     <Button 
                       onClick={handleFiltering} 
                       name="sort_by_categories"
-                      value="side"
+                      value="SIDE"
                       className="rounded-md m-2 bg-neutral-800 hover:bg-neutral-800 text-white roboto-regular px-8"
                     >
                       Side
