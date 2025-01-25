@@ -26,9 +26,20 @@ export const getAllMenus = async({ restaurantId }) => {
 
 export const getAllMenuItems = async({ menuId }) => {
     try{
-        const response = await axios.get(`${API_URL}/restaurants/menu/${menuId}/menuItems`); // error ????
+        const response = await axios.get(`${API_URL}/restaurants/menu/${menuId}/menuItems`); 
         const menuItems = response.data.menuItems;
         return menuItems;
+    }
+    catch(error){   
+        throw new Error("Something went wrong : " + error.message);
+    }
+}
+
+export const getAllRestaurantMenuItems = async({ restaurantId }) => {
+    try{
+        const response = await axios.get(`${API_URL}/restaurants/${restaurantId}/menu/menuItems`);
+        const restaurantMenuItems = response.data.restaurant_menuItems;
+        return restaurantMenuItems;
     }
     catch(error){   
         throw new Error("Something went wrong : " + error.message);

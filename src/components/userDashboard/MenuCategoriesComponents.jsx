@@ -13,9 +13,9 @@ function MenuCategoriesComponents() {
     const openMenu = async (menuId) => {
         try {
             const menuItems = await getAllMenuItems({menuId});
-            dispatch(setMenuItems(menuItems));
             dispatch(setSelectedMenu(menuId));
             dispatch(setIsMenuSelected(true));
+            dispatch(setMenuItems(menuItems));
         } 
         catch (error) {
             // dispatch

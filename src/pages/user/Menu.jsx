@@ -7,9 +7,10 @@ import ReviewsComponent from "@/components/userDashboard/ReviewsComponent.jsx";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllMenus } from "@/services/menus/menuFeed";
-import { setMenus, setSelectedMenu } from "@/redux/slices/menuFeedSlice";
+import { getAllMenus, getAllRestaurantMenuItems } from "@/services/menus/menuFeed";
+import { setMenus } from "@/redux/slices/menuFeedSlice";
 import { getARestaurant } from "@/services/restaurants/restaurantFeed";
+import { setFilteredMenuItems } from "@/redux/slices/menuItemsFilterSlice";
 
 function Menu() {
 
@@ -30,7 +31,6 @@ function Menu() {
                 const menus = await getAllMenus({ restaurantId });
                 if(isMounted){
                     dispatch(setMenus(menus));
-                    dispatch(setSelectedMenu(menus[0]));
                 }
             }
             catch(error){
@@ -63,6 +63,20 @@ function Menu() {
         isMounted = false;
       }
     }, []);
+
+    useEffect(() => {
+        let isMounted = true;
+        const getRestaurantMenuItems = async() => {
+            const restaurantMenuItems = await getAllRestaurantMenuItems({restaurantId});
+            if(isMounted){
+                dispatch(setFilteredMenuItems(restaurantMenuItems));
+            }
+        }
+        getRestaurantMenuItems();
+        return () => {
+            isMounted = false;
+        }
+    }, [])
     
 
     return (

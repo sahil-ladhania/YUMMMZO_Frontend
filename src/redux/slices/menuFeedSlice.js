@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     menus : [],
-    selectedMenu : 0,
+    selectedMenu : null,
     isMenuSelected : false,
     selectedMenuItems : [],
   };
