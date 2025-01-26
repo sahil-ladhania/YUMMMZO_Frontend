@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 export const initialState = {
-    restaurantId : null,
+    restaurantIdForCart : null,
     cartItems : [],
     totalItems : 0
 }
@@ -11,14 +11,14 @@ const cartSlice = createSlice({
     initialState,
     reducers : {
         setRestaurantId : (state , action) => {
-            state.restaurantId = action.payload;
+            state.restaurantIdForCart = action.payload;
         },
         setAddToCart : (state , action) => {
-            // Logic to Add the Item to Cart
             state.cartItems = [
                 ...state.cartItems,
                 action.payload
             ];
+            state.totalItems = state.cartItems.reduce((total, item) => total + item.selectedQuantity, 0);
         },
         setIncrementItem: (state, action) => {
             const { itemId, selectedQuantity } = action.payload;
@@ -26,6 +26,7 @@ const cartSlice = createSlice({
             if (existingItem) {
                 existingItem.selectedQuantity = selectedQuantity + 1;
             }
+            state.totalItems = state.cartItems.reduce((total, item) => total + item.selectedQuantity, 0);
         },
         setDecrementItem: (state, action) => {
             const { itemId, selectedQuantity } = action.payload;
@@ -33,12 +34,13 @@ const cartSlice = createSlice({
             if (existingItem && existingItem.selectedQuantity > 1) {
                 existingItem.selectedQuantity = selectedQuantity - 1;
             }
+            state.totalItems = state.cartItems.reduce((total, item) => total + item.selectedQuantity, 0);
         },
         setClearCart : (state , action) => {
-            // Logic to Increment the Item
+            state.cartItems = [];
         },
         setTotalItems : (state , action) => {
-            // Logic to Set Count of Total Items in the Cart
+            state.totalItems = state.cartItems.reduce((total, item) => total + item.selectedQuantity, 0);
         }
     }
 })

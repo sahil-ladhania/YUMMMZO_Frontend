@@ -1,8 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+  } from "@/components/ui/alert-dialog"  
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useParams } from "react-router-dom";
-import { setAddToCart, setDecrementItem, setIncrementItem, setRestaurantId } from "@/redux/slices/cartSlice";
+import { setAddToCart, setClearCart, setDecrementItem, setIncrementItem, setRestaurantId, setTotalItems } from "@/redux/slices/cartSlice";
+import { setRestaurantIdForCheckout } from "@/redux/slices/checkoutSlice";
+import { useEffect, useState } from "react";
 
 function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price, description, isPureVeg , isBestSeller }) {
 
@@ -16,7 +28,7 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
 
     // useDispatch and useSelector
     const dispatch = useDispatch();
-    const { cartItems } = useSelector((store) => store.cart);
+    const { cartItems , restaurantIdForCart } = useSelector((store) => store.cart);
 
     // useParams
     const { restaurantId } = useParams();    
@@ -28,13 +40,28 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
     }
     const quantity = getItemsQuantity(itemId);
 
+    // State Variables 
+    const [showAlertDialog, setShowAlertDialog] = useState(false);
+
     // Handler Functions
-    const handleAddToCart = () => {        
-        dispatch(setRestaurantId(restaurantId));
-        dispatch(setAddToCart({
-            selectedQuantity : 1,
-            itemDetails : item
-        }))
+    const handleAddToCart = () => {
+        if(restaurantIdForCart === null){
+            dispatch(setRestaurantId(restaurantId));
+            dispatch(setRestaurantIdForCheckout(restaurantId));
+            dispatch(setAddToCart({
+                selectedQuantity : 1,
+                itemDetails : item
+            }));
+        }
+        else if(restaurantIdForCart === restaurantId){
+            dispatch(setAddToCart({
+                selectedQuantity : 1,
+                itemDetails : item
+            }));
+        }
+        else{
+            setShowAlertDialog(true);
+        }
     }
 
     const handleIncrement = () => {
@@ -50,6 +77,16 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
             selectedQuantity: quantity
         }));
     };
+
+    const handleClearCart = () => {
+        dispatch(setRestaurantId(null));
+        dispatch(setClearCart());
+    }
+
+    // useEffect
+    useEffect(() => {
+        dispatch(setTotalItems());
+    }, [cartItems]);
 
     return (
         <>
@@ -92,16 +129,44 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
                 </div>
                 {/* Quantity Section */}
                 <div className="flex items-center space-x-2 w-2/12">
-                    {
-                        quantity === 0 ?
+                {
+                    quantity === 0 ? (
+                        <>
                             <Button 
                                 onClick={handleAddToCart}
-                                className="bg-orange-400 text-black hover:bg-orange-400 font-semibold"
+                                className="bg-orange-400 h-10 w-32 rounded-md text-black hover:bg-orange-400 font-semibold"
                             >
                                 ADD TO CART
                             </Button>
-                            :
-                            <>
+                            {
+                                showAlertDialog && (
+                                    <AlertDialog open={showAlertDialog} onOpenChange={setShowAlertDialog}>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle className="text-red-800">
+                                                    Items from Different Restaurants Cannot Be Added!
+                                                </AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Your cart already contains items from another restaurant. To add items from this restaurant, you need to clear your existing cart first. Would you like to proceed?
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>
+                                                    Keep Current Items
+                                                </AlertDialogCancel>
+                                                <AlertDialogAction onClick={handleClearCart}>
+                                                    Clear Cart & Proceed
+                                                </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                )
+                            }
+                        </>
+                    ) 
+                    : 
+                    (
+                        <>
                             <Button 
                                 onClick={handleDecrement}   
                                 className="bg-white text-black px-3 py-1 hover:bg-white rounded-md w-12"
@@ -115,8 +180,9 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
                             >
                                 +
                             </Button>
-                            </>
-                    }
+                        </>
+                    )
+            }
                 </div>
             </div>
         </>
