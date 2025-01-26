@@ -53,6 +53,8 @@ function MenuItemsComponents() {
                                 filteredMenuItemsList.map((menuItem) => (
                                     <MenuItemComponent
                                         key={menuItem.itemId}
+                                        itemId={menuItem.itemId}
+                                        itemAvailableQuantity={menuItem.quantity}
                                         image={menuItem.itemImage}
                                         name={menuItem.itemName}
                                         price={menuItem.itemPrice}

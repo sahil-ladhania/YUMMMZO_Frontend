@@ -13,7 +13,8 @@ function UserNavbarComponent() {
 
     // useDispatch and useSelector
     const dispatch = useDispatch();
-    const { isAuthenticated } = useSelector((state) => state.auth);
+    const { isAuthenticated } = useSelector((store) => store.auth);
+    const { totalItems } = useSelector((store) => store.cart);
 
 
     // Handler Functions
@@ -47,7 +48,7 @@ function UserNavbarComponent() {
                         <Link className="cursor-pointer font-medium" to="/user/checkout">
                             <div className="relative">
                                 <CiShoppingCart className="size-10 fill-orange-400" />
-                                <span className="absolute top-0 right-0 bg-orange-400 text-black text-xs rounded-full px-1 roboto-regular">3</span>
+                                <span className="absolute top-0 right-0 bg-orange-400 text-black text-xs rounded-full px-1 roboto-regular">{totalItems}</span>
                             </div>
                         </Link>
                         <CiSearch className="text-orange-400 text-2xl size-10 cursor-pointer" />
