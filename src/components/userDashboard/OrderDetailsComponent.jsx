@@ -11,7 +11,6 @@ function OrderDetailsComponent() {
     const dispatch = useDispatch();
     const { cartItems } = useSelector((store) => store.cart);
     const { restaurantIdForCheckout , restaurantName , restaurantImage , itemsTotal , deliveryFee , platformFee , gst , toPay } = useSelector((store) => store.checkout);
-    console.log(cartItems);
 
     // Calculating the Items Total
     const calculateItemsTotal = (cartItems) => {
@@ -43,7 +42,6 @@ function OrderDetailsComponent() {
 
     // Handler Functions
     const handleIncrement = (itemId, selectedQuantity) => {
-        console.log("Increment");
         dispatch(setIncrementItem({
             itemId: itemId,
             selectedQuantity: selectedQuantity 
@@ -51,7 +49,6 @@ function OrderDetailsComponent() {
     };
     
     const handleDecrement = (itemId, selectedQuantity) => {
-        console.log("Decrement");
         dispatch(setDecrementItem({
             itemId: itemId,
             selectedQuantity: selectedQuantity

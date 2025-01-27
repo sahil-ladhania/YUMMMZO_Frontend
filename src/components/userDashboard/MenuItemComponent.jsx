@@ -8,10 +8,11 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
+    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"  
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setAddToCart, setClearCart, setDecrementItem, setIncrementItem, setRestaurantId, setTotalItems } from "@/redux/slices/cartSlice";
 import { setRestaurantIdForCheckout } from "@/redux/slices/checkoutSlice";
 import { useEffect, useState } from "react";
@@ -26,9 +27,13 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
         itemQuantityAvailable : itemAvailableQuantity
     }
 
+    // useNavigate
+    const navigate = useNavigate();
+
     // useDispatch and useSelector
     const dispatch = useDispatch();
     const { cartItems , restaurantIdForCart } = useSelector((store) => store.cart);
+    const { isAuthenticated } = useSelector((store) => store.auth);
 
     // useParams
     const { restaurantId } = useParams();    
@@ -83,6 +88,12 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
         dispatch(setClearCart());
     }
 
+    const navigateToLoginScreen = () => {
+        setTimeout(() => {
+            navigate("/user/login");
+        }, 2000);
+    }
+
     // useEffect
     useEffect(() => {
         dispatch(setTotalItems());
@@ -132,12 +143,33 @@ function MenuItemComponent({ itemId , itemAvailableQuantity , image, name, price
                 {
                     quantity === 0 ? (
                         <>
-                            <Button 
-                                onClick={handleAddToCart}
-                                className="bg-orange-400 h-10 w-32 rounded-md text-black hover:bg-orange-400 font-semibold"
-                            >
-                                ADD TO CART
-                            </Button>
+                            {
+                                isAuthenticated === true ?
+                                    <Button 
+                                    onClick={handleAddToCart}
+                                    className="bg-orange-400 h-10 w-32 rounded-md text-black hover:bg-orange-400 font-semibold"
+                                    >
+                                        ADD TO CART
+                                    </Button>
+                                    :
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button className="bg-orange-400 h-10 w-32 rounded-md text-black hover:bg-orange-400 font-semibold">ADD TO CART</Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                            <AlertDialogTitle>Login Required</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                You need to be logged in to add items to your cart. Please log in to continue.
+                                            </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction onClick={navigateToLoginScreen}>Login</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                            }
                             {
                                 showAlertDialog && (
                                     <AlertDialog open={showAlertDialog} onOpenChange={setShowAlertDialog}>

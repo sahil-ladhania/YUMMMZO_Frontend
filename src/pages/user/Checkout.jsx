@@ -2,13 +2,42 @@ import DeliveryAddressComponent from "@/components/userDashboard/DeliveryAddress
 import OrderDetailsComponent from "@/components/userDashboard/OrderDetailsComponent.jsx";
 import PaymentComponent from "@/components/userDashboard/PaymentComponent.jsx";
 import { CiCircleInfo } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EmptyCart from "./EmptyCart";
+import { useEffect } from "react";
+import { getAllAddressesForUser } from "@/services/userAddress/userAddressService";
+import { setSavedAddresses } from "@/redux/slices/orderSlice";
 
 function Checkout() {
 
-    // useSelector
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
     const { cartItems } = useSelector((store) => store.cart);
+    const { selectedAddress } = useSelector((store) => store.order);
+    const { user } = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
+
+
+    // useEffect
+    useEffect(() => {
+        let isMounted = true;
+        const getAllUserAddress = async() => {
+            try {
+                const userAddresses = await getAllAddressesForUser(userId);
+                if(isMounted){
+                    dispatch(setSavedAddresses(userAddresses));
+                }
+            } 
+            catch(error){
+                console.log(error);
+            }
+        }
+        getAllUserAddress();
+        return () => {
+            isMounted = false;
+        }
+    }, [])
+
 
     return (
         <>
@@ -26,10 +55,17 @@ function Checkout() {
                             <DeliveryAddressComponent/>
                         </div>
                         {/* Step 2: Payment */}
-                        <div>
-                            <h3 className="roboto-regular text-sm text-white my-4">2. Payment</h3>
-                            <PaymentComponent/>
-                        </div>
+                        {
+                            selectedAddress === "" ?
+                                <div>
+
+                                </div>
+                            :
+                                <div>
+                                    <h3 className="roboto-regular text-sm text-white my-4">2. Payment</h3>
+                                    <PaymentComponent/>
+                                </div>
+                        }
                     </div>
                     {/* Right Side - Order Details Component */}
                     <div className="w-2/3 pl-8 bg-neutral-800 ml-2 rounded-lg">

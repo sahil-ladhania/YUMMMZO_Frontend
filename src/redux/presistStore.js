@@ -10,6 +10,7 @@ import menuCreationReducer from "./slices/menuCreationSlice";
 import menuFeedReducer from "./slices/menuFeedSlice";
 import menuItemsFilterReducer from "./slices/menuItemsFilterSlice";
 import cartReducer from "./slices/cartSlice";
+import orderReducer from "./slices/orderSlice";
 import checkoutReducer from "./slices/checkoutSlice";
 import storage from 'redux-persist/lib/storage'; 
 import persistReducer from "redux-persist/es/persistReducer";
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     menuFeed : menuFeedReducer,
     filteredMenuItems : menuItemsFilterReducer,
     cart : cartReducer,
-    checkout : checkoutReducer
+    checkout : checkoutReducer,
+    order : orderReducer
 })
 
 const persistConfig = {
