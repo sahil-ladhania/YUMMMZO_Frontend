@@ -1,20 +1,15 @@
 import {Button} from "@/components/ui/button.jsx";
+import { useSelector } from "react-redux";
 
 function PaymentOptionsComponent() {
+
+    // useSelector
+    const { toPay } = useSelector((store) => store.checkout);
+
     return (
         <>
             <div className="bg-neutral-100 p-4 rounded-lg shadow">
                 <h3 className="font-semibold mb-2 text-xl roboto-regular">Payment Options</h3>
-                {/* Cash on Delivery (COD) */}
-                <div className="mb-4">
-                    <label className="flex items-center roboto-regular text-md font-semibold py-4">
-                        <input type="checkbox" className="mr-2"/>
-                        Cash on Delivery
-                    </label>
-                    <Button className="mt-2 roboto-regular w-full bg-black hover:bg-black">
-                        Pay ₹200
-                    </Button>
-                </div>
                 {/* UPI Payment */}
                 <div className="mb-4">
                     <div className="flex items-center py-4">
@@ -27,7 +22,7 @@ function PaymentOptionsComponent() {
                     </label>
                     <div className="">
                         <Button className="mt-2 roboto-regular w-full bg-black hover:bg-black">
-                            Pay ₹200
+                            Pay Rs. {toPay}
                         </Button>
                         <Button className="mt-2 roboto-regular w-full bg-black hover:bg-black">
                             Add New UPI ID
@@ -46,7 +41,7 @@ function PaymentOptionsComponent() {
                     </label>
                     <div className="">
                         <Button className="mt-2 roboto-regular w-full bg-black hover:bg-black">
-                            Pay ₹200
+                            Pay Rs. {toPay}
                         </Button>
                         <Button className="mt-2 roboto-regular w-full bg-black hover:bg-black">
                             Add New Card
