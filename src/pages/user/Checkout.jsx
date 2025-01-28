@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import EmptyCart from "./EmptyCart";
 import { useEffect } from "react";
 import { getAllAddressesForUser } from "@/services/userAddress/userAddressService";
-import { setSavedAddresses } from "@/redux/slices/orderSlice";
+import { setRestaurantIdForOrder, setSavedAddresses, setUserIdForOrder } from "@/redux/slices/orderSlice";
 
 function Checkout() {
 
     // useSelector and useDispatch
     const dispatch = useDispatch();
-    const { cartItems } = useSelector((store) => store.cart);
+    const { cartItems , restaurantIdForCart } = useSelector((store) => store.cart);
     const { selectedAddress } = useSelector((store) => store.order);
     const { user } = useSelector((store) => store.auth);
     const userId = user ? user.userId : null;
@@ -26,6 +26,8 @@ function Checkout() {
                 const userAddresses = await getAllAddressesForUser(userId);
                 if(isMounted){
                     dispatch(setSavedAddresses(userAddresses));
+                    dispatch(setUserIdForOrder(userId));
+                    dispatch(setRestaurantIdForOrder(parseInt(restaurantIdForCart)));
                 }
             } 
             catch(error){

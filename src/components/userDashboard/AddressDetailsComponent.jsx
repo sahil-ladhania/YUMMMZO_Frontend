@@ -1,10 +1,12 @@
+import { setRestaurantAddress, setUserAddress } from "@/redux/slices/orderSlice";
 import { getARestaurant } from "@/services/restaurants/restaurantFeed";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function AddressDetailsComponent() {
 
-    // useSelector
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
     const { selectedAddress } = useSelector((store) => store.order);
     const { restaurantIdForCheckout , restaurantName } = useSelector((store) => store.checkout);
     const { user } = useSelector((store) => store.auth);
@@ -13,7 +15,6 @@ function AddressDetailsComponent() {
 
     // Getting the Current Time
     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
 
     // State Variables
     const [restaurantDetails , setRestaurantDetails] = useState({});
@@ -27,6 +28,8 @@ function AddressDetailsComponent() {
             console.log(getRestaurant);
             if(isMounted){
                 setRestaurantDetails(getRestaurant);
+                dispatch(setRestaurantAddress(getRestaurant));
+                dispatch(setUserAddress(selectedAddress));
             }
         }
         getRestaurantDetails();

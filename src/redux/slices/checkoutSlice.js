@@ -4,6 +4,7 @@ export const initialState = {
     restaurantIdForCheckout : null,
     restaurantName : '',
     restaurantImage : '',
+    itemsToOrder : [],
     itemsTotal : 0,
     deliveryFee : 50,
     platformFee : 5,
@@ -27,6 +28,9 @@ const checkoutSlice = createSlice({
             // Logic to set Restaurant Image
             state.restaurantImage = action.payload;
         },
+        setItemsToOrder : (state , action) => {
+            state.itemsToOrder = action.payload;
+        },
         setItemsTotal : (state , action) => {
             // Logic to Calculate the Total of Cart Items
             state.itemsTotal = action.payload;
@@ -48,6 +52,7 @@ export const {
     setRestaurantNameForCheckout,
     setRestaurantImageForCheckout,
     setItemsTotal,
+    setItemsToOrder,
     setGST,
     setToPay
 } = checkoutSlice.actions;
