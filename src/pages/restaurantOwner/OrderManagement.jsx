@@ -11,8 +11,8 @@ function OrderManagement() {
                 <OrderHeaderComponent/>
                 <FilterSortComponent/>
                 <OrderListComponent/>
-                <OrderDetailsComponent/>
-                <UpdateOrderStatusComponent/>
+                {/* <OrderDetailsComponent/> */}
+                {/* <UpdateOrderStatusComponent/> */}
             </div>
         </>
     );

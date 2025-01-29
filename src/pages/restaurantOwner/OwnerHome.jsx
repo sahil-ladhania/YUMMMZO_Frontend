@@ -7,13 +7,15 @@ import TopSellingItemsComponent from "@/components/restaurantOwnerDashboard/TopS
 import RestaurantCustomerFeedbackComponent from "@/components/restaurantOwnerDashboard/RestaurantCustomerFeedbackComponent.jsx";
 import RestaurantPromotionsComponent from "@/components/restaurantOwnerDashboard/RestaurantPromotionsComponent.jsx";
 import LandingPageComponent from "@/components/common/LandingPageComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function OwnerHome() {
 
-    // useSelector
+    // useDispatch and useSelector
+    const dispatch = useDispatch();
     const { isAuthenticated , user } = useSelector((store) => store.auth);
     const role = user ? user.role : null;
+    
 
     return (
         <>
