@@ -1,6 +1,6 @@
 import WelcomeMessageComponent from "@/components/deliveryPartnerDashboard/WelcomeMessageComponent.jsx";
 import DeliveryStatsOverviewComponent from "@/components/deliveryPartnerDashboard/DeliveryStatsOverviewComponent.jsx";
-import ActiveOrdersOverviewComponent from "@/components/deliveryPartnerDashboard/ActiveOrdersOverviewComponent.jsx";
+import ActiveOrdersOverviewComponent from "@/components/deliveryPartnerDashboard/DeliveriesOverviewComponent.jsx";
 import RecentNotificationsComponent from "@/components/deliveryPartnerDashboard/RecentNotificationsComponent.jsx";
 import { useSelector } from "react-redux";
 import LandingPageComponent from "@/components/common/LandingPageComponent";

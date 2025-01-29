@@ -41,13 +41,13 @@ function PartnerNavbarComponent() {
                 {
                     isAuthenticated && userRole === "COURIER" ?
                         <div className="flex space-x-8 items-center bg-neutral-900 rounded-lg px-10 py-4">
-                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/partner/active-orders">Active Orders</Link>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/partner/active-orders">Active Delivery</Link>
                             <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/partner/current-delivery">Current Delivery</Link>
                             <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg" to="/partner/earnings">Earnings</Link>
                         </div>
                         :
                         <div className="flex space-x-8 items-center bg-neutral-900 rounded-lg px-10 py-4">
-                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Active Orders</Link>
+                            <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Active Delivery</Link>
                             <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Current Delivery</Link>
                             <Link className="cursor-pointer hover:bg-neutral-800 px-4 py-2 hover:rounded-lg">Earnings</Link>
                         </div>

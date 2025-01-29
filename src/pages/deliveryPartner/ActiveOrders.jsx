@@ -1,5 +1,5 @@
 import DeliveryStatsOverviewComponent from "@/components/deliveryPartnerDashboard/DeliveryStatsOverviewComponent.jsx";
-import ActiveOrdersOverviewComponent from "@/components/deliveryPartnerDashboard/ActiveOrdersOverviewComponent.jsx";
+import ActiveOrdersOverviewComponent from "@/components/deliveryPartnerDashboard/DeliveriesOverviewComponent.jsx";
 
 function ActiveOrders() {
     return (
