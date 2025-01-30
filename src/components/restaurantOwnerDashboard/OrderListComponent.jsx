@@ -1,6 +1,6 @@
 import OrderItemComponent from "@/components/restaurantOwnerDashboard/OrderItemComponent.jsx";
 import { clearSelectedOrderDetails, setActiveOrders, setError, setLoading, setOrderDetailsToUpdate, setSelectedOrderDetails, setUpdatedOrderDetails, updateOrderStatus } from "@/redux/slices/ownerOrderManagementSlice";
-import { acceptOrRejectOrderForARestaurant, getAllActiveOrdersForARestaurant, getAOrderForARestaurant, UpdateOrderStatusToInProgress, UpdateOrderStatusToOutForDelivery } from "@/services/orders/ownerOrders";
+import { acceptOrRejectOrderForARestaurant, assignDeliveryPartner, getAllActiveOrdersForARestaurant, getAOrderForARestaurant, UpdateOrderStatusToInProgress, UpdateOrderStatusToOutForDelivery } from "@/services/orders/ownerOrders";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -104,8 +104,10 @@ function OrderListComponent() {
                 orderId, 
                 status: orderStatus 
             }));
+            const userId = response.userId;
             const updatedOrderDetails = await UpdateOrderStatusToOutForDelivery({restaurantId , orderId , orderStatusDetails: response , orderStatus});
             dispatch(setUpdatedOrderDetails(updatedOrderDetails));
+            const assignedDeliveryPartnerDetails = await assignDeliveryPartner({userId , restaurantId , orderId , orderStatusDetails: response , orderStatus});
         }
         catch(error){
             dispatch(setError(error.message));
