@@ -41,9 +41,7 @@ function PartnerHome() {
         return () => {
             isMounted = false;
         }
-    }, [])
-
-
+    }, [userId])
 
     return (
         <>
