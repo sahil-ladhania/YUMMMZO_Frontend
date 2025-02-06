@@ -35,8 +35,10 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 function App() {
     return (
+        // Wrapping the App with Provider and passing the Redux store as Props to Provider Component.
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
+            {/* PersistGate delays the rendering of the app's UI until the persisted state has been retrieved and rehydrated. */}
+            <PersistGate loading={<h1 className='text-white text-4xl'>Loading...</h1>} persistor={persistor}>
                 <BrowserRouter>
                     <Routes>
                         {/* User Dashboard Routes*/}

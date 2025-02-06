@@ -36,10 +36,10 @@ const cartSlice = createSlice({
             }
             state.totalItems = state.cartItems.reduce((total, item) => total + item.selectedQuantity, 0);
         },
-        setClearCart : (state , action) => {
+        setClearCart : (state) => {
             state.cartItems = [];
         },
-        setTotalItems : (state , action) => {
+        setTotalItems : (state) => {
             state.totalItems = state.cartItems.reduce((total, item) => total + item.selectedQuantity, 0);
         }
     }
