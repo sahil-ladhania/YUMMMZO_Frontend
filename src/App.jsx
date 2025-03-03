@@ -32,6 +32,7 @@ import Partner from "@/dashboards/Partner.jsx";
 import { Provider } from 'react-redux'
 import { store , persistor } from './redux/store.js'
 import { PersistGate } from 'redux-persist/integration/react';
+import OrderSummaryAndRating from './pages/user/OrderSummaryAndRating';
 
 function App() {
     return (
@@ -57,6 +58,7 @@ function App() {
                             <Route path="checkout" element={<Checkout/>}/>
                             <Route path="payment" element={<Payment/>}/>
                             <Route path="order-tracking" element={<OrderTracking/>}/>
+                            <Route path="order-summary" element={<OrderSummaryAndRating/>}/>
                             <Route path="error" element={<Error/>}/>
                         </Route>
                         {/* Vendor Dashboard Routes*/}

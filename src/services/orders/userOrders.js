@@ -4,7 +4,9 @@ const API_URL = "http://localhost:3000";
 
 export const placeOrder = async({ userId , restaurantId , orderDetails }) => {
     try{
-        const response = await axios.post(`${API_URL}/user/${userId}/restaurant/${restaurantId}/place-order` , orderDetails);
+        const response = await axios.post(`${API_URL}/user/${userId}/restaurant/${restaurantId}/place-order` , orderDetails , 
+            {withCredentials : true}
+        );
         return response.data.orderDetails;
     }
     catch(error){
