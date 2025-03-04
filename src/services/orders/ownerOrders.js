@@ -4,7 +4,9 @@ const API_URL = "http://localhost:3000";
 
 export const getAllActiveOrdersForARestaurant = async({restaurantId}) => {
     try{
-        const response = await axios.get(`${API_URL}/owner/${restaurantId}/orders`);
+        const response = await axios.get(`${API_URL}/owner/${restaurantId}/orders` , {
+            withCredentials : true
+        });
         console.log(response);
         return response.data.orders;
     }
@@ -15,7 +17,9 @@ export const getAllActiveOrdersForARestaurant = async({restaurantId}) => {
 
 export const getAOrderForARestaurant = async({restaurantId , orderId}) => {
     try{
-        const response = await axios.get(`${API_URL}/owner/${restaurantId}/orders/${orderId}`);
+        const response = await axios.get(`${API_URL}/owner/${restaurantId}/orders/${orderId}` , {
+            withCredentials : true
+        });
         console.log(response);
         return response.data.order;
     }
@@ -38,7 +42,9 @@ export const acceptOrRejectOrderForARestaurant = async({ restaurantId , orderId 
             userAddress: orderStatusDetails.userAddress,
             restaurantAddress: orderStatusDetails.restaurantAddress
         };
-        const response = await axios.put(`${API_URL}/owner/${restaurantId}/orders/accept-or-reject/${orderId}` , formattedOrderData);
+        const response = await axios.put(`${API_URL}/owner/${restaurantId}/orders/accept-or-reject/${orderId}` , formattedOrderData , {
+            withCredentials : true
+        });
         return response.data.orderStatus;
     }
     catch(error){
@@ -63,7 +69,9 @@ export const UpdateOrderStatusToInProgress = async({ restaurantId , orderId , or
             userAddress: orderStatusDetails.userAddress,
             restaurantAddress: orderStatusDetails.restaurantAddress
         };
-        const response = await axios.put(`${API_URL}/owner/${restaurantId}/orders/update-order-status-to-in-progress/${orderId}` , formattedOrderData);
+        const response = await axios.put(`${API_URL}/owner/${restaurantId}/orders/update-order-status-to-in-progress/${orderId}` , formattedOrderData , {
+            withCredentials : true
+        });
         return response.data.orderStatus;
     }
     catch(error){
@@ -88,7 +96,9 @@ export const UpdateOrderStatusToOutForDelivery = async({ restaurantId , orderId 
             userAddress: orderStatusDetails.userAddress,
             restaurantAddress: orderStatusDetails.restaurantAddress
         };
-        const response = await axios.put(`${API_URL}/owner/${restaurantId}/orders/update-order-status-to-out-for-delivery/${orderId}` , formattedOrderData);
+        const response = await axios.put(`${API_URL}/owner/${restaurantId}/orders/update-order-status-to-out-for-delivery/${orderId}` , formattedOrderData , {
+            withCredentials : true
+        });
         return response.data.orderStatus;
     }
     catch(error){
@@ -113,7 +123,9 @@ export const assignDeliveryPartner = async({ userId , restaurantId , orderId , o
             userAddress: orderStatusDetails.userAddress,
             restaurantAddress: orderStatusDetails.restaurantAddress
         };
-        const response = await axios.put(`${API_URL}/user/${userId}/partner/${restaurantId}/assign-delivery-partner/orders/${orderId}` , formattedOrderData);
+        const response = await axios.put(`${API_URL}/user/${userId}/partner/${restaurantId}/assign-delivery-partner/orders/${orderId}` , formattedOrderData , {
+            withCredentials : true
+        });
         return response.data.updatedOrderDetails.deliveryPartnerId;
     }
     catch(error){

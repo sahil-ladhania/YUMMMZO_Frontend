@@ -4,7 +4,9 @@ const API_URL = "http://localhost:3000";
 
 export const getOrderDetailsForActiveDelivery = async({partnerId}) => {
     try{
-        const response = await axios.get(`${API_URL}/partner/${partnerId}/get-orderId`);
+        const response = await axios.get(`${API_URL}/partner/${partnerId}/get-orderId` , {
+            withCredentials : true
+        });
         return response.data.orderDetails[0];
     }
     catch(error){   
@@ -14,7 +16,9 @@ export const getOrderDetailsForActiveDelivery = async({partnerId}) => {
 
 export const getActiveOrderDetailsForPartner = async({partnerId , orderId}) => {
     try{
-        const response = await axios.get(`${API_URL}/partner/${partnerId}/get-active-delivery/orders/${orderId}`);
+        const response = await axios.get(`${API_URL}/partner/${partnerId}/get-active-delivery/orders/${orderId}` , {
+            withCredentials : true
+        });
         return response.data.activeDeliveryDetails[0]
     }
     catch(error){   
@@ -24,7 +28,9 @@ export const getActiveOrderDetailsForPartner = async({partnerId , orderId}) => {
 
 export const getAllDeliveriesDoneByPartner = async({partnerId}) => {
     try{
-        const response = await axios.get(`${API_URL}/partner/${partnerId}/get-all-deliveries`);
+        const response = await axios.get(`${API_URL}/partner/${partnerId}/get-all-deliveries` , {
+            withCredentials : true
+        });
         return response.data.allDeliveriesDetails;
     }
     catch(error){   
@@ -48,7 +54,9 @@ export const updateOrderStatusToOnTheWay = async({ partnerId , restaurantId , or
             userAddress: activeOrderDetails.userAddress,
             restaurantAddress: activeOrderDetails.restaurantAddress
         };
-        const response = await axios.put(`${API_URL}/partner/${partnerId}/${restaurantId}/order-on-the-way/orders/${orderId}` , formattedOrderData);
+        const response = await axios.put(`${API_URL}/partner/${partnerId}/${restaurantId}/order-on-the-way/orders/${orderId}` , formattedOrderData ,  {
+            withCredentials : true
+        });
         return response.data.updatedOrderDetails.orderStatus;
     }
     catch(error){
@@ -75,7 +83,9 @@ export const updateOrderStatusToDelivered = async({ partnerId , restaurantId , o
             userAddress: activeOrderDetails.userAddress,
             restaurantAddress: activeOrderDetails.restaurantAddress
         };
-        const response = await axios.put(`${API_URL}/partner/${partnerId}/${restaurantId}/order-delivered/orders/${orderId}` , formattedOrderData);
+        const response = await axios.put(`${API_URL}/partner/${partnerId}/${restaurantId}/order-delivered/orders/${orderId}` , formattedOrderData , {
+            withCredentials : true
+        });
         return response.data.updatedOrderDetails.orderStatus;
     }
     catch(error){
