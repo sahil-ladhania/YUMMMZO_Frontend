@@ -1,14 +1,46 @@
 import OrderMapComponent from "@/components/userDashboard/OrderMapComponent.jsx";
 import OrderTimelineComponent from "@/components/userDashboard/OrderTimelineComponent.jsx";
 import ConfirmedOrderDetailsComponent from "@/components/userDashboard/ConfirmedOrderDetailsComponent.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { getOrderId } from "@/services/orderSummaryAndRatings/orderSummary.js";
+import { setError, setIsLoading, setOrderId, setUserId } from "@/redux/slices/orderSummarySlice";
 
 function OrderTracking() {
 
-    // useSelector
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
     const { isOrderPlaced } = useSelector((store) => store.order);
+    const { user } = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
+
+    // useEffect
+    useEffect(() => {
+        let isMounted = true;
+        const getOrderIdFromUserId = async() => {
+            try{
+                dispatch(setIsLoading(true));
+                const orderId = await getOrderId({userId});
+                if(isMounted){
+                    console.log(orderId);
+                    dispatch(setOrderId(orderId));
+                    dispatch(setUserId(userId));
+                }
+            }
+            catch(error){
+                dispatch(setError(error));
+            }
+            finally{
+                dispatch(setIsLoading(false));
+            }
+        }
+        getOrderIdFromUserId();
+        return () => {
+            isMounted = false;
+        }
+    }, [userId]);
 
     return (
         <>

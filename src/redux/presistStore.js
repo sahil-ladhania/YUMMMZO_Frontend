@@ -14,6 +14,7 @@ import orderReducer from "./slices/orderSlice";
 import ownerOrderManagementReducer from "./slices/ownerOrderManagementSlice";
 import deliveryManagementReducer from "./slices/deliveryManagementSlice";
 import checkoutReducer from "./slices/checkoutSlice";
+import orderSummaryReducer from "./slices/orderSummarySlice";
 import storage from 'redux-persist/lib/storage'; 
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
     checkout : checkoutReducer,
     order : orderReducer,
     ownerOrderManagement : ownerOrderManagementReducer,
-    deliveryManagement : deliveryManagementReducer
+    deliveryManagement : deliveryManagementReducer,
+    orderSummary : orderSummaryReducer,
 })
 
 const persistConfig = {
@@ -43,7 +45,7 @@ const persistConfig = {
     // Yeh define karta hai ki Redux state localStorage me save hogi ya kisi aur jagah.
     storage,
     // Yeh bata raha hai ki kon kon se reducer ka data persist hoga.
-    whitelist : ['auth' , 'user' , 'restaurant' , 'cuisine' , 'restaurantsFeed' , 'topBrands' , 'filteredRestaurants' , 'menu' , 'menuFeed' , 'filteredMenuItems' , 'cart' , 'checkout' , 'order' , 'ownerOrderManagement' , 'deliveryManagement']
+    whitelist : ['auth' , 'user' , 'restaurant' , 'cuisine' , 'restaurantsFeed' , 'topBrands' , 'filteredRestaurants' , 'menu' , 'menuFeed' , 'filteredMenuItems' , 'cart' , 'checkout' , 'order' , 'ownerOrderManagement' , 'deliveryManagement' , 'orderSummary']
 }
 
 // persistReducer Redux reducer ko wrap kar raha hai taki uska data persist ho sake.
