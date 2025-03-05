@@ -4,9 +4,40 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { useSelector } from "react-redux";
+import { ratingDeliveryPartner } from "@/services/orderSummaryAndRatings/ratings";
 
 function DeliveryPartnerRatingComponent() {
+
+    // useSelector
+    const { partnerName , userId , orderId , partnerId } = useSelector((store) => store.orderSummary);
+
+    // State Variables
     const [rating, setRating] = useState(0);
+    const [review, setReview] = useState("");
+
+    // Handler Functions
+    const handleChange = (e) => {
+        e.preventDefault();
+        setReview(e.target.value);
+    };
+    const ratePartner = async(e) => {
+        e.preventDefault();
+        const ratingType = e.target.name;
+        const formData = {
+            ratingType,
+            rating,
+            review
+        }
+        try{
+            const partnerRating = await ratingDeliveryPartner({userId , orderId , partnerId , formData});
+            setRating(0);
+            setReview("");
+        }
+        catch(error){
+            console.error("Error Submitting Partner Rating : ", error);
+        }
+    };
 
   return (
     <>
@@ -27,8 +58,7 @@ function DeliveryPartnerRatingComponent() {
                         </AvatarFallback>
                     </Avatar>
                     <div>
-                        <p className="text-white">John Doe</p>
-                        <p className="text-neutral-400">Delivered in 30 mins</p>
+                        <p className="text-white">{partnerName}</p>
                     </div>
                 </div>
                 {/* Star Rating */}
@@ -44,9 +74,9 @@ function DeliveryPartnerRatingComponent() {
                 ))}
                 </div>
                 {/* Review Box */}
-                <Textarea placeholder="Write your feedback (optional)" className="bg-neutral-800 text-white" />
+                <Textarea onChange={handleChange} value={review} placeholder="Write your feedback (optional)" className="bg-neutral-800 text-white" />
                 {/* Submit Button */}
-                <Button className="bg-orange-400 text-black hover:bg-orange-500">Submit Rating</Button>
+                <Button onClick={ratePartner} name="DELIVERY_PARTNER" className="bg-orange-400 text-black hover:bg-orange-500">Submit Rating</Button>
             </CardContent>
         </Card>
     </>

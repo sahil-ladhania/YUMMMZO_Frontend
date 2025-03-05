@@ -5,16 +5,44 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Textarea } from "../ui/textarea";
 import { StarIcon } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { ratingOrderedItem } from "@/services/orderSummaryAndRatings/ratings";
 
 function OrderedItemsListComponent() {
+    
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
+    const { orderItems , userId , orderId } = useSelector((store) => store.orderSummary);
+
+    // State Variables
     const [selectedItem, setSelectedItem] = useState(null);
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState("");
 
-    const orderedItems = [
-        { id: 1, name: "Burger", quantity: 2, price: "₹199", image: "/images/burger.png" },
-        { id: 2, name: "Fries", quantity: 1, price: "₹99", image: "/images/fries.png" },
-    ];    
+    // Handler Functions
+    const handleChange = (e) => {
+        e.preventDefault();
+        setReview(e.target.value);
+    };
+    const rateOrderedItem = async(e , orderedItemId) => {
+        e.preventDefault();
+        const ratingType = e.target.name;
+        const formData = {
+            ratingType,
+            rating,
+            review
+        }
+        try{
+            const orderedItemRating = await ratingOrderedItem({userId , orderId , orderedItemId , formData});
+            setRating(0);
+            setReview("");
+            setSelectedItem(null);
+        }
+        catch(error){
+            console.error("Error Submitting Ordered Item Rating : ", error);
+        }
+    };
+    
 
     return (
         <>
@@ -24,17 +52,17 @@ function OrderedItemsListComponent() {
                 </CardHeader>
                 <CardContent>
                     <ScrollArea className="h-[200px]">
-                        {orderedItems.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between py-2 border-b border-neutral-800">
+                        {orderItems.map((item) => (
+                            <div key={item.orderItemId} className="flex items-center justify-between py-2 border-b border-neutral-800">
                                 <div className="flex items-center gap-4">
-                                    <img src={item.image} alt={item.name} className="w-12 h-12 rounded-md" />
+                                    <p className="text-white">Item Id : {item.menuItemId}</p>
                                     <div>
                                         <p className="text-white">{item.name}</p>
                                         <p className="text-neutral-400">Qty: {item.quantity}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <p className="text-white">{item.price}</p>
+                                    <p className="text-white">Rs. {item.totalPrice}</p>
                                     <Button 
                                         className="bg-orange-400 text-black hover:bg-orange-500"
                                         onClick={() => setSelectedItem(item)} // Open Modal with Item
@@ -52,7 +80,7 @@ function OrderedItemsListComponent() {
                 <Dialog open={!!selectedItem} onOpenChange={() => setSelectedItem(null)}>
                     <DialogContent className="bg-neutral-800 text-white rounded-lg max-w-md border-none">
                         <DialogHeader>
-                            <DialogTitle className="text-orange-400">Rate {selectedItem.name}</DialogTitle>
+                            <DialogTitle className="text-orange-400">Rating Ordered Item Id : {selectedItem.orderItemId}</DialogTitle>
                         </DialogHeader>
                         <div className="space-y-4">
                             {/* Star Rating */}
@@ -72,7 +100,7 @@ function OrderedItemsListComponent() {
                                 placeholder="Write your review (optional)" 
                                 className="bg-neutral-800 text-white"
                                 value={review}
-                                onChange={(e) => setReview(e.target.value)}
+                                onChange={handleChange}
                             />
                             {/* Buttons */}
                             <div className="flex justify-end gap-3">
@@ -83,7 +111,7 @@ function OrderedItemsListComponent() {
                                 >
                                     Cancel
                                 </Button>
-                                <Button className="bg-orange-400 text-black hover:bg-orange-500">
+                                <Button onClick={(e) => rateOrderedItem(e , selectedItem.orderItemId)} name="MENUITEM" className="bg-orange-400 text-black hover:bg-orange-500">
                                     Submit Rating
                                 </Button>
                             </div>

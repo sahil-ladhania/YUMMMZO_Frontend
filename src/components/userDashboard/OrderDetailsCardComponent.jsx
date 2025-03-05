@@ -5,8 +5,12 @@ function OrderDetailsCardComponent() {
 
   // useDispatch and useSelector
   const dispatch = useDispatch();
-    const { orderId , userAddress , orderDate , totalPrice } = useSelector((store) => store.orderSummary);
-  
+  const { orderId , userAddress , orderDate , totalPrice , restaurantName } = useSelector((store) => store.orderSummary);
+
+  // Structuring the Order Date format
+  const datetime = new Date(orderDate);
+  const formattedDate = `${datetime.getFullYear()}-${String(datetime.getMonth() + 1).padStart(2, '0')}-${String(datetime.getDate()).padStart(2, '0')}`;
+
   return (
     <>
         <Card className="bg-neutral-800 text-white rounded-lg border-none mb-10">
@@ -20,7 +24,7 @@ function OrderDetailsCardComponent() {
                 </div>
                 <div className="flex justify-between text-neutral-300">
                   <span>Restaurant:</span>
-                  <span>Yummy Bites</span>
+                  <span>{restaurantName}</span>
                 </div>
                 <div className="flex justify-between text-neutral-300">
                   <span>Total Price:</span>
@@ -28,7 +32,7 @@ function OrderDetailsCardComponent() {
                 </div>
                 <div className="flex justify-between text-neutral-300">
                   <span>Order Date:</span>
-                  <span>{orderDate}</span>
+                  <span>{formattedDate}</span>
                 </div>
                 <div className="flex justify-between text-neutral-300">
                   <span>Delivery Address:</span>

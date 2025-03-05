@@ -6,6 +6,7 @@ export const initialState = {
     restaurantId : null,
     partnerId : null,
     restaurantName : "",
+    partnerName : "",
     orderDate : null,
     totalPrice : 0,
     orderStatus : "",
@@ -33,7 +34,10 @@ const orderSummarySlice = createSlice({
             state.partnerId = action.payload;
         },
         setRestaurantName : (state , action) => {
-            // logic
+            state.restaurantName = action.payload;
+        },
+        setPartnerName : (state , action) => {
+            state.partnerName = action.payload;
         },
         setOrderDate : (state , action) => {
             state.orderDate = action.payload;
@@ -68,6 +72,7 @@ export const {
     setRestaurantId,
     setPartnerId,
     setRestaurantName,
+    setPartnerName,
     setOrderDate,
     setTotalPrice,
     setOrderStatus,
