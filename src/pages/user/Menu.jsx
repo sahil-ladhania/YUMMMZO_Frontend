@@ -5,7 +5,7 @@ import MenuItemsComponents from "@/components/userDashboard/MenuItemsComponents.
 import MenuTabsComponent from "@/components/userDashboard/MenuTabsComponent.jsx";
 import ReviewsComponent from "@/components/userDashboard/ReviewsComponent.jsx";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllMenus, getAllRestaurantMenuItems } from "@/services/menus/menuFeed";
 import { setMenus } from "@/redux/slices/menuFeedSlice";
@@ -14,8 +14,9 @@ import { setFilteredMenuItems } from "@/redux/slices/menuItemsFilterSlice";
 
 function Menu() {
 
-    // useDispatch
+    // useDispatch and useSelector
     const dispatch = useDispatch();
+    const {activeTab} = useSelector((store) => store.menuTabs);
 
     // useParams
     const { restaurantId } = useParams();
@@ -87,17 +88,30 @@ function Menu() {
             <RestaurantInfoComponent restaurantDetails={restaurantDetails}/>
             {/* Menu Tabs */}
             <MenuTabsComponent/>
-            {/* Menu Section */}
-            <div className="grid grid-cols-4 gap-8">
-                {/* Left Sidebar - Categories */}
-                <MenuCategoriesComponents />
-                {/* Right Sidebar - Items */}
-                <MenuItemsComponents />
-            </div>
-            {/* Reviews Section */}
-            {/* <div className="w-full max-w-5xl mx-auto">
-               <ReviewsComponent/>
-            </div> */}
+            {/* Dynamic Tabs UI */}
+            {
+                activeTab === "order-online" 
+                &&
+                <>
+                    {/* Menu Section */}
+                    <div className="grid grid-cols-4 gap-8">
+                        {/* Left Sidebar - Categories */}
+                        <MenuCategoriesComponents />
+                        {/* Right Sidebar - Items */}
+                        <MenuItemsComponents />
+                    </div>
+                </>
+            }
+            {
+                activeTab === "reviews"
+                &&
+                <>
+                    {/* Reviews Section */}
+                    <div className="w-full">
+                        <ReviewsComponent/>
+                    </div>   
+                </>
+            }
         </div>
     );
 }
