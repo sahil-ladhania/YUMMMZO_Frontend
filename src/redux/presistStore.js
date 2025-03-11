@@ -17,6 +17,7 @@ import checkoutReducer from "./slices/checkoutSlice";
 import orderSummaryReducer from "./slices/orderSummarySlice";
 import menuTabsReducer from "./slices/menuTabsSlice";
 import reviewsReducer from "./slices/reviewsSlice";
+import reviewDirectCommentsReducer from "./slices/reviewDirectCommentsSlice"
 import storage from 'redux-persist/lib/storage'; 
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
     deliveryManagement : deliveryManagementReducer,
     orderSummary : orderSummaryReducer,
     menuTabs : menuTabsReducer,
-    reviews : reviewsReducer
+    reviews : reviewsReducer,
+    reviewDirectComments : reviewDirectCommentsReducer
 })
 
 const persistConfig = {

@@ -5,7 +5,6 @@ function ReviewsListComponent() {
 
     // useSelector
     const {reviews} = useSelector((store) => store.reviews);
-    console.log(reviews);
 
     return (
         <>
@@ -16,6 +15,7 @@ function ReviewsListComponent() {
                     reviews.map((review) => (
                         <ReviewItemComponent 
                             key={review.ratingId}
+                            reviewId={review.ratingId}
                             firstName={review?.user?.firstName}
                             lastName={review?.user?.lastName}
                             rating={review.rating}

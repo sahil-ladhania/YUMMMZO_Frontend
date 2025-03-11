@@ -5,8 +5,29 @@ import { Input } from "../ui/input";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useState } from "react";
 import UserCommentComponent from "./UserCommentComponent";
+import { directCommentOnReview, getAllDirectCommentsOnAReview } from "@/services/reviewsCommentsReplies/comments";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setDirectComments } from "@/redux/slices/reviewDirectCommentsSlice";
 
-function ReviewItemComponent({firstName , lastName , rating , review , reviewedTime}) {
+function ReviewItemComponent({firstName , lastName , rating , review , reviewedTime , reviewId}) {
+
+    // useSelector
+    const dispatch = useDispatch();
+    const {directComments} = useSelector((store) => store.reviewDirectComments);
+    const {user} = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
+    const firstNameForLoggedInUser = user ? user.firstName : null;
+    const lastNameForLoggedInUser = user ? user.lastName : null;
+
+    // Formating Data For Temporary Comment UI
+    const firstCharAvatar_tempComment = firstNameForLoggedInUser ? firstNameForLoggedInUser.charAt(0) : "";
+    const secondCharAvatar_tempComment = lastNameForLoggedInUser ? lastNameForLoggedInUser.charAt(0) : "";
+    const avatarFallback_tempComment = `${firstCharAvatar_tempComment} ${secondCharAvatar_tempComment}`;
+    const userName_tempComment = firstNameForLoggedInUser && lastNameForLoggedInUser ? `${firstNameForLoggedInUser} ${lastNameForLoggedInUser}` : null;
+
+    // useParams
+    const { restaurantId } = useParams();
 
     // Formating Data For Reviews
     const firstCharAvatar = firstName ? firstName.charAt(0) : "";
@@ -26,24 +47,69 @@ function ReviewItemComponent({firstName , lastName , rating , review , reviewedT
     // State Variables
     const [isInputFeildVisible, setIsInputFeildVisible] = useState(false);
     const [isCommentListVisible, setIsCommentListVisible] = useState(false);
+    const [commentOnReview, setCommentOnReview] = useState("");
+    const [formData, setFormData] = useState({
+        userId : null,
+        comment : commentOnReview
+    });
+    const [newComments, setNewComments] = useState([]);
+    const [reviewComments , setReviewComments] = useState([]);
 
     // Handler Functions
     const handleShowInputField = () => {
         setIsInputFeildVisible(!isInputFeildVisible);
     }
 
-    const handleShowCommentList = () => {
+    const handleShowCommentList = async() => {
         setIsCommentListVisible(!isCommentListVisible);
+        try {
+            if(!isCommentListVisible){
+                const commentList = await getAllDirectCommentsOnAReview({restaurantId , reviewId});
+                setReviewComments([...reviewComments , commentList]);
+                dispatch(setDirectComments(commentList));
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleCommentChange = (e) => {
+        e.preventDefault();
+        let commentText = e.target.value;
+        setCommentOnReview(commentText);
+        setFormData({
+            userId : userId,
+            comment : commentOnReview
+        })
+    }
+
+    const writeCommentOnReview = async(e) => {
+        let key = e.key;
+        if(key === "Enter" && commentOnReview.trim() !== ""){
+            try {
+                console.log("Making API call...");
+                const response = await directCommentOnReview({restaurantId , reviewId , formData});
+                if(response){
+                    setNewComments([...newComments , response]);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+            setCommentOnReview("");
+        }
     }
 
     return (
         <div className="w-full border-t py-4"> {/* Full width */}
             {/* User Info */}
             <div className="flex items-center mb-4">
-                <Avatar>
-                    <AvatarImage src="" />
-                    <AvatarFallback>{avatarFallback}</AvatarFallback>
-                </Avatar>                
+                <Avatar className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                    <AvatarFallback className="text-black font-semibold text-lg">
+                        {avatarFallback}
+                    </AvatarFallback>
+                </Avatar>  
                 <div className="flex flex-col items-start text-white ml-4">
                     <p className="font-semibold mr-4 mb-1">{userName}</p>
                 </div>
@@ -65,7 +131,7 @@ function ReviewItemComponent({firstName , lastName , rating , review , reviewedT
                     Comment
                 </Button>
                 <Button onClick={handleShowCommentList} className="ml-4 bg-orange-400 text-black hover:bg-orange-400">
-                    3 Comments
+                    {isCommentListVisible === true ? directComments.length : ""} Comments
                     <RxDropdownMenu className="fill-black"/>
                 </Button>
             </div>
@@ -77,20 +143,49 @@ function ReviewItemComponent({firstName , lastName , rating , review , reviewedT
                     <div className="my-2 flex">   
                         <Avatar>
                             <AvatarImage src="" />
-                            <AvatarFallback className="bg-orange-200">U</AvatarFallback>
+                            <AvatarFallback className="bg-orange-200">{avatarFallback_tempComment}</AvatarFallback>
                         </Avatar>                
-                        <Input className="ml-2" placeholder="Write your comment"/>
+                        <Input 
+                            onChange={handleCommentChange}
+                            onKeyDown={writeCommentOnReview} 
+                            value={commentOnReview}
+                            className="ml-2" 
+                            placeholder="Write your comment"
+                        />
                     </div>
                 </>
+            }
+            {
+                (newComments.length > 0) 
+                &&
+                newComments.map((newComment) => (
+                    <UserCommentComponent
+                        key={newComment.commentId}
+                        comment={newComment.comment}
+                        avatarFallback_tempComment={avatarFallback_tempComment}
+                        userName_tempComment={userName_tempComment}
+                    />
+                ))
             }
             {/* User Comments Section */}
             {
                 isCommentListVisible 
                 &&
                 <>
-                    <UserCommentComponent/>
-                    <UserCommentComponent/>
-                    <UserCommentComponent/>
+                    {
+                        (directComments.length > 0) ?
+                            directComments.map((directComment) => (
+                                <UserCommentComponent 
+                                    key={directComment.commentId}
+                                    firstName={directComment.user.firstName}
+                                    lastName={directComment.user.lastName}
+                                    comment={directComment.comment}
+                                    timeOfComment={directComment.createdAt}
+                                />            
+                            ))
+                            :
+                            <h1>Loading...</h1>
+                    }
                 </>
             }
         </div>
