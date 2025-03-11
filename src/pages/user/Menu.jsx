@@ -11,6 +11,8 @@ import { getAllMenus, getAllRestaurantMenuItems } from "@/services/menus/menuFee
 import { setMenus } from "@/redux/slices/menuFeedSlice";
 import { getARestaurant } from "@/services/restaurants/restaurantFeed";
 import { setFilteredMenuItems } from "@/redux/slices/menuItemsFilterSlice";
+import { getAllReviewsForARestaurant } from "@/services/reviewsCommentsReplies/reviews";
+import { setReviews } from "@/redux/slices/reviewsSlice";
 
 function Menu() {
 
@@ -35,7 +37,6 @@ function Menu() {
                 }
             }
             catch(error){
-                // dispatch 
                 console.log(error);
             }
         }
@@ -55,7 +56,6 @@ function Menu() {
                 }
             }
             catch(error){
-                // dispatch
                 console.log(error);
             }
         }
@@ -68,9 +68,14 @@ function Menu() {
     useEffect(() => {
         let isMounted = true;
         const getRestaurantMenuItems = async() => {
-            const restaurantMenuItems = await getAllRestaurantMenuItems({restaurantId});
-            if(isMounted){
-                dispatch(setFilteredMenuItems(restaurantMenuItems));
+            try{
+                const restaurantMenuItems = await getAllRestaurantMenuItems({restaurantId});
+                if(isMounted){
+                    dispatch(setFilteredMenuItems(restaurantMenuItems));
+                }
+            }
+            catch(error){
+                console.log(error);
             }
         }
         getRestaurantMenuItems();
@@ -78,6 +83,26 @@ function Menu() {
             isMounted = false;
         }
     }, [])
+
+    useEffect(() => {
+      let isMounted = true;
+      // logic
+      const getAllReviews = async() => {
+        try {
+            const reviews = await getAllReviewsForARestaurant({restaurantId});
+            if(isMounted){
+                dispatch(setReviews(reviews));
+            }   
+        }
+        catch (error) {
+            console.log(error);
+        }
+      };
+      getAllReviews();
+      return () => {
+        isMounted = false;
+      }
+    }, [restaurantId]);
     
 
     return (
@@ -108,7 +133,7 @@ function Menu() {
                 <>
                     {/* Reviews Section */}
                     <div className="w-full">
-                        <ReviewsComponent/>
+                        <ReviewsComponent restaurantDetails={restaurantDetails}/>
                     </div>   
                 </>
             }

@@ -15,7 +15,7 @@ function UserReplyComponent() {
 
   return (
     <>
-        <div className="my-2 flex flex-col mt-4">   
+        <div className="my-2 flex mt-4">   
             <div className="w-1.5/12 mr-4">
                 <Avatar>
                     <AvatarImage className="rounded-full h-10" src="https://github.com/shadcn.png" />

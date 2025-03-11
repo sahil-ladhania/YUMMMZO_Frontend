@@ -6,7 +6,22 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { useState } from "react";
 import UserCommentComponent from "./UserCommentComponent";
 
-function ReviewItemComponent() {
+function ReviewItemComponent({firstName , lastName , rating , review , reviewedTime}) {
+
+    // Formating Data For Reviews
+    const firstCharAvatar = firstName ? firstName.charAt(0) : "";
+    const secondCharAvatar = lastName ? lastName.charAt(0) : "";
+    const avatarFallback = `${firstCharAvatar} ${secondCharAvatar}`;
+    const userName = firstName && lastName ? `${firstName} ${lastName}` : null;
+    const options = {
+        year : 'numeric',
+        month : 'long',
+        day : 'numeric',
+        hour : '2-digit',
+        minute : '2-digit',
+        hour12 : true,
+    }
+    const formattedReviewTime = new Date(reviewedTime).toLocaleString('en-US' , options);
 
     // State Variables
     const [isInputFeildVisible, setIsInputFeildVisible] = useState(false);
@@ -26,26 +41,22 @@ function ReviewItemComponent() {
             {/* User Info */}
             <div className="flex items-center mb-4">
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src="" />
+                    <AvatarFallback>{avatarFallback}</AvatarFallback>
                 </Avatar>                
                 <div className="flex flex-col items-start text-white ml-4">
-                    <p className="font-semibold mr-4 mb-1">A. K. Raja</p>
-                    <div className="flex items-center">
-                        <p className="text-sm mr-1">0 reviews</p>
-                        <p className="text-sm ml-1">2 Followers</p>
-                    </div>
+                    <p className="font-semibold mr-4 mb-1">{userName}</p>
                 </div>
             </div>
             {/* Review Info */}
-            <div className="flex items-center justify-between w-2/12 text-sm text-slate-200 mb-2">
-                <span className="bg-green-800 text-white py-1 px-2 rounded-sm mr-2">1 ★</span>
+            <div className="flex items-center justify-between w-3/12 text-sm text-slate-200 mb-2">
+                <span className="bg-green-800 text-white py-1 px-2 rounded-sm mr-2">{rating} ★</span>
                 <span>DELIVERY</span>
-                <span className="ml-auto text-gray-300">Just Now</span>
+                <span className="text-slate-400">{formattedReviewTime}</span>
             </div>
             {/* Review Text */}
             <p className="text-gray-300 mb-4 py-4">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime iusto accusamus odio ab perspiciatis, impedit, sequi, deserunt non perferendis nemo aliquid quibusdam repellat eaque eos. Atque assumenda reprehenderit neque facere reiciendis recusandae aliquam, omnis temporibus aspernatur? Mollitia debitis praesentium voluptas, numquam delectus saepe officiis vitae, obcaecati cupiditate rem non illum?
+                {review}
             </p>
             {/* Comment Section */}
             <div className="flex text-gray-300 text-sm">
