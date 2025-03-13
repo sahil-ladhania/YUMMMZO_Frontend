@@ -4,12 +4,41 @@ import { useState } from "react";
 import UserReplyComponent from "./UserReplyComponent";
 import { RxDropdownMenu } from "react-icons/rx";
 import { Input } from "../ui/input";
+import { getAllRepliesOnAComment, replyOnAComment } from "@/services/reviewsCommentsReplies/replies";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setReplies } from "@/redux/slices/commentRepliesSlice";
 
-function UserCommentComponent({firstName , lastName , comment , timeOfComment , avatarFallback_tempComment , userName_tempComment}) {
+function UserCommentComponent({commentId , reviewId , firstName , lastName , comment , timeOfComment , avatarFallback_tempComment , userName_tempComment}) {
+
+    // useSelector and useDispatch
+    const dispatch = useDispatch();
+    const {replies} = useSelector((store) => store.commentReplies);
+    const {user} = useSelector((store) => store.auth);
+    const userId = user ? user.userId : null;
+    const firstNameForLoggedInUser = user ? user.firstName : null;
+    const lastNameForLoggedInUser = user ? user.lastName : null;
 
     // State Variables
     const [isInputFeildVisible, setIsInputFeildVisible] = useState(false);
     const [isRepliesListVisible, setIsRepliesListVisible] = useState(false);
+    const [newReplies, setNewReplies] = useState([]);
+    const [commentReplies , setCommentReplies] = useState([]);
+    const [replyOnComment , setReplyOnComment] = useState("");
+    const [formData, setFormData] = useState({
+        userId : null,
+        parentId : null,
+        reply : replyOnComment
+    });
+
+    // useParams
+    const { restaurantId } = useParams();
+
+    // Formating Data For Temporary Reply UI
+    const firstCharAvatar_tempReply = firstNameForLoggedInUser ? firstNameForLoggedInUser.charAt(0) : "";
+    const secondCharAvatar_tempReply = lastNameForLoggedInUser ? lastNameForLoggedInUser.charAt(0) : "";
+    const avatarFallback_tempReply = `${firstCharAvatar_tempReply} ${secondCharAvatar_tempReply}`;
+    const userName_tempReply = firstNameForLoggedInUser && lastNameForLoggedInUser ? `${firstNameForLoggedInUser} ${lastNameForLoggedInUser}` : null;
 
     // Formating Data For Reviews
     const firstCharAvatar = firstName ? firstName.charAt(0) : "";
@@ -30,8 +59,49 @@ function UserCommentComponent({firstName , lastName , comment , timeOfComment , 
     const handleShowInputField = () => {
         setIsInputFeildVisible(!isInputFeildVisible);
     }
-    const handleShowRepliesList = () => {
+
+    const handleShowRepliesList = async() => {
         setIsRepliesListVisible(!isRepliesListVisible);
+        try {
+            if(!isRepliesListVisible){
+                const replyList = await getAllRepliesOnAComment({restaurantId , commentId});
+                console.log(replyList);
+                setCommentReplies([...commentReplies , replyList]);
+                dispatch(setReplies(replyList));
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    const handleReplyChange = (e) => {
+        e.preventDefault();
+        let replyText = e.target.value;
+        setReplyOnComment(replyText);
+        setFormData({
+            userId : userId,
+            // parentId : 
+            reply : replyOnComment
+        })
+    }
+
+    const writeReplyOnComment = async(e) => {
+        let key = e.key;
+        if(key === "Enter" && replyOnComment.trim() !== ""){
+            try {
+                console.log("Making API call...");
+                const response = await replyOnAComment({restaurantId , reviewId , commentId , formData});
+                console.log(response);
+                if(response){
+                    setNewReplies([...newReplies , response]);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+            setReplyOnComment("");
+        }
     }
 
   return (
@@ -76,7 +146,7 @@ function UserCommentComponent({firstName , lastName , comment , timeOfComment , 
                         <Button className="bg-black border-2 border-orange-400 hover:bg-black mr-2">Edit</Button>
                         <Button className="bg-black border-2 border-orange-400 hover:bg-black mr-2">Delete</Button>
                         <Button onClick={handleShowRepliesList} className="ml-4 bg-orange-400 text-black hover:bg-orange-400">
-                            1 Reply
+                            2 Reply
                             <RxDropdownMenu className="fill-black"/>
                         </Button>
                     </div>
@@ -89,20 +159,53 @@ function UserCommentComponent({firstName , lastName , comment , timeOfComment , 
                         <div className="my-2 flex">   
                             <div className="w-1.5/12 mr-4">
                                 <Avatar>
-                                    <AvatarImage className="rounded-full h-10" src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>U</AvatarFallback>
+                                    <AvatarImage className="rounded-full h-10" src="" />
+                                    <AvatarFallback>{avatarFallback_tempReply}</AvatarFallback>
                                 </Avatar>                
                             </div>
-                            <Input className="ml-2 w-11/12" placeholder="Reply to comment"/>
+                            <Input 
+                                onClick={writeReplyOnComment}
+                                onChange={handleReplyChange} 
+                                value={replyOnComment} 
+                                className="ml-2 w-11/12" 
+                                placeholder="Reply to comment"
+                            />
                         </div>
                     </>
+                }
+                {
+                    (newReplies.length > 0) 
+                    &&
+                    newReplies.map((newReply) => (
+                        <UserCommentComponent
+                            key={newReply.commentId}
+                            comment={newReply.comment}
+                            avatarFallback_tempReply={avatarFallback_tempReply}
+                            userName_tempReply={userName_tempReply}
+                        />
+                    ))
                 }
                 {/* Reply Section */}
                 {
                     isRepliesListVisible 
                     &&
                     <>
-                        <UserReplyComponent/>
+                        {
+                            (replies.length > 0) ?
+                                replies.map((reply) => (
+                                    <UserReplyComponent
+                                        key={reply.commentId}
+                                        replyId={reply.commentId}
+                                        firstName={reply.user.firstName}
+                                        lastName={reply.user.lastName}
+                                        reply={reply.comment}
+                                        parentIdOfReply={reply.parentId}
+                                        timeOfReply={reply.createdAt}
+                                    />
+                                ))
+                                :
+                                <h1 className="text-orange-400">No Replies...</h1>
+                        }
                     </>
                 }
             </div>            

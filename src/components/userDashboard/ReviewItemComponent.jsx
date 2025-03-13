@@ -12,7 +12,7 @@ import { setDirectComments } from "@/redux/slices/reviewDirectCommentsSlice";
 
 function ReviewItemComponent({firstName , lastName , rating , review , reviewedTime , reviewId}) {
 
-    // useSelector
+    // useSelector and useDispatch
     const dispatch = useDispatch();
     const {directComments} = useSelector((store) => store.reviewDirectComments);
     const {user} = useSelector((store) => store.auth);
@@ -48,12 +48,12 @@ function ReviewItemComponent({firstName , lastName , rating , review , reviewedT
     const [isInputFeildVisible, setIsInputFeildVisible] = useState(false);
     const [isCommentListVisible, setIsCommentListVisible] = useState(false);
     const [commentOnReview, setCommentOnReview] = useState("");
+    const [newComments, setNewComments] = useState([]);
+    const [reviewComments , setReviewComments] = useState([]);
     const [formData, setFormData] = useState({
         userId : null,
         comment : commentOnReview
     });
-    const [newComments, setNewComments] = useState([]);
-    const [reviewComments , setReviewComments] = useState([]);
 
     // Handler Functions
     const handleShowInputField = () => {
@@ -177,14 +177,16 @@ function ReviewItemComponent({firstName , lastName , rating , review , reviewedT
                             directComments.map((directComment) => (
                                 <UserCommentComponent 
                                     key={directComment.commentId}
+                                    commentId={directComment.commentId}
                                     firstName={directComment.user.firstName}
                                     lastName={directComment.user.lastName}
                                     comment={directComment.comment}
                                     timeOfComment={directComment.createdAt}
+                                    reviewId={reviewId}
                                 />            
                             ))
                             :
-                            <h1>Loading...</h1>
+                            <h1 className="text-orange-400">No Comments...</h1>
                     }
                 </>
             }
