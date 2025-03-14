@@ -11,6 +11,9 @@ import { setReplies } from "@/redux/slices/commentRepliesSlice";
 
 function UserCommentComponent({commentId , reviewId , firstName , lastName , comment , timeOfComment , avatarFallback_tempComment , userName_tempComment}) {
 
+    // useParams
+    const { restaurantId } = useParams();
+
     // useSelector and useDispatch
     const dispatch = useDispatch();
     const {replies} = useSelector((store) => store.commentReplies);
@@ -30,9 +33,6 @@ function UserCommentComponent({commentId , reviewId , firstName , lastName , com
         parentId : null,
         reply : replyOnComment
     });
-
-    // useParams
-    const { restaurantId } = useParams();
 
     // Formating Data For Temporary Reply UI
     const firstCharAvatar_tempReply = firstNameForLoggedInUser ? firstNameForLoggedInUser.charAt(0) : "";
@@ -78,12 +78,13 @@ function UserCommentComponent({commentId , reviewId , firstName , lastName , com
     const handleReplyChange = (e) => {
         e.preventDefault();
         let replyText = e.target.value;
-        setReplyOnComment(replyText);
         setFormData({
+            ...formData,
             userId : userId,
-            // parentId : 
-            reply : replyOnComment
+            parentId : commentId,
+            reply : replyText
         })
+        setReplyOnComment(replyText);
     }
 
     const writeReplyOnComment = async(e) => {
@@ -109,7 +110,7 @@ function UserCommentComponent({commentId , reviewId , firstName , lastName , com
         <div className="my-2 flex mt-4">   
             <div className="w-1.5/12 mr-4">
                 <Avatar className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-                    <AvatarFallback className="text-black font-semibold text-lg">
+                    <AvatarFallback className="text-black bg-gray-300 font-semibold text-lg">
                         {
                             (avatarFallback_tempComment !== "") 
                             &&
@@ -146,7 +147,7 @@ function UserCommentComponent({commentId , reviewId , firstName , lastName , com
                         <Button className="bg-black border-2 border-orange-400 hover:bg-black mr-2">Edit</Button>
                         <Button className="bg-black border-2 border-orange-400 hover:bg-black mr-2">Delete</Button>
                         <Button onClick={handleShowRepliesList} className="ml-4 bg-orange-400 text-black hover:bg-orange-400">
-                            2 Reply
+                            {isRepliesListVisible === true ? replies.length : ""} Reply
                             <RxDropdownMenu className="fill-black"/>
                         </Button>
                     </div>
@@ -157,17 +158,17 @@ function UserCommentComponent({commentId , reviewId , firstName , lastName , com
                     &&
                     <>
                         <div className="my-2 flex">   
-                            <div className="w-1.5/12 mr-4">
+                            <div className="w-10 h-10 rounded-full text-black font-semibold bg-gray-300 flex items-center justify-center">
                                 <Avatar>
                                     <AvatarImage className="rounded-full h-10" src="" />
                                     <AvatarFallback>{avatarFallback_tempReply}</AvatarFallback>
                                 </Avatar>                
                             </div>
                             <Input 
-                                onClick={writeReplyOnComment}
+                                onKeyDown={writeReplyOnComment}
                                 onChange={handleReplyChange} 
                                 value={replyOnComment} 
-                                className="ml-2 w-11/12" 
+                                className="ml-2 w-11/12 text-black" 
                                 placeholder="Reply to comment"
                             />
                         </div>
@@ -195,6 +196,7 @@ function UserCommentComponent({commentId , reviewId , firstName , lastName , com
                                 replies.map((reply) => (
                                     <UserReplyComponent
                                         key={reply.commentId}
+                                        reviewId={reviewId}
                                         replyId={reply.commentId}
                                         firstName={reply.user.firstName}
                                         lastName={reply.user.lastName}
